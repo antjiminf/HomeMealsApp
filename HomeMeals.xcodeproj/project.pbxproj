@@ -14,6 +14,8 @@
 		1E28E99B2C8CB76400CEA3BB /* HomeMealsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E99A2C8CB76400CEA3BB /* HomeMealsTests.swift */; };
 		1E28E9A52C8CB76400CEA3BB /* HomeMealsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9A42C8CB76400CEA3BB /* HomeMealsUITests.swift */; };
 		1E28E9A72C8CB76400CEA3BB /* HomeMealsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9A62C8CB76400CEA3BB /* HomeMealsUITestsLaunchTests.swift */; };
+		1E28E9B82C8CF82D00CEA3BB /* ModelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9B72C8CF82D00CEA3BB /* ModelDTO.swift */; };
+		1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9B92C8DB87F00CEA3BB /* Enums.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		1E28E9A02C8CB76400CEA3BB /* HomeMealsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomeMealsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E28E9A42C8CB76400CEA3BB /* HomeMealsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMealsUITests.swift; sourceTree = "<group>"; };
 		1E28E9A62C8CB76400CEA3BB /* HomeMealsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMealsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1E28E9B72C8CF82D00CEA3BB /* ModelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDTO.swift; sourceTree = "<group>"; };
+		1E28E9B92C8DB87F00CEA3BB /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 			children = (
 				1E28E9892C8CB76200CEA3BB /* HomeMealsApp.swift */,
 				1E28E98B2C8CB76200CEA3BB /* ContentView.swift */,
+				1E28E9B62C8CF81700CEA3BB /* Model */,
 				1E28E98D2C8CB76400CEA3BB /* Assets.xcassets */,
 				1E28E98F2C8CB76400CEA3BB /* Preview Content */,
 			);
@@ -125,6 +130,15 @@
 				1E28E9A62C8CB76400CEA3BB /* HomeMealsUITestsLaunchTests.swift */,
 			);
 			path = HomeMealsUITests;
+			sourceTree = "<group>";
+		};
+		1E28E9B62C8CF81700CEA3BB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1E28E9B72C8CF82D00CEA3BB /* ModelDTO.swift */,
+				1E28E9B92C8DB87F00CEA3BB /* Enums.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +271,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E28E9B82C8CF82D00CEA3BB /* ModelDTO.swift in Sources */,
 				1E28E98C2C8CB76200CEA3BB /* ContentView.swift in Sources */,
+				1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */,
 				1E28E98A2C8CB76200CEA3BB /* HomeMealsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
