@@ -48,6 +48,7 @@
 		1E28E9A62C8CB76400CEA3BB /* HomeMealsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMealsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1E28E9B72C8CF82D00CEA3BB /* ModelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDTO.swift; sourceTree = "<group>"; };
 		1E28E9B92C8DB87F00CEA3BB /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		1E28E9BD2C8E37FF00CEA3BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +99,7 @@
 		1E28E9882C8CB76200CEA3BB /* HomeMeals */ = {
 			isa = PBXGroup;
 			children = (
+				1E28E9BD2C8E37FF00CEA3BB /* Info.plist */,
 				1E28E9892C8CB76200CEA3BB /* HomeMealsApp.swift */,
 				1E28E98B2C8CB76200CEA3BB /* ContentView.swift */,
 				1E28E9B62C8CF81700CEA3BB /* Model */,
@@ -229,6 +231,9 @@
 				Base,
 			);
 			mainGroup = 1E28E97D2C8CB76200CEA3BB;
+			packageReferences = (
+				1E28E9BC2C8E36B400CEA3BB /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */,
+			);
 			productRefGroup = 1E28E9872C8CB76200CEA3BB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -441,6 +446,7 @@
 				DEVELOPMENT_TEAM = TRMHX95KA5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HomeMeals/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -470,6 +476,7 @@
 				DEVELOPMENT_TEAM = TRMHX95KA5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HomeMeals/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -604,6 +611,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1E28E9BC2C8E36B400CEA3BB /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/acacademy/ACNetwork-Bootcamp2024";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.15;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 1E28E97E2C8CB76200CEA3BB /* Project object */;
 }

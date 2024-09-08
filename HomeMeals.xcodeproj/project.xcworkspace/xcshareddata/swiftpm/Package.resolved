@@ -1,0 +1,15 @@
+{
+  "originHash" : "f50d40b5238f0d931a2bb0e93e931d402020edf67b38e7049694cc1c72a8e11f",
+  "pins" : [
+    {
+      "identity" : "acnetwork-bootcamp2024",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/acacademy/ACNetwork-Bootcamp2024",
+      "state" : {
+        "revision" : "38c45ea1b878ede5534e19df2950b6f879302bca",
+        "version" : "1.0.15"
+      }
+    }
+  ],
+  "version" : 3
+}
