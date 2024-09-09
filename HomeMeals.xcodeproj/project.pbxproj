@@ -16,6 +16,9 @@
 		1E28E9A72C8CB76400CEA3BB /* HomeMealsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9A62C8CB76400CEA3BB /* HomeMealsUITestsLaunchTests.swift */; };
 		1E28E9B82C8CF82D00CEA3BB /* ModelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9B72C8CF82D00CEA3BB /* ModelDTO.swift */; };
 		1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9B92C8DB87F00CEA3BB /* Enums.swift */; };
+		1E28E9C02C8E408500CEA3BB /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9BF2C8E408500CEA3BB /* URL.swift */; };
+		1E4D95BB2C8E7BFD00BCA798 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4D95BA2C8E7BFD00BCA798 /* Network.swift */; };
+		1E4D95BE2C8E7E6E00BCA798 /* ACNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 1E4D95BD2C8E7E6E00BCA798 /* ACNetwork */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,8 @@
 		1E28E9B72C8CF82D00CEA3BB /* ModelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDTO.swift; sourceTree = "<group>"; };
 		1E28E9B92C8DB87F00CEA3BB /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		1E28E9BD2C8E37FF00CEA3BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1E28E9BF2C8E408500CEA3BB /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		1E4D95BA2C8E7BFD00BCA798 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E4D95BE2C8E7E6E00BCA798 /* ACNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +89,7 @@
 				1E28E9992C8CB76400CEA3BB /* HomeMealsTests */,
 				1E28E9A32C8CB76400CEA3BB /* HomeMealsUITests */,
 				1E28E9872C8CB76200CEA3BB /* Products */,
+				1E4D95BC2C8E7E6E00BCA798 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +109,8 @@
 				1E28E9BD2C8E37FF00CEA3BB /* Info.plist */,
 				1E28E9892C8CB76200CEA3BB /* HomeMealsApp.swift */,
 				1E28E98B2C8CB76200CEA3BB /* ContentView.swift */,
+				1E28E9BE2C8E407100CEA3BB /* Interface */,
+				1E4D95B92C8E7BC600BCA798 /* Network */,
 				1E28E9B62C8CF81700CEA3BB /* Model */,
 				1E28E98D2C8CB76400CEA3BB /* Assets.xcassets */,
 				1E28E98F2C8CB76400CEA3BB /* Preview Content */,
@@ -143,6 +152,29 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		1E28E9BE2C8E407100CEA3BB /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				1E28E9BF2C8E408500CEA3BB /* URL.swift */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		1E4D95B92C8E7BC600BCA798 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1E4D95BA2C8E7BFD00BCA798 /* Network.swift */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		1E4D95BC2C8E7E6E00BCA798 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -159,6 +191,9 @@
 			dependencies = (
 			);
 			name = HomeMeals;
+			packageProductDependencies = (
+				1E4D95BD2C8E7E6E00BCA798 /* ACNetwork */,
+			);
 			productName = HomeMeals;
 			productReference = 1E28E9862C8CB76200CEA3BB /* HomeMeals.app */;
 			productType = "com.apple.product-type.application";
@@ -276,7 +311,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E28E9C02C8E408500CEA3BB /* URL.swift in Sources */,
 				1E28E9B82C8CF82D00CEA3BB /* ModelDTO.swift in Sources */,
+				1E4D95BB2C8E7BFD00BCA798 /* Network.swift in Sources */,
 				1E28E98C2C8CB76200CEA3BB /* ContentView.swift in Sources */,
 				1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */,
 				1E28E98A2C8CB76200CEA3BB /* HomeMealsApp.swift in Sources */,
@@ -622,6 +659,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1E4D95BD2C8E7E6E00BCA798 /* ACNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1E28E9BC2C8E36B400CEA3BB /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */;
+			productName = ACNetwork;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1E28E97E2C8CB76200CEA3BB /* Project object */;
 }
