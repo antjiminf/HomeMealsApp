@@ -1,6 +1,11 @@
 import Foundation
 
-enum FoodCategory: String, Codable, CaseIterable {
+enum FoodCategory: String, Identifiable, Codable, CaseIterable, Comparable {
+    
+    static func < (lhs: FoodCategory, rhs: FoodCategory) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+    
     case bakeryPastry = "bakery-pastry"
     case beverage
     case cerealsGrains = "cereals-grains"
@@ -15,6 +20,8 @@ enum FoodCategory: String, Codable, CaseIterable {
     case seafood
     case sweetDessert = "sweet-dessert"
     case vegetable
+    
+    var id: Self { self }
 }
 
 enum Unit: String, Codable, CaseIterable {
@@ -23,7 +30,7 @@ enum Unit: String, Codable, CaseIterable {
     case weight
 }
 
-enum Allergen: String, Codable, CaseIterable{
+enum Allergen: String, Identifiable, Codable, CaseIterable {
     case celery
     case crustaceans
     case dairy
@@ -38,4 +45,6 @@ enum Allergen: String, Codable, CaseIterable{
     case sesame
     case soy
     case sulphites
+    
+    var id: Self { self }
 }

@@ -1,12 +1,20 @@
 import Foundation
 
-struct IngredientDTO: Codable {
+struct Page<T: Codable>: Codable {
+    let items: [T]
+    let page: Int
+    let perPage: Int
+    let total: Int
+}
+
+struct IngredientDTO: Codable, Identifiable, Hashable {
     let id: UUID
     let name: String
+    let unit: Unit
     let category: FoodCategory
 }
 
-struct RecipeDTO: Codable {
+struct RecipeDTO: Codable, Identifiable {
     let id: UUID
     let name: String
     let description: String
@@ -14,10 +22,10 @@ struct RecipeDTO: Codable {
     let guide: [String]
     let allergens: [Allergen]
     let owner: UUID
-    let ingredients: RecipeIngredientsDTO
+    let ingredients: RecipeIngredientDTO
 }
 
-struct RecipeListDTO: Codable {
+struct RecipeListDTO: Codable, Identifiable {
     let id: UUID
     let name: String
     let description: String
@@ -26,8 +34,26 @@ struct RecipeListDTO: Codable {
     let owner: UUID
 }
 
-struct RecipeIngredientsDTO: Codable {
+struct SelectionIngredient: Identifiable, Hashable {
+    let id: UUID
     let name: String
+    let unit: Unit
+    var quantity: Double
+//    let category: FoodCategory
+}
+
+struct RecipeIngredientDTO: Codable, Identifiable, Hashable {
+    let id: UUID
     let quantity: Double
     let unit: Unit
+}
+
+struct CreateRecipeDTO: Codable {
+    let name: String
+    let description: String
+    let time: Int
+    let isPublic: Bool
+    let ingredients: [RecipeIngredientDTO]
+    let guide: [String]
+    let allergens: [Allergen]
 }
