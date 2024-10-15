@@ -6,6 +6,7 @@ extension URL {
     
     // Ingredients
     static let ingredients = api.appending(path: "ingredients")
+    static let ingredientsAll = ingredients.appending(path: "all")
     static let ingredientsSearch = ingredients.appending(path: "search")
     static let ingredientsCategory = ingredients.appending(path: "category")
     static func ingredientsIdRecipes(id: UUID) -> URL {

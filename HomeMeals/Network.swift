@@ -1,20 +1,46 @@
 import Foundation
 import ACNetwork
 
-struct Network: NetworkJSONInteractor {
+protocol DataInteractor {
+    func getAllIngredients() async throws -> [IngredientDTO]
+    func getIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO>
+    func searchIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO>
+    func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
+    
+}
+
+struct Network: NetworkJSONInteractor, DataInteractor {
     static let shared = Network()
     
     //Ingredients
-    func getIngredients(page: Int = 1, perPage: Int = 10) async throws -> [IngredientDTO] {
-        try await getJSON(request: .get(url: .ingredients.appending(path: "?page=\(page)&per=\(perPage)")), type: [IngredientDTO].self)
+    func getAllIngredients() async throws -> [IngredientDTO] {
+        try await getJSON(request: .get(url: .ingredientsAll), type: [IngredientDTO].self)
     }
-    // Falta busqueda
-    func searchIngredients(page: Int = 1, perPage: Int = 10) async throws -> [IngredientDTO] {
-        try await getJSON(request: .get(url: .ingredientsSearch.appending(path: "?page=\(page)&per=\(perPage)")), type: [IngredientDTO].self)
+    func getIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<IngredientDTO> {
+        try await getJSON(
+            request: .get(url: .ingredients.appending(queryItems: [
+                URLQueryItem(name: "page", value: page.description),
+                URLQueryItem(name: "per", value: perPage.description)
+            ])),
+            type: Page<IngredientDTO>.self)
+    }
+    //TODO: Falta busqueda
+    func searchIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<IngredientDTO> {
+        try await getJSON(
+            request: .get(url: .ingredientsSearch.appending(queryItems: [
+                URLQueryItem(name: "page", value: page.description),
+                URLQueryItem(name: "per", value: perPage.description)
+            ])),
+            type: Page<IngredientDTO>.self)
     }
     
     //Recipes
-    func getRecipes(page: Int = 1, perPage: Int = 10) async throws -> [RecipeDTO] {
-        try await getJSON(request: .get(url: .recipes.appending(path: "?page=\(page)&per=\(perPage)")), type: [RecipeDTO].self)
+    func getRecipes(page: Int = 1, perPage: Int = 10) async throws -> Page<RecipeListDTO> {
+        try await getJSON(
+            request: .get(url: .recipes.appending(queryItems: [
+                URLQueryItem(name: "page", value: page.description),
+                URLQueryItem(name: "per", value: perPage.description)
+            ])),
+            type: Page<RecipeListDTO>.self)
     }
 }
