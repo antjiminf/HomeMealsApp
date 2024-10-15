@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "7A4B84C8-9709-4887-8711-6E81430B2CF0"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7AD895F6-1AFC-4BEF-ABAB-CB4610DC8CFD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/MasterVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "getData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7AD895F6-1AFC-4BEF-ABAB-CB4610DC8CFD - 724951369b8954ac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23">
+               </Location>
+               <Location
+                  uuid = "7AD895F6-1AFC-4BEF-ABAB-CB4610DC8CFD - 19d82fc61f6a6ad"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23">
+               </Location>
+               <Location
+                  uuid = "7AD895F6-1AFC-4BEF-ABAB-CB4610DC8CFD - cf30f3a9e732e8aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23">
+               </Location>
+               <Location
+                  uuid = "7AD895F6-1AFC-4BEF-ABAB-CB4610DC8CFD - d99867bd446f72b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E8CFA1BB-6769-4963-901A-49905D8CA899"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/MasterVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "getData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9D97AD81-0A9F-4400-8B6E-76633162F269"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/MasterVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "getData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9D97AD81-0A9F-4400-8B6E-76633162F269 - 26ae46cb0fdccb2b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17">
+               </Location>
+               <Location
+                  uuid = "9D97AD81-0A9F-4400-8B6E-76633162F269 - 724951369b895792"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17">
+               </Location>
+               <Location
+                  uuid = "9D97AD81-0A9F-4400-8B6E-76633162F269 - a4536f7fe232388"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17">
+               </Location>
+               <Location
+                  uuid = "9D97AD81-0A9F-4400-8B6E-76633162F269 - 7b32c5ca78e7dd97"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AA5DA4E2-3A28-4CB6-A441-4BCEA7C77619"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/MasterVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "getData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AA5DA4E2-3A28-4CB6-A441-4BCEA7C77619 - ad9f941cf2bb8d0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28">
+               </Location>
+               <Location
+                  uuid = "AA5DA4E2-3A28-4CB6-A441-4BCEA7C77619 - 7b32c5ca78e7df0c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28">
+               </Location>
+               <Location
+                  uuid = "AA5DA4E2-3A28-4CB6-A441-4BCEA7C77619 - d99867bd446f7312"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for HomeMeals.MasterVM.getData() async -&gt; ()"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/MasterVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "99F23B7B-6872-4BDE-B1FC-FEF6EFC94991"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/Preview Content/RecipeInteractorTest.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "getRecipes(page:perPage:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "99F23B7B-6872-4BDE-B1FC-FEF6EFC94991 - be89575467a23225"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HomeMeals.RecipeInteractorTest.getRecipes(page: Swift.Int, perPage: Swift.Int) async throws -&gt; HomeMeals.Page&lt;HomeMeals.RecipeListDTO&gt;"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/Preview%20Content/RecipeInteractorTest.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39">
+               </Location>
+               <Location
+                  uuid = "99F23B7B-6872-4BDE-B1FC-FEF6EFC94991 - a36d139694f3dd88"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for HomeMeals.RecipeInteractorTest.getRecipes(page: Swift.Int, perPage: Swift.Int) async throws -&gt; HomeMeals.Page&lt;HomeMeals.RecipeListDTO&gt;"
+                  moduleName = "HomeMeals"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/antoniojimenezinfante/Developer/Projects/HomeMeals/HomeMeals/Preview%20Content/RecipeInteractorTest.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2C4E2EF0-8590-4749-8907-7C08531D7ACC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/RecipesVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "getData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1E86CC5A-6E65-4402-8551-353B1BED7DAC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/Preview Content/TestData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "getIngredients(page:perPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "40BE6EDB-0000-4D82-9F85-27CB941DA86D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/Preview Content/TestData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "getIngredients(page:perPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "772C7BA5-B1C5-4FEE-B547-331AC4FA5374"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/Preview Content/TestData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "getRecipes(page:perPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EB669AD5-A4DA-49E7-9130-F9C1EA691A6A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/Preview Content/TestData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "getRecipes(page:perPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4276F2B9-B5A8-4DD6-AB2B-B868651782D6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/Preview Content/TestData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "getRecipes(page:perPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1EA949F6-EC66-446C-8E93-ED7BFB4E7C58"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/Preview Content/TestData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "getRecipes(page:perPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2FFCCC02-A1AF-4991-9D52-F2ED0200CA21"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HomeMeals/Preview Content/TestData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "getRecipes(page:perPage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
