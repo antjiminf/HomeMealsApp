@@ -1,17 +1,14 @@
-//
-//  HomeMealsApp.swift
-//  HomeMeals
-//
-//  Created by Antonio Jiménez Infante on 7/9/24.
-//
-
 import SwiftUI
 
 @main
 struct HomeMealsApp: App {
+    @State var recipesVm = RecipesVM()
+    @State var ingredientsVm = IngredientsVM()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(recipesVm)
+                .environment(ingredientsVm)
         }
     }
 }
