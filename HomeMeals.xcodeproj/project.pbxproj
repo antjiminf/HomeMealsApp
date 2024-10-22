@@ -17,6 +17,8 @@
 		1E28E9B82C8CF82D00CEA3BB /* ModelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9B72C8CF82D00CEA3BB /* ModelDTO.swift */; };
 		1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9B92C8DB87F00CEA3BB /* Enums.swift */; };
 		1E28E9C02C8E408500CEA3BB /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9BF2C8E408500CEA3BB /* URL.swift */; };
+		1E48BAC62CC6DE23008D5CC4 /* GuideField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E48BAC52CC6DE23008D5CC4 /* GuideField.swift */; };
+		1E48BAC82CC6DEA9008D5CC4 /* IngredientsSelectedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E48BAC72CC6DEA9008D5CC4 /* IngredientsSelectedList.swift */; };
 		1E4D95BB2C8E7BFD00BCA798 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4D95BA2C8E7BFD00BCA798 /* Network.swift */; };
 		1E4D95BE2C8E7E6E00BCA798 /* ACNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 1E4D95BD2C8E7E6E00BCA798 /* ACNetwork */; };
 		1E5255042C8F5F4E00A9A364 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5255032C8F5F4E00A9A364 /* RecipeView.swift */; };
@@ -66,6 +68,8 @@
 		1E28E9B92C8DB87F00CEA3BB /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		1E28E9BD2C8E37FF00CEA3BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E28E9BF2C8E408500CEA3BB /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		1E48BAC52CC6DE23008D5CC4 /* GuideField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideField.swift; sourceTree = "<group>"; };
+		1E48BAC72CC6DEA9008D5CC4 /* IngredientsSelectedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsSelectedList.swift; sourceTree = "<group>"; };
 		1E4D95BA2C8E7BFD00BCA798 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		1E5255032C8F5F4E00A9A364 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		1E573A312CBE8ADF005EF98C /* AllergensSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergensSelector.swift; sourceTree = "<group>"; };
@@ -223,6 +227,8 @@
 				1E63BABC2CA5D7B0000082BD /* IngredientsSelector.swift */,
 				1EC380032CBD549D0077B520 /* IngredientQuantity.swift */,
 				1E573A312CBE8ADF005EF98C /* AllergensSelector.swift */,
+				1E48BAC52CC6DE23008D5CC4 /* GuideField.swift */,
+				1E48BAC72CC6DEA9008D5CC4 /* IngredientsSelectedList.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -387,11 +393,13 @@
 				1E28E9B82C8CF82D00CEA3BB /* ModelDTO.swift in Sources */,
 				1E63BABF2CA5D826000082BD /* IngredientsVM.swift in Sources */,
 				1E4D95BB2C8E7BFD00BCA798 /* Network.swift in Sources */,
+				1E48BAC62CC6DE23008D5CC4 /* GuideField.swift in Sources */,
 				1EC380022CBD2A0A0077B520 /* IngredientSelectorVM.swift in Sources */,
 				1E28E98C2C8CB76200CEA3BB /* ContentView.swift in Sources */,
 				1E68E5322C9C492F008AFF07 /* CustomTextField.swift in Sources */,
 				1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */,
 				1E68E52B2C9B551F008AFF07 /* AddRecipeVM.swift in Sources */,
+				1E48BAC82CC6DEA9008D5CC4 /* IngredientsSelectedList.swift in Sources */,
 				1E28E98A2C8CB76200CEA3BB /* HomeMealsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

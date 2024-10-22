@@ -7,7 +7,16 @@ struct RecipeView: View {
             List(recipesVm.recipes) { recipe in
                 Text(recipe.name)
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: AddRecipeView()) {
+                        Image(systemName: "plus.circle.fill")
+                            .imageScale(.large)
+                    }
+                }
+            }
         }
+        
     }
 }
 

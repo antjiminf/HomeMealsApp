@@ -25,53 +25,27 @@ struct AddRecipeView: View {
                         validation: addRecipeVm.validationDescription,
                         initial: false,
                         lines: 3)
-                    CustomStepper(
+                    MinutesStepper( 
                         label: "Recipe time",
                         value: $addRecipeVm.time,
                         initial: false,
                         hint: "Recipe time of preparation",
                         isError: $addRecipeVm.error,
                         validation: addRecipeVm.validationTime)
-                    Toggle(addRecipeVm.isPublic ? "Private recipe" : "Public recipe", isOn: $addRecipeVm.isPublic)
+                    Toggle(addRecipeVm.isPublic ? "Public recipe" : "Private recipe", isOn: $addRecipeVm.isPublic)
                         .bold()
                 }
                 Section("Details") {
-                    //TODO: Validacion / Accesibilidad
-                    IngredientsSelectedView(showIngredientsForm: $showIngredientsForm, ingredients: $addRecipeVm.ingredients)
+                    IngredientsSelectedList(showIngredientsForm: $showIngredientsForm,
+                                            ingredients: $addRecipeVm.ingredients,
+                                            isError: $addRecipeVm.error,
+                                            validation: addRecipeVm.validateIngredients)
                     
-                    VStack(alignment: .leading) {
-                        Text("Guide")
-                            .bold()
-                        ForEach(0..<addRecipeVm.guide.count, id: \.self) { index in
-                            TextField("Step \(index + 1)", text: $addRecipeVm.guide[index], axis: .vertical)
-                                .lineLimit(2, reservesSpace: true)
-                            //                                .overlay {
-                            //                                    RoundedRectangle(cornerRadius: 10)
-                            //                                        .stroke(lineWidth: 2.0)
-                            //                                        .fill(.red)
-                            //                                        .padding(2)
-                            //                                       .opacity( ? 1.0 : 0.0)
-                            //                                }
-                                .padding()
-                                .background {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color(UIColor.secondarySystemBackground))
-                                }
-                        }
-                        
-                        Button {
-                            addRecipeVm.addGuideStep()
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus.circle.fill")
-                                Text("Add step")
-                            }
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                        .contentShape(Rectangle())
-                        .padding(.top, 5)
-                    }
-                    .padding(.bottom)
+                    GuideField(guide: $addRecipeVm.guide,
+                          isError: $addRecipeVm.error,
+                          validation: addRecipeVm.validationGuide,
+                          addGuideStep: addRecipeVm.addGuideStep,
+                          removeLastStep: addRecipeVm.removeLastStep)
                     
                 }
                 AllergensSelector(
@@ -85,16 +59,31 @@ struct AddRecipeView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         Task {
-                            await addRecipeVm.addRecipe()
-                            dismiss()
+                            if let recipe = addRecipeVm.addRecipe() {
+                                await recipesVm.addRecipe(recipe)
+                                
+                                if !recipesVm.hasError {
+                                    dismiss()
+                                } else {
+                                    addRecipeVm.showAlert.toggle()
+                                }
+                            }
                         }
                     } label: {
                         Text("Add")
                     }
+                    .disabled(addRecipeVm.error)
                 }
             }
             .fullScreenCover(isPresented: $showIngredientsForm) {
                 IngredientsSelector(selectorVM: IngredientSelectorVM(), selectedIngredients: $addRecipeVm.ingredients)
+            }
+            .alert("Error", isPresented: $addRecipeVm.showAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                if let errorMessage = recipesVm.errorMessage {
+                    Text(errorMessage)
+                }
             }
         }
     }
@@ -104,7 +93,7 @@ struct AddRecipeView: View {
     AddRecipeView.preview
 }
 
-struct CustomStepper: View {
+struct MinutesStepper: View {
     let label: String
     @Binding var value: Int
     var initial = true
@@ -161,53 +150,5 @@ struct CustomStepper: View {
                 .accessibilityLabel(Text("\(label) error message."))
                 .accessibilityHint(Text("This is an error validation message for the field \(label). Fix the error to continue."))
         }
-    }
-}
-
-struct IngredientsSelectedView: View {
-    @Binding var showIngredientsForm: Bool
-    @Binding var ingredients: [SelectionIngredient]
-    
-    var body: some View {
-        VStack {
-            HStack{
-                Text("Ingredients")
-                    .bold()
-                Spacer()
-                Button {
-                    showIngredientsForm.toggle()
-                } label: {
-                    Text("Edit")
-                }
-                .buttonStyle(BorderlessButtonStyle())
-            }
-            .padding(.bottom)
-            if ingredients.isEmpty {
-                HStack {
-                    Text("No ingredients selected")
-                    Spacer()
-                    Image(systemName: "xmark.circle.fill")
-                }
-                .foregroundStyle(.secondary)
-            }
-            else {
-                ForEach(ingredients, id: \.self) { ing in
-                    HStack{
-                        
-                        Text(ing.name)
-                        Spacer()
-                        switch ing.unit {
-                        case .units:
-                            Text("\(ing.quantity, specifier: "%.0f") units")
-                        case .volume:
-                            Text("\(ing.quantity, specifier: "%.2f") L")
-                        case .weight:
-                            Text("\(ing.quantity, specifier: "%.2f") g")
-                        }
-                    }
-                }
-            }
-        }
-        .padding(.bottom)
     }
 }
