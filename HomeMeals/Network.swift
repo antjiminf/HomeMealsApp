@@ -6,6 +6,7 @@ protocol DataInteractor {
     func getIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO>
     func searchIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO>
     func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
+    func addRecipe(_ recipe: CreateRecipeDTO) async throws
     
 }
 
@@ -35,12 +36,16 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     }
     
     //Recipes
-    func getRecipes(page: Int = 1, perPage: Int = 10) async throws -> Page<RecipeListDTO> {
+    func getRecipes(page: Int = 1, perPage: Int = 20) async throws -> Page<RecipeListDTO> {
         try await getJSON(
             request: .get(url: .recipes.appending(queryItems: [
                 URLQueryItem(name: "page", value: page.description),
                 URLQueryItem(name: "per", value: perPage.description)
             ])),
             type: Page<RecipeListDTO>.self)
+    }
+    
+    func addRecipe(_ recipe: CreateRecipeDTO) async throws {
+        try await post(request: .post(url: .recipes, post: recipe), status: 201)
     }
 }

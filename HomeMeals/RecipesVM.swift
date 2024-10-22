@@ -6,17 +6,20 @@ final class RecipesVM {
     
     var recipes: [RecipeListDTO] = []
     var ingredients: [IngredientDTO] = []
+    var hasError: Bool = false
+    var errorMessage: String?
+    
     
     init(interactor: DataInteractor = Network.shared) {
         self.interactor = interactor
         Task {
-            await getData()
+            await getRecipes()
         }
     }
     
-    func getData() async {
+    func getRecipes() async {
 //        async let ingredientsQuery = interactor.getIngredients(page: 1, perPage: 10)
-        async let recipesQuery = interactor.getRecipes(page: 1, perPage: 10)
+        async let recipesQuery = interactor.getRecipes(page: 1, perPage: 20)
         
         do {
 //            let (ingredientsResult, recipesResult) = try await (ingredientsQuery, recipesQuery)
@@ -26,7 +29,20 @@ final class RecipesVM {
                 self.recipes = recipesResult.items
             }
         } catch {
+            hasError = true
+            errorMessage = "Failed to fetch recipes"
+        }
+    }
+    
+    func addRecipe(_ new: CreateRecipeDTO) async {
+        do {
+            try await interactor.addRecipe(new)
+            await getRecipes()
+        } catch {
             print(error.localizedDescription)
+            hasError = true
+            errorMessage = error.localizedDescription
+//            errorMessage = "Failed to create recipe"
         }
     }
     
