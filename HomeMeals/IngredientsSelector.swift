@@ -33,10 +33,12 @@ struct IngredientsSelector: View {
                             }
                         }
                     } else {
-                        ContentUnavailableView(
-                            "No coincidences",
-                            systemImage: "exclamationmark.magnifyingglass",
-                            description: Text("No ingredients found containing \"\(ingredientsVM.searchText)\""))
+                        Section("") {
+                            ContentUnavailableView(
+                                "No coincidences",
+                                systemImage: "exclamationmark.magnifyingglass",
+                                description: Text("No ingredients found containing \"\(ingredientsVM.searchText)\""))
+                        }
                     }
                 }
             }

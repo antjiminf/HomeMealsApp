@@ -1,4 +1,5 @@
 import SwiftUI
+import ACNetwork
 
 //extension RecipeDTO {
 //    var toPresentationRecipe: RecipeDTO {
@@ -14,6 +15,10 @@ extension [SelectionIngredient] {
 }
 
 struct RecipeInteractorTest: DataInteractor {
+    
+    func addRecipe(_ recipe: CreateRecipeDTO) async throws {
+//        try await post(request: .post(url: .recipes, post: recipe), status: 201)
+    }
     
     func getAllIngredients() async throws -> [IngredientDTO] {
         guard let url = Bundle.main.url(forResource: "ingredients", withExtension: "json") else {

@@ -40,10 +40,15 @@ struct SelectionIngredient: Identifiable, Hashable {
     let unit: Unit
     var quantity: Double
 //    let category: FoodCategory
+    
+    func toRecipeIngredient() -> RecipeIngredientDTO {
+        RecipeIngredientDTO(ingredient: id, quantity: quantity, unit: unit)
+    }
 }
 
-struct RecipeIngredientDTO: Codable, Identifiable, Hashable {
-    let id: UUID
+struct RecipeIngredientDTO: Codable, Hashable {
+    
+    let ingredient: UUID
     let quantity: Double
     let unit: Unit
 }
