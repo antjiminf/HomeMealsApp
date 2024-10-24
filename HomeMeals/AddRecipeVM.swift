@@ -34,6 +34,19 @@ final class AddRecipeVM {
         return allergens.contains(value)
     }
     
+    //TODO: BORRAR ING SELECCIONADOS
+    // PROBAR METER EL FOREACH DE LOS ING SOLAMENTE EN UN SECTION PARA HACER ONDELETE COMO EN SCORESSWIFTUI
+//    func removeIngredient(index: Int) {
+//        ingredients.remove(at: index)
+//    }
+//    
+//    private func deleteIngredients(at offsets: IndexSet) {
+//        ingredients.remove(atOffsets: offsets)
+//    }
+//    func deleteIngredient(at offsets: IndexSet) {
+//            ingredients.remove(atOffsets: offsets)
+//        }
+    
     func validationName(value: String) -> String? {
         value.isEmpty ? "must not be empty" : nil
     }
@@ -56,33 +69,33 @@ final class AddRecipeVM {
     }
     
     func validateIngredients(value: [SelectionIngredient]) -> String? {
-        value.count < 3 ? "Recipes must have more than 2 ingredients" : nil
+        value.filter{$0.quantity > 0.01}.count < 3 ? "Recipes must have at least 3 ingredients" : nil
     }
     
     func validateAllFields() -> Bool {
-            
-            if validationName(value: name) != nil {
-                error = true
-                return false
-            }
-            
-            if validationGuide(value: guide) != nil {
-                error = true
-                return false
-            }
-            
-            if validationTime(value: time) != nil {
-                error = true
-                return false
-            }
-            
-            if validateIngredients(value: ingredients) != nil {
-                error = true
-                return false
-            }
-            
-            return true
+        
+        if validationName(value: name) != nil {
+            error = true
+            return false
         }
+        
+        if validationGuide(value: guide) != nil {
+            error = true
+            return false
+        }
+        
+        if validationTime(value: time) != nil {
+            error = true
+            return false
+        }
+        
+        if validateIngredients(value: ingredients) != nil {
+            error = true
+            return false
+        }
+        
+        return true
+    }
     
     func addRecipe() -> CreateRecipeDTO? {
         guard validateAllFields() else {
@@ -90,12 +103,12 @@ final class AddRecipeVM {
         }
         
         return CreateRecipeDTO(name: name,
-                            description: description,
-                            time: time,
-                            isPublic: isPublic,
-                            ingredients: ingredients.map{$0.toRecipeIngredient()},
-                            guide: guide.filter{!$0.isEmpty},
-                            allergens: allergens)
+                               description: description,
+                               time: time,
+                               isPublic: isPublic,
+                               ingredients: ingredients.map{$0.toRecipeIngredient()},
+                               guide: guide.filter{!$0.isEmpty},
+                               allergens: allergens)
     }
     
 }

@@ -5,6 +5,7 @@ struct IngredientsSelector: View {
     @Environment(IngredientsVM.self) var ingredientsVM
     @State var selectorVM: IngredientSelectorVM
     @Binding var selectedIngredients: [SelectionIngredient]
+    @State var detent: PresentationDetent = .fraction(0.5)
     
     var body: some View {
         @Bindable var ingredientsBinding = ingredientsVM
@@ -25,8 +26,7 @@ struct IngredientsSelector: View {
                                         quantity: Binding(
                                             get: { selectorVM.quantityForIngredient(ingredient) },
                                             set: { newQuantity in
-                                                selectorVM.updateIngredientSelection(ingredient: ingredient, quantity: newQuantity)
-                                            }
+                                                selectorVM.updateIngredientSelection(ingredient: ingredient, quantity: newQuantity)}
                                         ),
                                         unit: ingredient.unit)
                                 }
@@ -44,7 +44,7 @@ struct IngredientsSelector: View {
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") {
+                    Button("Edit") {
                         selectedIngredients = selectorVM.saveIngredients()
                         ingredientsBinding.searchText = ""
                         dismiss()
@@ -74,7 +74,7 @@ struct IngredientsSelector: View {
                 selectorVM.loadInitialSelectedIngredients(selectedIngredients)
             }
             .sheet(isPresented: $selectorVM.showSelectedIngredients) {
-                List(selectorVM.sortedIngredients.filter { $0.quantity > 0 }) { i in
+                List(selectorVM.sortedIngredients) { i in
                     HStack {
                         Text(i.name)
                         Spacer()
@@ -88,6 +88,9 @@ struct IngredientsSelector: View {
                         }
                     }
                 }
+                .presentationDetents([.large, .fraction(0.5)],
+                                     selection: $detent)
+                .presentationBackgroundInteraction(.enabled)
             }
         }
     }

@@ -5,16 +5,7 @@ struct IngredientQuantity: View {
     @Binding var quantity: Double
     let unit: Unit
     
-    @FocusState private var isFocused: Bool
-    
-    private var decimalFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.minimumFractionDigits = 1
-        formatter.maximumFractionDigits = 2
-        return formatter
-    }
-    
+    @FocusState private var isFocused: Bool    
     
     var body: some View {
         HStack {
@@ -40,7 +31,7 @@ struct IngredientQuantity: View {
                 TextField(
                     "Quantity",
                     value: $quantity,
-                    formatter: decimalFormatter
+                    formatter: NumberFormatter.decimalFormatter
                 )
                 .foregroundStyle(quantity == 0 ? .gray : .black)
                 .padding(5)
@@ -50,7 +41,6 @@ struct IngredientQuantity: View {
                 }
                 .keyboardType(.decimalPad)
                 .frame(width: 80)
-                .multilineTextAlignment(.trailing)
                 .focused($isFocused)
                 
                 
@@ -71,7 +61,6 @@ struct IngredientQuantity: View {
                 }
                 .keyboardType(.decimalPad)
                 .frame(width: 80)
-                .multilineTextAlignment(.trailing)
                 .focused($isFocused)
                 
                 Text("units")
@@ -81,7 +70,7 @@ struct IngredientQuantity: View {
                 TextField(
                     "Quantity",
                     value: $quantity,
-                    formatter: decimalFormatter
+                    formatter: NumberFormatter.decimalFormatter
                 )
                 .foregroundStyle(quantity == 0 ? .gray : .black)
                 .padding(5)
@@ -91,7 +80,6 @@ struct IngredientQuantity: View {
                 }
                 .keyboardType(.decimalPad)
                 .frame(width: 80)
-                .multilineTextAlignment(.trailing)
                 .focused($isFocused)
                 
                 Text("g")

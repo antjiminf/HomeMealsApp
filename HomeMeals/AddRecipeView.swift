@@ -39,6 +39,7 @@ struct AddRecipeView: View {
                     IngredientsSelectedList(showIngredientsForm: $showIngredientsForm,
                                             ingredients: $addRecipeVm.ingredients,
                                             isError: $addRecipeVm.error,
+//                                            removeIngredient: addRecipeVm.removeIngredient,
                                             validation: addRecipeVm.validateIngredients)
                     
                     GuideField(guide: $addRecipeVm.guide,

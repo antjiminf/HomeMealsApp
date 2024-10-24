@@ -4,6 +4,7 @@ struct IngredientsSelectedList: View {
     @Binding var showIngredientsForm: Bool
     @Binding var ingredients: [SelectionIngredient]
     @Binding var isError: Bool
+//    let removeIngredient: (Int) -> Void
     let validation: ([SelectionIngredient]) -> String?
     var initial = true
     
@@ -36,24 +37,83 @@ struct IngredientsSelectedList: View {
                         .fill(Color(UIColor.secondarySystemBackground))
                 }
                 .foregroundStyle(.secondary)
-            }
-            else {
+            } else {
                 VStack(alignment: .leading) {
-                    ForEach(ingredients, id: \.self) { ing in
-                        HStack{
+                    List {
+                        ForEach(ingredients.indices, id: \.self) { index in
                             
-                            Text(ing.name)
-                            Spacer()
-                            switch ing.unit {
-                            case .units:
-                                Text("\(ing.quantity, specifier: "%.0f") units")
-                            case .volume:
-                                Text("\(ing.quantity, specifier: "%.2f") L")
-                            case .weight:
-                                Text("\(ing.quantity, specifier: "%.2f") g")
+                            HStack  {
+//                                Button {
+//                                    removeIngredient(index)
+//                                } label: {
+//                                    Image(systemName: "minus.circle.fill")
+//                                        .foregroundStyle(.red)
+//                                }
+                                
+                                Text(ingredients[index].name)
+                                Spacer()
+                                
+                                switch ingredients[index].unit {
+                                case .volume:
+                                    TextField(
+                                        "Quantity",
+                                        value: $ingredients[index].quantity,
+                                        formatter: NumberFormatter.decimalFormatter
+                                    )
+                                    .foregroundStyle(ingredients[index].quantity < 0.01 ? .gray : .black)
+                                    .padding(5)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(Color(UIColor.systemBackground))
+                                    }
+                                    .keyboardType(.decimalPad)
+                                    .frame(width: 80)
+                                    
+                                    Text("L")
+                                        .frame(width: 40, alignment: .leading)
+                                    
+                                case .units:
+                                    TextField(
+                                        "Quantity",
+                                        value: $ingredients[index].quantity,
+                                        formatter: NumberFormatter()
+                                    )
+                                    .foregroundStyle(ingredients[index].quantity < 0.01 ? .gray : .black)
+                                    .padding(5)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(Color(UIColor.systemBackground))
+                                    }
+                                    .keyboardType(.decimalPad)
+                                    .frame(width: 80)
+                                    
+                                    Text("units")
+                                        .frame(width: 40, alignment: .leading)
+                                    
+                                case .weight:
+                                    TextField(
+                                        "Quantity",
+                                        value: $ingredients[index].quantity,
+                                        formatter: NumberFormatter.decimalFormatter)
+                                    .foregroundStyle(ingredients[index].quantity < 0.01 ? .gray : .black)
+                                    .padding(5)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(Color(UIColor.systemBackground))
+                                    }
+                                    .keyboardType(.decimalPad)
+                                    .frame(width: 80)
+                                    
+                                    Text("g")
+                                        .frame(width: 40, alignment: .leading)
+
+                                }
                             }
+                            .padding(.bottom, 5)
+//                            .buttonStyle(PlainButtonStyle())
+                            Divider()
                         }
-                        .padding(.bottom, 5)
+//                        .onDelete(perform: deleteIngredients)
                     }
                 }
                 .padding()
