@@ -7,7 +7,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Recipes", systemImage: "fork.knife.circle.fill")
                 }
-            
+            InventoryView()
+                .tabItem {
+                    Label("Inventory", systemImage: "house.fill")
+                }
         }
     }
 }

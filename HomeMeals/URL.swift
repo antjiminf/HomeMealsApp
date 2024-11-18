@@ -4,6 +4,16 @@ let api = URL(string: "http://localhost:8080/api")!
 
 extension URL {
     
+    // Inventory
+    static let inventory = api.appending(path: "users/inventory")
+    static let inventoryRecipeSuggestions = inventory.appending(path: "recipe-suggestions")
+    static let inventoryGroceriesList = inventory.appending(path: "groceries-list")
+    static let inventoryAddGroceries = inventory.appending(path: "groceries")
+    static let inventoryConsumeGroceries = inventory.appending(path: "consume")
+    static func inventoryItem(id: UUID) -> URL {
+        inventory.appending(path: id.uuidString)
+    }
+    
     // Ingredients
     static let ingredients = api.appending(path: "ingredients")
     static let ingredientsAll = ingredients.appending(path: "all")

@@ -15,6 +15,42 @@ extension [SelectionIngredient] {
 }
 
 struct RecipeInteractorTest: DataInteractor {
+    func getInventory() async throws -> [InventoryItemDTO] {
+        <#code#>
+    }
+    
+    func getRecipeSuggestions() async throws -> [RecipeListDTO] {
+        <#code#>
+    }
+    
+    func addInventoryItem(_ item: ModifyInventoryItemDTO) async throws {
+        <#code#>
+    }
+    
+    func shoppingList(_ ingredients: [ModifyInventoryItemDTO]) async throws -> [Groceries] {
+        <#code#>
+    }
+    
+    func updateInventory(_ ingredients: [ModifyInventoryItemDTO]) async throws {
+        <#code#>
+    }
+    
+    func updateInventoryItem(id: UUID, item: ModifyInventoryItemDTO) async throws {
+        <#code#>
+    }
+    
+    func addGroceries(_ groceries: [ModifyInventoryItemDTO]) async throws {
+        <#code#>
+    }
+    
+    func consumeGroceries(_ groceries: [ModifyInventoryItemDTO]) async throws {
+        <#code#>
+    }
+    
+    func deleteInventoryItem(_ id: UUID) async throws {
+        <#code#>
+    }
+    
     
     func addRecipe(_ recipe: CreateRecipeDTO) async throws {
 //        try await post(request: .post(url: .recipes, post: recipe), status: 201)
@@ -102,7 +138,8 @@ extension AddRecipeView {
 extension IngredientsSelector {
     static var preview: some View {
         NavigationStack {
-            IngredientsSelector(selectorVM: IngredientSelectorVM(), selectedIngredients: .constant(.test))
+            IngredientsSelector(selectorVM: IngredientSelectorVM(), 
+                                selectedIngredients: .constant(.test))
                 .environment(IngredientsVM(interactor: RecipeInteractorTest()))
         }
     }
