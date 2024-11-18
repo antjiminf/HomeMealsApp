@@ -60,7 +60,7 @@ struct IngredientsSelectedList: View {
                                         value: $ingredients[index].quantity,
                                         formatter: NumberFormatter.decimalFormatter
                                     )
-                                    .foregroundStyle(ingredients[index].quantity < 0.01 ? .gray : .black)
+                                    .foregroundStyle(ingredients[index].quantity < 0.1 ? .gray : .black)
                                     .padding(5)
                                     .background {
                                         RoundedRectangle(cornerRadius: 8)
@@ -78,7 +78,7 @@ struct IngredientsSelectedList: View {
                                         value: $ingredients[index].quantity,
                                         formatter: NumberFormatter()
                                     )
-                                    .foregroundStyle(ingredients[index].quantity < 0.01 ? .gray : .black)
+                                    .foregroundStyle(ingredients[index].quantity < 0.1 ? .gray : .black)
                                     .padding(5)
                                     .background {
                                         RoundedRectangle(cornerRadius: 8)
@@ -95,7 +95,7 @@ struct IngredientsSelectedList: View {
                                         "Quantity",
                                         value: $ingredients[index].quantity,
                                         formatter: NumberFormatter.decimalFormatter)
-                                    .foregroundStyle(ingredients[index].quantity < 0.01 ? .gray : .black)
+                                    .foregroundStyle(ingredients[index].quantity < 0.1 ? .gray : .black)
                                     .padding(5)
                                     .background {
                                         RoundedRectangle(cornerRadius: 8)
