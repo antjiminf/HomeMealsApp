@@ -94,7 +94,7 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     }
     
     func updateInventoryItem(id: UUID, item: ModifyInventoryItemDTO) async throws {
-        try await post(request: .post(url: .inventoryItem(id: id), post: item), 
+        try await post(request: .post(url: .inventoryItem(id: id), post: item, method: .put), 
                        status: 204)
     }
     
@@ -109,7 +109,7 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     }
     
     func deleteInventoryItem(_ id: UUID) async throws {
-        try await post(request: .delete(url: .inventory),
+        try await post(request: .delete(url: .inventoryItem(id: id)),
                        status: 204)
     }
     
@@ -120,6 +120,7 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     func getAllIngredients() async throws -> [IngredientDTO] {
         try await getJSON(request: .get(url: .ingredientsAll), type: [IngredientDTO].self)
     }
+    
     func getIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<IngredientDTO> {
         try await getJSON(
             request: .get(url: .ingredients.appending(queryItems: [
@@ -128,6 +129,7 @@ struct Network: NetworkJSONInteractor, DataInteractor {
             ])),
             type: Page<IngredientDTO>.self)
     }
+    
     //TODO: Falta busqueda
     func searchIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<IngredientDTO> {
         try await getJSON(

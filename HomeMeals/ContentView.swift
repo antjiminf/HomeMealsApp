@@ -17,5 +17,7 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environment(RecipesVM(interactor: RecipeInteractorTest()))
+        .environment(RecipesVM(interactor: InteractorTest()))
+        .environment(InventoryVM(interactor: InteractorTest()))
+        .environment(IngredientsVM(interactor: InteractorTest()))
 }

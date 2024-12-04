@@ -6,54 +6,85 @@ struct IngredientsSelector: View {
     @State var selectorVM: IngredientSelectorVM
     @Binding var selectedIngredients: [SelectionIngredient]
     @State var detent: PresentationDetent = .fraction(0.5)
-    
+    let title: String
+
     var body: some View {
-        @Bindable var ingredientsBinding = ingredientsVM
+        @Bindable var ingredientsBindable = ingredientsVM
+
         NavigationView {
-            Form {
-                TextField("Search...", text: $ingredientsBinding.searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Group {
-                    if !ingredientsVM.filteredIngredients.isEmpty {
-                        ForEach(ingredientsVM.ingredientsByCategory.keys.sorted(), id: \.self) { category in
-                            Section(header: Text(category.rawValue.capitalized)) {
-                                ForEach(ingredientsVM.ingredientsByCategory[category]?.sorted(by: {$0.name < $1.name}) ?? [], id: \.self) { ingredient in
-                                    
-                                    IngredientQuantity(
-                                        ingredientName: ingredient.name,
-                                        quantity: Binding(
-                                            get: { selectorVM.quantityForIngredient(ingredient) },
-                                            set: { newQuantity in
-                                                selectorVM.updateIngredientSelection(ingredient: ingredient, quantity: newQuantity)}
-                                        ),
-                                        unit: ingredient.unit)
+            VStack(spacing: 0) {
+                // Search bar
+                HStack {
+                    TextField("Search ingredients...", text: $ingredientsBindable.searchText)
+                        .padding(10)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .overlay(
+                            HStack {
+                                Spacer()
+                                if !ingredientsBindable.searchText.isEmpty {
+                                    Button(action: { ingredientsBindable.searchText = "" }) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.gray)
+                                    }
+                                    .padding(.trailing, 8)
                                 }
                             }
-                        }
-                    } else {
-                        Section("") {
-                            ContentUnavailableView(
-                                "No coincidences",
-                                systemImage: "exclamationmark.magnifyingglass",
-                                description: Text("No ingredients found containing \"\(ingredientsVM.searchText)\""))
+                        )
+                        .padding(.horizontal)
+                }
+                .padding(.vertical, 8)
+
+                // Form
+                Form {
+                    Group {
+                        if !ingredientsVM.filteredIngredients.isEmpty {
+                            ForEach(ingredientsVM.ingredientsByCategory.keys.sorted(), id: \.self) { category in
+                                Section(header: HStack {
+                                    Image(systemName: "leaf.circle")
+                                    Text(category.rawValue.capitalized)
+                                        .font(.headline)
+                                }) {
+                                    ForEach(ingredientsVM.ingredientsByCategory[category]?.sorted(by: { $0.name < $1.name }) ?? [], id: \.self) { ingredient in
+                                        IngredientQuantity(
+                                            ingredientName: ingredient.name,
+                                            quantity: Binding(
+                                                get: { selectorVM.quantityForIngredient(ingredient) },
+                                                set: { newQuantity in
+                                                    selectorVM.updateIngredientSelection(ingredient: ingredient, quantity: newQuantity)
+                                                }
+                                            ),
+                                            unit: ingredient.unit
+                                        )
+                                    }
+                                }
+                                .padding(.vertical, 4)
+                            }
+                        } else {
+                            Section {
+                                ContentUnavailableView(
+                                    "No coincidences",
+                                    systemImage: "exclamationmark.magnifyingglass",
+                                    description: Text("No ingredients found containing \"\(ingredientsVM.searchText)\"")
+                                )
+                                .padding(.vertical, 20)
+                            }
                         }
                     }
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Edit") {
+                    Button("Save") {
                         selectedIngredients = selectorVM.saveIngredients()
-                        ingredientsBinding.searchText = ""
+                        ingredientsBindable.searchText = ""
                         dismiss()
                     }
                     .accessibilityHint(Text("This button will confirm any change done"))
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
-                        ingredientsBinding.searchText = ""
+                        ingredientsBindable.searchText = ""
                         dismiss()
                     }
                     .accessibilityHint(Text("Cancels the ingredients selection"))
@@ -68,7 +99,7 @@ struct IngredientsSelector: View {
                     .accessibilityHint(Text("Shows the list of ingredients selected"))
                 }
             }
-            .navigationTitle("Select Ingredients")
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 selectorVM.loadInitialSelectedIngredients(selectedIngredients)

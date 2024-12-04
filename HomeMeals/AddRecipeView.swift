@@ -77,7 +77,10 @@ struct AddRecipeView: View {
                 }
             }
             .fullScreenCover(isPresented: $showIngredientsForm) {
-                IngredientsSelector(selectorVM: IngredientSelectorVM(), selectedIngredients: $addRecipeVm.ingredients)
+                IngredientsSelector(
+                    selectorVM: IngredientSelectorVM(),
+                    selectedIngredients: $addRecipeVm.ingredients,
+                    title: "Select Ingredients")
             }
             .alert("Error", isPresented: $addRecipeVm.showAlert) {
                 Button("OK", role: .cancel) { }
