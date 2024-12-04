@@ -15,12 +15,11 @@ struct RecipeView: View {
                     }
                 }
             }
+            .navigationTitle("Recipes")
         }
-        
     }
 }
 
 #Preview {
-    RecipeView()
-        .environment(RecipesVM(interactor: RecipeInteractorTest()))
+    RecipeView.preview
 }

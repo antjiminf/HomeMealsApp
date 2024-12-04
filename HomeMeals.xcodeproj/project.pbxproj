@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E276A242CEBD53800747585 /* InventoryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E276A232CEBD53800747585 /* InventoryVM.swift */; };
 		1E28E98A2C8CB76200CEA3BB /* HomeMealsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9892C8CB76200CEA3BB /* HomeMealsApp.swift */; };
 		1E28E98C2C8CB76200CEA3BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E98B2C8CB76200CEA3BB /* ContentView.swift */; };
 		1E28E98E2C8CB76400CEA3BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E28E98D2C8CB76400CEA3BB /* Assets.xcassets */; };
@@ -28,11 +29,15 @@
 		1E68E52B2C9B551F008AFF07 /* AddRecipeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E68E52A2C9B551F008AFF07 /* AddRecipeVM.swift */; };
 		1E68E52F2C9B564B008AFF07 /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E68E52E2C9B564B008AFF07 /* AddRecipeView.swift */; };
 		1E68E5322C9C492F008AFF07 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E68E5312C9C492F008AFF07 /* CustomTextField.swift */; };
+		1E6E030B2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E030A2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift */; };
+		1E6E030D2CF4AF2B00B60FE8 /* InventoryItemVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E030C2CF4AF2B00B60FE8 /* InventoryItemVm.swift */; };
+		1E7472DE2CCB8EEE00697C89 /* InventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7472DD2CCB8EEE00697C89 /* InventoryView.swift */; };
 		1E79014B2C93202700A78D25 /* ingredients.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E79014A2C93202700A78D25 /* ingredients.json */; };
 		1E79014D2C93206500A78D25 /* recipes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E79014C2C93206500A78D25 /* recipes.json */; };
 		1E79014F2C9320B000A78D25 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E79014E2C9320B000A78D25 /* TestData.swift */; };
 		1E7A847C2C8F0F5600544777 /* RecipesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A847B2C8F0F5600544777 /* RecipesVM.swift */; };
 		1E8F1AD32CC7F3F6001284B8 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8F1AD22CC7F3F6001284B8 /* Formatters.swift */; };
+		1EA705802CE65B7D00933279 /* InventoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA7057F2CE65B7D00933279 /* InventoryDTO.swift */; };
 		1EC380022CBD2A0A0077B520 /* IngredientSelectorVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC380012CBD2A0A0077B520 /* IngredientSelectorVM.swift */; };
 		1EC380042CBD549D0077B520 /* IngredientQuantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC380032CBD549D0077B520 /* IngredientQuantity.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E276A232CEBD53800747585 /* InventoryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryVM.swift; sourceTree = "<group>"; };
 		1E28E9862C8CB76200CEA3BB /* HomeMeals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeMeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E28E9892C8CB76200CEA3BB /* HomeMealsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMealsApp.swift; sourceTree = "<group>"; };
 		1E28E98B2C8CB76200CEA3BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,11 +85,15 @@
 		1E68E52A2C9B551F008AFF07 /* AddRecipeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeVM.swift; sourceTree = "<group>"; };
 		1E68E52E2C9B564B008AFF07 /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
 		1E68E5312C9C492F008AFF07 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		1E6E030A2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInventoryQuantity.swift; sourceTree = "<group>"; };
+		1E6E030C2CF4AF2B00B60FE8 /* InventoryItemVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemVm.swift; sourceTree = "<group>"; };
+		1E7472DD2CCB8EEE00697C89 /* InventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryView.swift; sourceTree = "<group>"; };
 		1E79014A2C93202700A78D25 /* ingredients.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ingredients.json; sourceTree = "<group>"; };
 		1E79014C2C93206500A78D25 /* recipes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = recipes.json; sourceTree = "<group>"; };
 		1E79014E2C9320B000A78D25 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		1E7A847B2C8F0F5600544777 /* RecipesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesVM.swift; sourceTree = "<group>"; };
 		1E8F1AD22CC7F3F6001284B8 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		1EA7057F2CE65B7D00933279 /* InventoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryDTO.swift; sourceTree = "<group>"; };
 		1EC380012CBD2A0A0077B520 /* IngredientSelectorVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientSelectorVM.swift; sourceTree = "<group>"; };
 		1EC380032CBD549D0077B520 /* IngredientQuantity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientQuantity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,10 +155,10 @@
 				1E28E9BE2C8E407100CEA3BB /* Interface */,
 				1E4D95B92C8E7BC600BCA798 /* Network */,
 				1E28E9B62C8CF81700CEA3BB /* Model */,
+				1E8F1AD12CC7F3C7001284B8 /* Utils */,
 				1E7A847A2C8F0F3A00544777 /* ViewModel */,
 				1E28E9BD2C8E37FF00CEA3BB /* Info.plist */,
 				1E28E98D2C8CB76400CEA3BB /* Assets.xcassets */,
-				1E8F1AD12CC7F3C7001284B8 /* Utils */,
 				1E28E98F2C8CB76400CEA3BB /* Preview Content */,
 			);
 			path = HomeMeals;
@@ -186,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				1E28E9B72C8CF82D00CEA3BB /* ModelDTO.swift */,
+				1EA7057F2CE65B7D00933279 /* InventoryDTO.swift */,
 				1E28E9B92C8DB87F00CEA3BB /* Enums.swift */,
 			);
 			name = Model;
@@ -219,6 +230,7 @@
 			children = (
 				1E5255032C8F5F4E00A9A364 /* RecipeView.swift */,
 				1E68E52E2C9B564B008AFF07 /* AddRecipeView.swift */,
+				1E7472DD2CCB8EEE00697C89 /* InventoryView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -232,6 +244,7 @@
 				1E573A312CBE8ADF005EF98C /* AllergensSelector.swift */,
 				1E48BAC52CC6DE23008D5CC4 /* GuideField.swift */,
 				1E48BAC72CC6DEA9008D5CC4 /* IngredientsSelectedList.swift */,
+				1E6E030A2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -243,6 +256,8 @@
 				1E68E52A2C9B551F008AFF07 /* AddRecipeVM.swift */,
 				1E63BABE2CA5D826000082BD /* IngredientsVM.swift */,
 				1EC380012CBD2A0A0077B520 /* IngredientSelectorVM.swift */,
+				1E276A232CEBD53800747585 /* InventoryVM.swift */,
+				1E6E030C2CF4AF2B00B60FE8 /* InventoryItemVm.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -399,10 +414,14 @@
 				1E28E9C02C8E408500CEA3BB /* URL.swift in Sources */,
 				1EC380042CBD549D0077B520 /* IngredientQuantity.swift in Sources */,
 				1E68E52F2C9B564B008AFF07 /* AddRecipeView.swift in Sources */,
+				1EA705802CE65B7D00933279 /* InventoryDTO.swift in Sources */,
 				1E7A847C2C8F0F5600544777 /* RecipesVM.swift in Sources */,
 				1E5255042C8F5F4E00A9A364 /* RecipeView.swift in Sources */,
+				1E6E030B2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift in Sources */,
+				1E276A242CEBD53800747585 /* InventoryVM.swift in Sources */,
 				1E28E9B82C8CF82D00CEA3BB /* ModelDTO.swift in Sources */,
 				1E63BABF2CA5D826000082BD /* IngredientsVM.swift in Sources */,
+				1E6E030D2CF4AF2B00B60FE8 /* InventoryItemVm.swift in Sources */,
 				1E4D95BB2C8E7BFD00BCA798 /* Network.swift in Sources */,
 				1E48BAC62CC6DE23008D5CC4 /* GuideField.swift in Sources */,
 				1EC380022CBD2A0A0077B520 /* IngredientSelectorVM.swift in Sources */,
@@ -411,6 +430,7 @@
 				1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */,
 				1E68E52B2C9B551F008AFF07 /* AddRecipeVM.swift in Sources */,
 				1E48BAC82CC6DEA9008D5CC4 /* IngredientsSelectedList.swift in Sources */,
+				1E7472DE2CCB8EEE00697C89 /* InventoryView.swift in Sources */,
 				1E8F1AD32CC7F3F6001284B8 /* Formatters.swift in Sources */,
 				1E28E98A2C8CB76200CEA3BB /* HomeMealsApp.swift in Sources */,
 			);

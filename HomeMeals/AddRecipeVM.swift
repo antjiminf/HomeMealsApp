@@ -69,7 +69,7 @@ final class AddRecipeVM {
     }
     
     func validateIngredients(value: [SelectionIngredient]) -> String? {
-        value.filter{$0.quantity > 0.01}.count < 3 ? "Recipes must have at least 3 ingredients" : nil
+        value.filter{$0.quantity > 0.1}.count < 3 ? "Recipes must have at least 3 ingredients" : nil
     }
     
     func validateAllFields() -> Bool {

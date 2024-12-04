@@ -7,12 +7,17 @@ struct ContentView: View {
                 .tabItem {
                     Label("Recipes", systemImage: "fork.knife.circle.fill")
                 }
-            
+            InventoryView()
+                .tabItem {
+                    Label("Inventory", systemImage: "house.fill")
+                }
         }
     }
 }
 
 #Preview {
     ContentView()
-        .environment(RecipesVM(interactor: RecipeInteractorTest()))
+        .environment(RecipesVM(interactor: InteractorTest()))
+        .environment(InventoryVM(interactor: InteractorTest()))
+        .environment(IngredientsVM(interactor: InteractorTest()))
 }
