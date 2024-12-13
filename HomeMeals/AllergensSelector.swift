@@ -8,7 +8,6 @@ struct AllergensSelector: View {
     
     var body: some View {
         Section("Allergens") {
-            //TODO: ACCESIBILIDAD
             HStack {
                 if allergens.isEmpty {
                     Text("Allergens: None")

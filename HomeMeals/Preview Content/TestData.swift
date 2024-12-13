@@ -1,11 +1,7 @@
 import SwiftUI
 import ACNetwork
 
-//extension RecipeDTO {
-//    var toPresentationRecipe: RecipeDTO {
-//        RecipeDTO(id: <#T##UUID#>, name: <#T##String#>, description: <#T##String#>, time: <#T##Int#>, guide: <#T##[String]#>, allergens: <#T##[Allergen]#>, owner: <#T##UUID#>, ingredients: <#T##RecipeIngredientsDTO#>)
-//    }
-//}
+
 
 extension [SelectionIngredient] {
     static var test = [
@@ -22,7 +18,39 @@ extension InventoryItemDTO {
                                        quantity: 20)
 }
 
+extension RecipeDTO {
+    static var test = RecipeDTO(id: UUID(),
+                                name: "Grilled Chicken Salad",
+                                description: "The best chicken recipe you would ever see",
+                                time: 20,
+                                guide: ["First step", "Second step", "Third step", "Fourth step"],
+                                allergens: [.egg],
+                                owner: UUID(),
+                                ingredients: [
+                                    RecipeIngredient(ingredientId: UUID(),
+                                                        name: "Egg",
+                                                        quantity: 2,
+                                                        unit: .units),
+                                    RecipeIngredient(ingredientId: UUID(),
+                                                        name: "Water",
+                                                        quantity: 3.2,
+                                                        unit: .volume),
+                                    RecipeIngredient(ingredientId: UUID(),
+                                                        name: "Olive Oil",
+                                                        quantity: 0.2,
+                                                        unit: .volume)])
+}
+
 struct InteractorTest: DataInteractor {
+    
+    func getRecipeIngredients(id: UUID) async throws -> RecipeDTO {
+        RecipeDTO.test
+    }
+    
+    func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws {}
+    
+    func deleteRecipe(id: UUID) async throws {}
+    
     func getInventory() async throws -> [InventoryItemDTO] {
         [
             InventoryItemDTO(id: UUID(uuidString: "B07B2DF9-2A7C-4280-A14B-6E503AA2581D")!,
@@ -47,37 +75,25 @@ struct InteractorTest: DataInteractor {
         []
     }
     
-    func addInventoryItem(_ item: ModifyInventoryItemDTO) async throws {
-        
-    }
+    func addInventoryItem(_ item: ModifyInventoryItemDTO) async throws {}
     
     func shoppingList(_ ingredients: [ModifyInventoryItemDTO]) async throws -> [Groceries] {
         []
     }
     
-    func updateInventory(_ ingredients: [ModifyInventoryItemDTO]) async throws {
-        
-    }
+    func updateInventory(_ ingredients: [ModifyInventoryItemDTO]) async throws {}
     
-    func updateInventoryItem(id: UUID, item: ModifyInventoryItemDTO) async throws {
-        
-    }
+    func updateInventoryItem(id: UUID, item: ModifyInventoryItemDTO) async throws {}
     
-    func addGroceries(_ groceries: [ModifyInventoryItemDTO]) async throws {
-        
-    }
+    func addGroceries(_ groceries: [ModifyInventoryItemDTO]) async throws {}
     
-    func consumeGroceries(_ groceries: [ModifyInventoryItemDTO]) async throws {
-        
-    }
+    func consumeGroceries(_ groceries: [ModifyInventoryItemDTO]) async throws {}
     
-    func deleteInventoryItem(_ id: UUID) async throws {
-        
-    }
+    func deleteInventoryItem(_ id: UUID) async throws {}
     
     
     func addRecipe(_ recipe: CreateRecipeDTO) async throws {
-//        try await post(request: .post(url: .recipes, post: recipe), status: 201)
+        //        try await post(request: .post(url: .recipes, post: recipe), status: 201)
     }
     
     func getAllIngredients() async throws -> [IngredientDTO] {
@@ -148,10 +164,10 @@ extension RecipeView {
     }
 }
 
-extension AddRecipeView {
+extension RecipeFormView {
     static var preview: some View {
         NavigationStack {
-            AddRecipeView(addRecipeVm: AddRecipeVM())
+            RecipeFormView(addRecipeVm: AddRecipeVM(), title: "Recipe Form", method: .CREATE)
                 .environment(RecipesVM(interactor: InteractorTest()))
                 .environment(IngredientsVM(interactor: InteractorTest()))
         }
@@ -161,10 +177,10 @@ extension AddRecipeView {
 extension IngredientsSelector {
     static var preview: some View {
         NavigationStack {
-            IngredientsSelector(selectorVM: IngredientSelectorVM(), 
+            IngredientsSelector(selectorVM: IngredientSelectorVM(),
                                 selectedIngredients: .constant(.test),
                                 title: "Select ingredients")
-                .environment(IngredientsVM(interactor: InteractorTest()))
+            .environment(IngredientsVM(interactor: InteractorTest()))
         }
     }
 }
@@ -186,8 +202,17 @@ extension IngredientQuantity {
 extension EditQuantityView {
     static var preview: some View {
         NavigationStack {
-            EditQuantityView(inventoryItemVm: InventoryItemVm(inventoryItem: .test))
+            EditQuantityView(inventoryItemVm: InventoryItemVM(inventoryItem: .test))
                 .environment(InventoryVM(interactor: InteractorTest()))
+        }
+    }
+}
+
+extension RecipeDetailsView {
+    static var preview: some View {
+        NavigationStack {
+            RecipeDetailsView(recipeId: UUID())
+                .environment(RecipesVM(interactor: InteractorTest()))
         }
     }
 }

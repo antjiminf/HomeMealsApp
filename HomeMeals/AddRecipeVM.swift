@@ -2,6 +2,22 @@ import SwiftUI
 
 @Observable
 final class AddRecipeVM {
+    
+    init(recipe: RecipeDTO? = nil) {
+        if let recipe = recipe {
+            id = recipe.id
+            name = recipe.name
+            description = recipe.description
+            guide = recipe.guide
+            time = recipe.time
+            isPublic = true //TODO: RECIBIR PARAMETRO ISPUBLIC PARA FUTUROS PROBLEMAS
+            allergens = recipe.allergens
+            ingredients = recipe.ingredients.map{ $0.toSelectionIngredient() }
+        }
+    }
+    
+    var id: UUID? = nil
+    
     var name = ""
     var description = ""
     var guide: [String] = ["", "", ""]
@@ -97,7 +113,7 @@ final class AddRecipeVM {
         return true
     }
     
-    func addRecipe() -> CreateRecipeDTO? {
+    func createRecipeDto() -> CreateRecipeDTO? {
         guard validateAllFields() else {
             return nil
         }
@@ -106,9 +122,11 @@ final class AddRecipeVM {
                                description: description,
                                time: time,
                                isPublic: isPublic,
-                               ingredients: ingredients.map{$0.toRecipeIngredient()},
+                               ingredients: ingredients.map{$0.toCreateRecipeIngredient()},
                                guide: guide.filter{!$0.isEmpty},
                                allergens: allergens)
     }
+    
+//    func 
     
 }

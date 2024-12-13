@@ -1,10 +1,19 @@
 import SwiftUI
 
-struct AddRecipeView: View {
+enum MethodType {
+    case UPDATE
+    case CREATE
+}
+
+struct RecipeFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(RecipesVM.self) private var recipesVm
-    @State var addRecipeVm = AddRecipeVM()
+    @State var addRecipeVm: AddRecipeVM
     @State var showIngredientsForm = false
+    let title: String
+    let method: MethodType
+    var onUpdate: (() -> Void)? = nil
+    
     
     var body: some View {
         NavigationStack {
@@ -55,23 +64,37 @@ struct AddRecipeView: View {
                     toggleAllergen: addRecipeVm.toggleAllergenSelection,
                     isAllergenSelected: addRecipeVm.isAllergenAdded)
             }
-            .navigationTitle("Create Recipe")
+            .navigationTitle(title)
             .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         Task {
-                            if let recipe = addRecipeVm.addRecipe() {
-                                await recipesVm.addRecipe(recipe)
+                            if let recipe = addRecipeVm.createRecipeDto() {
+                                
+                                if method == .CREATE {
+                                    await recipesVm.addRecipe(recipe)
+                                } else if method == .UPDATE,
+                                          let id = addRecipeVm.id {
+                                    await recipesVm.updateRecipe(id: id, updated: recipe)
+                                }
                                 
                                 if !recipesVm.hasError {
+                                    onUpdate?()
                                     dismiss()
                                 } else {
-                                    addRecipeVm.showAlert.toggle()
+                                    addRecipeVm.showAlert = true
                                 }
                             }
                         }
                     } label: {
-                        Text("Add")
+                        Text("Save")
                     }
                     .disabled(addRecipeVm.error)
                 }
@@ -94,7 +117,7 @@ struct AddRecipeView: View {
 }
 
 #Preview {
-    AddRecipeView.preview
+    RecipeFormView.preview
 }
 
 struct MinutesStepper: View {

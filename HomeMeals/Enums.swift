@@ -24,10 +24,12 @@ enum FoodCategory: String, Identifiable, Codable, CaseIterable, Comparable {
     var id: Self { self }
 }
 
-enum Unit: String, Codable, CaseIterable {
+enum Unit: String, Codable, CaseIterable, Identifiable {
     case volume
     case units
     case weight
+    
+    var id: Self { self }
 }
 
 enum Allergen: String, Identifiable, Codable, CaseIterable {

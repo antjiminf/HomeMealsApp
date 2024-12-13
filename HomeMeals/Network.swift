@@ -11,6 +11,9 @@ protocol DataInteractor {
     //Recipes
     func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
     func addRecipe(_ recipe: CreateRecipeDTO) async throws
+    func getRecipeIngredients(id: UUID) async throws -> RecipeDTO
+    func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws
+    func deleteRecipe(id: UUID) async throws
     
     //Inventory
     func getInventory() async throws -> [InventoryItemDTO]
@@ -154,6 +157,21 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     }
     
     func addRecipe(_ recipe: CreateRecipeDTO) async throws {
-        try await post(request: .post(url: .recipes, post: recipe), status: 201)
+        try await post(request: .post(url: .recipes, post: recipe), 
+                       status: 201)
+    }
+    
+    func getRecipeIngredients(id: UUID) async throws -> RecipeDTO {
+        try await getJSON(request: .get(url: .recipesIdIngredients(id: id)), 
+                          type: RecipeDTO.self)
+    }
+    
+    func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws {
+        try await post(request: .post(url: .recipesId(id: id), post: updated, method: .put), status: 204)
+    }
+    
+    func deleteRecipe(id: UUID) async throws {
+        try await post(request: .delete(url: .recipesId(id: id)),
+                       status: 204)
     }
 }

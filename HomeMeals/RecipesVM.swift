@@ -42,7 +42,36 @@ final class RecipesVM {
             print(error.localizedDescription)
             hasError = true
             errorMessage = error.localizedDescription
-//            errorMessage = "Failed to create recipe"
+        }
+    }
+    
+    func updateRecipe(id: UUID, updated: CreateRecipeDTO) async {
+        do {
+            try await interactor.updateRecipe(id: id, updated: updated)
+            await getRecipes()
+        } catch {
+            hasError = true
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func getRecipeDetails(id: UUID) async -> RecipeDTO? {
+        do {
+            return try await interactor.getRecipeIngredients(id: id)
+        } catch {
+            hasError = true
+            errorMessage = error.localizedDescription
+            return nil
+        }
+    }
+    
+    func deleteRecipe(id: UUID) async {
+        do {
+            try await interactor.deleteRecipe(id: id)
+            await getRecipes()
+        } catch {
+            hasError = true
+            errorMessage = error.localizedDescription
         }
     }
     

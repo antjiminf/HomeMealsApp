@@ -2,7 +2,7 @@ import SwiftUI
 
 struct EditQuantityView: View {
     @Environment(InventoryVM.self) var inventoryVm
-    @State var inventoryItemVm: InventoryItemVm
+    @State var inventoryItemVm: InventoryItemVM
     
     var body: some View {
         @Bindable var inventory = inventoryVm

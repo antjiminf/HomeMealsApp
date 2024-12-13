@@ -1,7 +1,7 @@
 import SwiftUI
 
 @Observable
-final class InventoryItemVm {
+final class InventoryItemVM {
     
     let inventoryItem: InventoryItemDTO
     

@@ -74,7 +74,7 @@ struct InventoryView: View {
             }
             .sheet(isPresented: $inventory.showingEditModal) {
                 if let item = inventoryVm.editingItem {
-                    EditQuantityView(inventoryItemVm: InventoryItemVm(inventoryItem: item))
+                    EditQuantityView(inventoryItemVm: InventoryItemVM(inventoryItem: item))
                         .environment(inventoryVm)
                         .presentationDetents([.fraction(0.25), .medium],
                                              selection: $detent)
