@@ -41,7 +41,21 @@ extension RecipeDTO {
                                                         unit: .volume)])
 }
 
+extension RecipeListDTO {
+    static var test = RecipeListDTO(id: UUID(),
+                                    name: "Papas",
+                                    description: "Las mejores papas de la historia",
+                                    time: 20,
+                                    allergens: [.dairy],
+                                    owner: UUID())
+}
+
 struct InteractorTest: DataInteractor {
+    
+    func filterRecipes(minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO> {
+        return Page(items: [], page: 1, perPage: 10, total: 10)
+    }
+    
     
     func getRecipeIngredients(id: UUID) async throws -> RecipeDTO {
         RecipeDTO.test
@@ -72,7 +86,11 @@ struct InteractorTest: DataInteractor {
     }
     
     func getRecipeSuggestions() async throws -> [RecipeListDTO] {
-        []
+        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
+            return []
+        }
+        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
+        return recipes
     }
     
     func addInventoryItem(_ item: ModifyInventoryItemDTO) async throws {}
@@ -146,6 +164,10 @@ struct InteractorTest: DataInteractor {
         
         let paginatedRecipes = Array(recipes[first..<last])
         return Page(items: paginatedRecipes, page: page, perPage: perPage, total: total)
+    }
+    
+    func filterRecipes(minTime: Int, maxTime: Int, allergens: [Allergen]) async throws -> Page<RecipeListDTO> {
+        return Page(items: [], page: 1, perPage: 10, total: 0)
     }
     
     func getJSON<JSON>(url: URL, type: JSON.Type) throws -> JSON where JSON: Codable {

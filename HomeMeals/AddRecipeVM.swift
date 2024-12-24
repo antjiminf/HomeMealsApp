@@ -11,6 +11,7 @@ final class AddRecipeVM {
             guide = recipe.guide
             time = recipe.time
             isPublic = true //TODO: RECIBIR PARAMETRO ISPUBLIC PARA FUTUROS PROBLEMAS
+            //Cuando quiero hacer update no se si la receta es true o false
             allergens = recipe.allergens
             ingredients = recipe.ingredients.map{ $0.toSelectionIngredient() }
         }

@@ -5,39 +5,80 @@ final class RecipesVM {
     private let interactor: DataInteractor
     
     var recipes: [RecipeListDTO] = []
-    var ingredients: [IngredientDTO] = []
+    var suggestedRecipes: [RecipeListDTO] = []
+    var searchedRecipes: [RecipeListDTO] {
+        recipes.filter { r in
+            search.isEmpty || r.name.localizedCaseInsensitiveContains(search)
+        }
+    }
+    
+    var isLoadingPage: Bool = false
+    private var totalPages: Int = 1
+    private var page: Int = 1
+    private var perPage: Int = 10
+    
+    var search: String = ""
     var hasError: Bool = false
     var errorMessage: String?
-    
     
     init(interactor: DataInteractor = Network.shared) {
         self.interactor = interactor
         Task {
-            await getRecipes()
+            await initRecipes()
         }
     }
     
-    func getRecipes() async {
-//        async let ingredientsQuery = interactor.getIngredients(page: 1, perPage: 10)
-        async let recipesQuery = interactor.getRecipes(page: 1, perPage: 20)
+    func initRecipes() async {
+        
+        isLoadingPage = true
+        defer { isLoadingPage = false }
+        
+        async let recipesQuery = interactor.getRecipes(page: page, perPage: perPage)
+        async let suggestionsQuery = interactor.getRecipeSuggestions()
         
         do {
-//            let (ingredientsResult, recipesResult) = try await (ingredientsQuery, recipesQuery)
-            let recipesResult = try await recipesQuery
-            await MainActor.run {
-//                self.ingredients = ingredientsResult.items
-                self.recipes = recipesResult.items
-            }
+            let (suggestionsResult, recipesResult) = try await (suggestionsQuery, recipesQuery)
+            recipes = recipesResult.items
+            suggestedRecipes = suggestionsResult
+            totalPages = recipesResult.total
         } catch {
             hasError = true
             errorMessage = "Failed to fetch recipes"
         }
     }
     
+    func getNextRecipes() async {
+        guard page < totalPages && !isLoadingPage else { return }
+        
+        isLoadingPage = true
+        defer { isLoadingPage = false }
+        
+        page += 1
+        
+        do {
+            let result = try await interactor.getRecipes(page: page, perPage: perPage)
+            recipes.append(contentsOf: result.items)
+        } catch {
+            hasError = true
+            errorMessage = "Failed to fetch recipes"
+        }
+    }
+    
+    //    func filterRecipes() async {
+    //        do {
+    //            let result = try await interactor.filterRecipes(minTime: 0, maxTime: 0, allergens: [])
+    //            
+    //        } catch {
+    //            hasError = true
+    //            errorMessage = "Failed to fetch recipes"
+    //        }
+    //    }
+    
     func addRecipe(_ new: CreateRecipeDTO) async {
         do {
             try await interactor.addRecipe(new)
-            await getRecipes()
+            resetPagination()
+            await initRecipes()
         } catch {
             print(error.localizedDescription)
             hasError = true
@@ -48,7 +89,8 @@ final class RecipesVM {
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async {
         do {
             try await interactor.updateRecipe(id: id, updated: updated)
-            await getRecipes()
+            resetPagination()
+            await initRecipes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
@@ -68,14 +110,30 @@ final class RecipesVM {
     func deleteRecipe(id: UUID) async {
         do {
             try await interactor.deleteRecipe(id: id)
-            await getRecipes()
+            resetPagination()
+            await initRecipes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
         }
     }
     
-    func nextPage() async {
-        
+    func getSuggestedRecipes() async {
+        do {
+            suggestedRecipes = try await interactor.getRecipeSuggestions()
+        } catch {
+            hasError = true
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func resetPagination() {
+        page = 1
+        totalPages = 1
+        recipes = []
+    }
+    
+    func hasReachedEnd(recipe: RecipeListDTO) -> Bool {
+        recipes.last?.id == recipe.id
     }
 }

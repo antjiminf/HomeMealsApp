@@ -10,6 +10,7 @@ protocol DataInteractor {
     
     //Recipes
     func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
+    func filterRecipes(minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
     func addRecipe(_ recipe: CreateRecipeDTO) async throws
     func getRecipeIngredients(id: UUID) async throws -> RecipeDTO
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws
@@ -155,6 +156,31 @@ struct Network: NetworkJSONInteractor, DataInteractor {
             ])),
             type: Page<RecipeListDTO>.self)
     }
+    
+    func filterRecipes(minTime: Int? = nil, maxTime: Int? = nil, allergens: [Allergen]? = nil, page: Int = 1, perPage: Int = 20) async throws -> Page<RecipeListDTO> {
+        
+        var queryItems: [URLQueryItem] = []
+        
+        queryItems.append(contentsOf: [
+            URLQueryItem(name: "page", value: page.description),
+            URLQueryItem(name: "per", value: perPage.description)
+        ])
+        
+        if let minTime {
+            queryItems.append(URLQueryItem(name: "minTime", value: minTime.description))
+        }
+        if let maxTime {
+            queryItems.append(URLQueryItem(name: "maxTime", value: maxTime.description))
+        }
+        if let allergens, !allergens.isEmpty {
+            let allergensString = allergens.map { $0.rawValue }.joined(separator: ",")
+            queryItems.append(URLQueryItem(name: "allergens", value: allergensString))
+        }
+        
+        return try await getJSON(request: .get(url: .recipesSearch.appending(queryItems: queryItems)),
+                                 type: Page<RecipeListDTO>.self)
+    }
+
     
     func addRecipe(_ recipe: CreateRecipeDTO) async throws {
         try await post(request: .post(url: .recipes, post: recipe), 

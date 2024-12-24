@@ -11,14 +11,14 @@ final class InventoryVM {
             searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText)
         }
     }
-    var ingredients: [SelectionIngredient] {
-        inventory.map { i in
-            SelectionIngredient(id: i.ingredientId,
-                                name: i.name,
-                                unit: i.unit,
-                                quantity: i.quantity)
-        }
-    }
+//    var ingredients: [SelectionIngredient] {
+//        inventory.map { i in
+//            SelectionIngredient(id: i.ingredientId,
+//                                name: i.name,
+//                                unit: i.unit,
+//                                quantity: i.quantity)
+//        }
+//    }
     
     var editingItem: InventoryItemDTO?
     var showingEditModal: Bool = false

@@ -24,6 +24,7 @@
 		1E4D95BE2C8E7E6E00BCA798 /* ACNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 1E4D95BD2C8E7E6E00BCA798 /* ACNetwork */; };
 		1E5255042C8F5F4E00A9A364 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5255032C8F5F4E00A9A364 /* RecipeView.swift */; };
 		1E573A322CBE8ADF005EF98C /* AllergensSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E573A312CBE8ADF005EF98C /* AllergensSelector.swift */; };
+		1E5971C22D10A15E000D2CF0 /* RecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5971C12D10A15E000D2CF0 /* RecipeCard.swift */; };
 		1E63BABD2CA5D7B0000082BD /* IngredientsSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E63BABC2CA5D7B0000082BD /* IngredientsSelector.swift */; };
 		1E63BABF2CA5D826000082BD /* IngredientsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E63BABE2CA5D826000082BD /* IngredientsVM.swift */; };
 		1E68DBBF2D011590004972E8 /* IngredientDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E68DBBE2D011590004972E8 /* IngredientDTO.swift */; };
@@ -39,6 +40,7 @@
 		1E79014D2C93206500A78D25 /* recipes.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E79014C2C93206500A78D25 /* recipes.json */; };
 		1E79014F2C9320B000A78D25 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E79014E2C9320B000A78D25 /* TestData.swift */; };
 		1E7A847C2C8F0F5600544777 /* RecipesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A847B2C8F0F5600544777 /* RecipesVM.swift */; };
+		1E7E51A52D159EA600DA445B /* FilterRecipesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7E51A42D159EA600DA445B /* FilterRecipesVM.swift */; };
 		1E8F1AD32CC7F3F6001284B8 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8F1AD22CC7F3F6001284B8 /* Formatters.swift */; };
 		1EA705802CE65B7D00933279 /* InventoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA7057F2CE65B7D00933279 /* InventoryDTO.swift */; };
 		1EC380022CBD2A0A0077B520 /* IngredientSelectorVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC380012CBD2A0A0077B520 /* IngredientSelectorVM.swift */; };
@@ -83,6 +85,7 @@
 		1E4D95BA2C8E7BFD00BCA798 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		1E5255032C8F5F4E00A9A364 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		1E573A312CBE8ADF005EF98C /* AllergensSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergensSelector.swift; sourceTree = "<group>"; };
+		1E5971C12D10A15E000D2CF0 /* RecipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCard.swift; sourceTree = "<group>"; };
 		1E63BABC2CA5D7B0000082BD /* IngredientsSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsSelector.swift; sourceTree = "<group>"; };
 		1E63BABE2CA5D826000082BD /* IngredientsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsVM.swift; sourceTree = "<group>"; };
 		1E68DBBE2D011590004972E8 /* IngredientDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientDTO.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		1E79014C2C93206500A78D25 /* recipes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = recipes.json; sourceTree = "<group>"; };
 		1E79014E2C9320B000A78D25 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		1E7A847B2C8F0F5600544777 /* RecipesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesVM.swift; sourceTree = "<group>"; };
+		1E7E51A42D159EA600DA445B /* FilterRecipesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRecipesVM.swift; sourceTree = "<group>"; };
 		1E8F1AD22CC7F3F6001284B8 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		1EA7057F2CE65B7D00933279 /* InventoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryDTO.swift; sourceTree = "<group>"; };
 		1EC380012CBD2A0A0077B520 /* IngredientSelectorVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientSelectorVM.swift; sourceTree = "<group>"; };
@@ -236,9 +240,9 @@
 			isa = PBXGroup;
 			children = (
 				1E5255032C8F5F4E00A9A364 /* RecipeView.swift */,
+				1E7472DD2CCB8EEE00697C89 /* InventoryView.swift */,
 				1E68DBC02D021CDC004972E8 /* RecipeDetailsView.swift */,
 				1E68E52E2C9B564B008AFF07 /* RecipeFormView.swift */,
-				1E7472DD2CCB8EEE00697C89 /* InventoryView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -253,6 +257,7 @@
 				1E48BAC52CC6DE23008D5CC4 /* GuideField.swift */,
 				1E48BAC72CC6DEA9008D5CC4 /* IngredientsSelectedList.swift */,
 				1E6E030A2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift */,
+				1E5971C12D10A15E000D2CF0 /* RecipeCard.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				1E7A847B2C8F0F5600544777 /* RecipesVM.swift */,
+				1E7E51A42D159EA600DA445B /* FilterRecipesVM.swift */,
 				1E7222B42D08BF0700591D3E /* RecipeDetailsVM.swift */,
 				1E68E52A2C9B551F008AFF07 /* AddRecipeVM.swift */,
 				1E63BABE2CA5D826000082BD /* IngredientsVM.swift */,
@@ -439,11 +445,13 @@
 				1EC380022CBD2A0A0077B520 /* IngredientSelectorVM.swift in Sources */,
 				1E28E98C2C8CB76200CEA3BB /* ContentView.swift in Sources */,
 				1E68E5322C9C492F008AFF07 /* CustomTextField.swift in Sources */,
+				1E5971C22D10A15E000D2CF0 /* RecipeCard.swift in Sources */,
 				1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */,
 				1E68E52B2C9B551F008AFF07 /* AddRecipeVM.swift in Sources */,
 				1E48BAC82CC6DEA9008D5CC4 /* IngredientsSelectedList.swift in Sources */,
 				1E7472DE2CCB8EEE00697C89 /* InventoryView.swift in Sources */,
 				1E8F1AD32CC7F3F6001284B8 /* Formatters.swift in Sources */,
+				1E7E51A52D159EA600DA445B /* FilterRecipesVM.swift in Sources */,
 				1E28E98A2C8CB76200CEA3BB /* HomeMealsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -617,6 +625,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -647,6 +656,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
