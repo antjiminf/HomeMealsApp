@@ -52,6 +52,7 @@ final class InventoryVM {
     func deleteInventoryItem(id: UUID) async {
         do {
             try await interactor.deleteInventoryItem(id)
+            pendingItem = nil
             await loadInventory()
         } catch {
             print(error.localizedDescription)

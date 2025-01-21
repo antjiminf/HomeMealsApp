@@ -2,83 +2,132 @@ import SwiftUI
 
 struct InventoryView: View {
     @Environment(InventoryVM.self) var inventoryVm
+    @Environment(RecipesVM.self) var recipesVm
     @State var detent: PresentationDetent = .fraction(0.25)
     @State var ingredients: [SelectionIngredient] = []
     @State var showAddIngredients = false
     @State var showConsumeIngredients = false
+    @State var showSuggestedRecipes = false
     
     var body: some View {
         @Bindable var inventory = inventoryVm
         
         NavigationStack {
-            VStack {
-                TextField("Search ingredients...", text: $inventory.searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding([.horizontal, .top])
+            VStack(alignment: .leading) {
+                // Lista de ingredientes
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                    
+                    TextField("Search ingredients...", text: $inventory.searchText)
+                    
+                    if !inventory.searchText.isEmpty {
+                        Button {
+                            inventory.searchText = ""
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("Delete current value.")
+                    }
+                }
+                .padding(10)
+                .background {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(UIColor.secondarySystemBackground))
+                }
+                .padding([.horizontal, .bottom])
                 
-                Group {
-                    if !inventoryVm.filteredInventory.isEmpty {
-                        List {
-                            ForEach(inventoryVm.filteredInventory.sorted(by: {
-                                $0.name < $1.name
-                            })) { item in
-                                HStack {
-                                    Text(item.name)
-                                        .font(.headline)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    
-                                    switch item.unit {
-                                    case .units:
-                                        Text("\(item.quantity, specifier: "%.0f") units")
-                                            .font(.headline)
-                                            .foregroundColor(.secondary)
-                                    case .weight:
-                                        Text("\(item.quantity, specifier: "%.1f") g")
-                                            .font(.headline)
-                                            .foregroundColor(.secondary)
-                                    case .volume:
-                                        Text("\(item.quantity, specifier: "%.1f") L")
-                                            .font(.headline)
-                                            .foregroundColor(.secondary)
-                                    }
-                                    
-                                    Button {
-                                        inventoryVm.editingItem = item
-                                        inventoryVm.showingEditModal = true
-                                    } label: {
-                                        Image(systemName: "pencil.circle.fill")
-                                            .foregroundColor(.blue)
-                                            .font(.title2)
-                                    }
+                HStack(spacing: 10) {
+                    Button {
+                        showSuggestedRecipes = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "list.bullet.rectangle.portrait.fill")
+                                .font(.title2)
+                            Text("For you")
+                        }
+                    }
+                    .accessibilityLabel("Suggested Recipes")
+                    
+                    Spacer()
+                    
+                    Button {
+                        showAddIngredients = true
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.green)
+                    }
+                    .accessibilityLabel("Add Ingredients")
+                    
+                    Button {
+                        showConsumeIngredients = true
+                    } label: {
+                        
+                        Image(systemName: "minus.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.red)
+                    }
+                    .accessibilityLabel("Consume Ingredients")
+                }
+                .padding(.horizontal, 20)
+                
+                if !inventoryVm.filteredInventory.isEmpty {
+                    List {
+                        ForEach(inventoryVm.filteredInventory.sorted(by: { $0.name < $1.name })) { item in
+                            HStack {
+                                Text(item.name)
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                switch item.unit {
+                                case .units:
+                                    Text("\(item.quantity, specifier: "%.0f") units")
+                                        .foregroundColor(.secondary)
+                                case .weight:
+                                    Text("\(item.quantity, specifier: "%.1f") g")
+                                        .foregroundColor(.secondary)
+                                case .volume:
+                                    Text("\(item.quantity, specifier: "%.1f") L")
+                                        .foregroundColor(.secondary)
                                 }
-                                .swipeActions {
-                                    Button(role: .destructive) {
-                                        inventoryVm.pendingItem = item
-                                        inventoryVm.showingDeleteConfirmation = true
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
+                                
+                                Button {
+                                    inventoryVm.editingItem = item
+                                    inventoryVm.showingEditModal = true
+                                } label: {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .foregroundColor(.blue)
+                                        .font(.title2)
+                                }
+                            }
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    inventoryVm.pendingItem = item
+                                    inventoryVm.showingDeleteConfirmation = true
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
                                 }
                             }
                         }
-                        .refreshable {
-                            await inventoryVm.loadInventory()
-                        }
-                    } else {
-                        ContentUnavailableView(
-                            "No coincidences",
-                            systemImage: "exclamationmark.magnifyingglass",
-                            description: Text("No ingredients found containing \"\(inventoryVm.searchText)\""))
                     }
+                    .refreshable {
+                        await inventoryVm.loadInventory()
+                    }
+                } else {
+                    ContentUnavailableView(
+                        "No coincidences",
+                        systemImage: "exclamationmark.magnifyingglass",
+                        description: Text("No ingredients found containing \"\(inventoryVm.searchText)\""))
+                    .background(Color(uiColor: .systemGray6))
                 }
             }
             .sheet(isPresented: $inventory.showingEditModal) {
                 if let item = inventoryVm.editingItem {
                     EditQuantityView(inventoryItemVm: InventoryItemVM(inventoryItem: item))
                         .environment(inventoryVm)
-                        .presentationDetents([.fraction(0.25), .medium],
-                                             selection: $detent)
-                        .presentationBackgroundInteraction(.enabled)
+                        .presentationDetents([.fraction(0.25), .medium], selection: $detent)
                 }
             }
             .fullScreenCover(isPresented: $showAddIngredients) {
@@ -114,7 +163,6 @@ struct InventoryView: View {
                     Task {
                         if let item = inventoryVm.pendingItem {
                             await inventoryVm.deleteInventoryItem(id: item.id)
-                            inventoryVm.pendingItem = nil
                         }
                     }
                 }
@@ -124,54 +172,54 @@ struct InventoryView: View {
             }, message: {
                 Text("Are you sure you want to delete \(inventoryVm.pendingItem?.name ?? "this ingredient")?")
             })
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    Button {
-//                        showAddIngredients = true
-//                    } label: {
-//                        Label("Add", systemImage: "plus.circle.fill")
-//                            .labelStyle(IconOnlyLabelStyle())
-//                    }
-//                }
-//                
-//                ToolbarItem(placement: .navigationBarLeading) {
-//                    Button {
-//                        showConsumeIngredients = true
-//                    } label: {
-//                        Label("Consume", systemImage: "minus.circle.fill")
-//                            .labelStyle(IconOnlyLabelStyle())
-//                    }
-//                }
-//            }
-            .overlay(alignment: .bottomTrailing) {
-                VStack {
-                    Button {
-                        showAddIngredients = true
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.largeTitle)
-                            .shadow(radius: 5)
+            .sheet(isPresented: $showSuggestedRecipes) {
+                //TODO: NO PUEDO HACER NAVIGATIONSTACK AQUÍ, no respeta el detent
+                NavigationStack {
+                    Group {
+                        if !recipesVm.suggestedRecipes.isEmpty {
+                            Section {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack {
+                                        ForEach(recipesVm.suggestedRecipes) { recipe in
+                                            NavigationLink(destination: RecipeDetailsView(recipeId: recipe.id)) {
+                                                RecipeCard(recipe: recipe)
+                                            }
+                                        }
+                                    }
+                                    .scrollTargetLayout()
+                                }
+                                .scrollTargetBehavior(.viewAligned)
+                                .contentMargins(20, for: .scrollContent)
+                                .listRowInsets(EdgeInsets())
+                            } header: {
+                                HStack {
+                                    Text("Suggested for you")
+                                        .font(.title)
+                                        .bold()
+                                    Spacer()
+                                    Button("Close") {
+                                        showSuggestedRecipes = false
+                                    }
+                                }
+                                .padding()
+                            }
+                            .listRowSeparator(.hidden)
+                        } else {
+                            Text("No suggestions available.")
+                                .foregroundStyle(.secondary)
+                                .padding()
+                        }
                     }
-                    .accessibilityLabel("Add Ingredients")
-                    .padding(.bottom)
-                    
-                    Button {
-                        showConsumeIngredients = true
-                    } label: {
-                        Image(systemName: "minus.circle.fill")
-                            .font(.largeTitle)
-                            .tint(.red)
-                            .shadow(radius: 5)
-                    }
-                    .accessibilityLabel("Consume Ingredients")
+                    .presentationDetents([.medium, .large])
+    //                .navigationDestination(for: RecipeListDTO.self) { r in
+    //                    RecipeDetailsView(recipe: r.id)
+    //                }
                 }
-                .padding()
             }
             .navigationTitle("Inventory")
         }
     }
 }
-
 
 #Preview {
     InventoryView.preview
