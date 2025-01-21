@@ -10,7 +10,7 @@ protocol DataInteractor {
     
     //Recipes
     func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
-    func filterRecipes(minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
+    func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
     func addRecipe(_ recipe: CreateRecipeDTO) async throws
     func getRecipeIngredients(id: UUID) async throws -> RecipeDTO
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws
@@ -157,7 +157,7 @@ struct Network: NetworkJSONInteractor, DataInteractor {
             type: Page<RecipeListDTO>.self)
     }
     
-    func filterRecipes(minTime: Int? = nil, maxTime: Int? = nil, allergens: [Allergen]? = nil, page: Int = 1, perPage: Int = 20) async throws -> Page<RecipeListDTO> {
+    func filterRecipes(name: String? = nil, minTime: Int? = nil, maxTime: Int? = nil, allergens: [Allergen]? = nil, page: Int = 1, perPage: Int = 20) async throws -> Page<RecipeListDTO> {
         
         var queryItems: [URLQueryItem] = []
         
@@ -165,6 +165,10 @@ struct Network: NetworkJSONInteractor, DataInteractor {
             URLQueryItem(name: "page", value: page.description),
             URLQueryItem(name: "per", value: perPage.description)
         ])
+        
+        if let name {
+            queryItems.append(URLQueryItem(name: "name", value: name))
+        }
         
         if let minTime {
             queryItems.append(URLQueryItem(name: "minTime", value: minTime.description))

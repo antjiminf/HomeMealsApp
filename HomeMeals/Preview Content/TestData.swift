@@ -52,7 +52,7 @@ extension RecipeListDTO {
 
 struct InteractorTest: DataInteractor {
     
-    func filterRecipes(minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO> {
+    func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO> {
         return Page(items: [], page: 1, perPage: 10, total: 10)
     }
     
@@ -212,6 +212,7 @@ extension InventoryView {
         InventoryView()
             .environment(InventoryVM(interactor: InteractorTest()))
             .environment(IngredientsVM(interactor: InteractorTest()))
+            .environment(RecipesVM(interactor: InteractorTest()))
     }
 }
 
@@ -234,6 +235,15 @@ extension RecipeDetailsView {
     static var preview: some View {
         NavigationStack {
             RecipeDetailsView(recipeId: UUID())
+                .environment(RecipesVM(interactor: InteractorTest()))
+        }
+    }
+}
+
+extension FilterRecipesView {
+    static var preview: some View {
+        NavigationStack {
+            FilterRecipesView(filterVm: FilterRecipesVM())
                 .environment(RecipesVM(interactor: InteractorTest()))
         }
     }
