@@ -37,15 +37,7 @@ struct RecipeDetailsView: View {
                             HStack(alignment: .center) {
                                 HStack(spacing: 8) {
                                     if recipe.allergens.isEmpty {
-                                        HStack {
-                                            Image(systemName: "checkmark.circle")
-                                            Text("Allergen Free")
-                                                .font(.footnote)
-                                        }
-                                        .foregroundColor(.green)
-                                        .padding(8)
-                                        .background(RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color.green.opacity(0.2)))
+                                        AllergenFreeIndicator()
                                     } else {
                                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 20))],
                                                   spacing: 8) {

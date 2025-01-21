@@ -6,20 +6,26 @@ final class RecipesVM {
     
     var recipes: [RecipeListDTO] = []
     var suggestedRecipes: [RecipeListDTO] = []
-    var searchedRecipes: [RecipeListDTO] {
-        recipes.filter { r in
-            search.isEmpty || r.name.localizedCaseInsensitiveContains(search)
-        }
-    }
+//        var searchedRecipes: [RecipeListDTO] {
+//            recipes.filter { r in
+//                search.isEmpty || r.name.localizedCaseInsensitiveContains(search)
+//            }
+//        }
+//        var search: String = ""
     
-    var isLoadingPage: Bool = false
-    private var totalPages: Int = 1
-    private var page: Int = 1
-    private var perPage: Int = 10
+    private let perPage = 30
+    private var page = 1
+    private var totalPages: Int?
     
-    var search: String = ""
+    var isFiltered: Bool = false
+    private var filters: (String?, Int?, Int?, [Allergen]?)
+    var filteredRecipes: [RecipeListDTO] = []
+    private var filteredPage: Int = 1
+    private var filteredTotalPages: Int?
+    
     var hasError: Bool = false
     var errorMessage: String?
+    var viewState: ViewState?
     
     init(interactor: DataInteractor = Network.shared) {
         self.interactor = interactor
@@ -29,9 +35,9 @@ final class RecipesVM {
     }
     
     func initRecipes() async {
-        
-        isLoadingPage = true
-        defer { isLoadingPage = false }
+        reset()
+        viewState = .loading
+        defer { viewState = .finished }
         
         async let recipesQuery = interactor.getRecipes(page: page, perPage: perPage)
         async let suggestionsQuery = interactor.getRecipeSuggestions()
@@ -48,31 +54,23 @@ final class RecipesVM {
     }
     
     func getNextRecipes() async {
-        guard page < totalPages && !isLoadingPage else { return }
+        guard page != totalPages else { return }
         
-        isLoadingPage = true
-        defer { isLoadingPage = false }
+        viewState = .fetching
+        defer { viewState = .finished }
         
         page += 1
         
         do {
             let result = try await interactor.getRecipes(page: page, perPage: perPage)
             recipes.append(contentsOf: result.items)
+            totalPages = result.total
         } catch {
             hasError = true
             errorMessage = "Failed to fetch recipes"
         }
     }
     
-    //    func filterRecipes() async {
-    //        do {
-    //            let result = try await interactor.filterRecipes(minTime: 0, maxTime: 0, allergens: [])
-    //            
-    //        } catch {
-    //            hasError = true
-    //            errorMessage = "Failed to fetch recipes"
-    //        }
-    //    }
     
     func addRecipe(_ new: CreateRecipeDTO) async {
         do {
@@ -129,11 +127,95 @@ final class RecipesVM {
     
     func resetPagination() {
         page = 1
+        filteredPage = 1
         totalPages = 1
+        filteredTotalPages = 1
         recipes = []
+        filteredRecipes = []
     }
     
     func hasReachedEnd(recipe: RecipeListDTO) -> Bool {
-        recipes.last?.id == recipe.id
+        return isFiltered ? recipe.id == filteredRecipes.last?.id : recipe.id == recipes.last?.id
+    }
+}
+
+// FILTERED LIST EXTENSION
+extension RecipesVM {
+    
+    func filterRecipes(filters f: (String?, Int?, Int?, [Allergen]?)) async {
+        
+        resetFilters()
+        viewState = .loading
+        defer { viewState = .finished }
+        
+        do {
+            let result = try await interactor.filterRecipes(name: f.0, minTime: f.1, maxTime: f.2, allergens: f.3, page: filteredPage, perPage: perPage)
+            filters = f
+            
+            filteredRecipes = result.items
+            filteredTotalPages = result.total
+            isFiltered = true
+        } catch {
+            hasError = true
+            errorMessage = "Failed to filter recipes"
+        }
+    }
+    
+    func resetFilters() {
+        if viewState == .finished {
+            filteredRecipes.removeAll()
+            filteredPage = 1
+            filteredTotalPages = nil
+            viewState = nil
+        }
+    }
+    
+    func getNextFilteredRecipes() async {
+        guard filteredPage != filteredTotalPages else { return }
+        
+        viewState = .fetching
+        defer { viewState = .finished }
+        
+        filteredPage += 1
+        
+        do {
+            let result = try await interactor.filterRecipes(name: filters.0, minTime: filters.1, maxTime: filters.2, allergens: filters.3, page: page, perPage: perPage)
+            filteredRecipes.append(contentsOf: result.items)
+            filteredTotalPages = result.total
+        } catch {
+            hasError = true
+            errorMessage = "Failed to load new page of filtered recipes"
+        }
+    }
+    
+    func dismissFilter() {
+        isFiltered = false
+    }
+}
+
+extension RecipesVM {
+    enum ViewState {
+        case fetching
+        case loading
+        case finished
+    }
+    
+    var isLoading: Bool {
+        viewState == .loading
+    }
+    
+    var isFetching: Bool {
+        viewState == .fetching
+    }
+}
+
+private extension RecipesVM {
+    func reset() {
+        if viewState == .finished {
+            recipes.removeAll()
+            page = 1
+            totalPages = nil
+            viewState = nil
+        }
     }
 }
