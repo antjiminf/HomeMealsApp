@@ -2,7 +2,9 @@ import SwiftUI
 
 struct EditQuantityView: View {
     @Environment(InventoryVM.self) var inventoryVm
+    @Environment(\.dismiss) var dismiss
     @State var inventoryItemVm: InventoryItemVM
+    let onUpdate: () async -> Void
     
     var body: some View {
         @Bindable var inventory = inventoryVm
@@ -21,7 +23,7 @@ struct EditQuantityView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 80)
                         
-                        Stepper(value: $inventoryItemVm.quantity, step: 1) {}
+                        Stepper(value: $inventoryItemVm.quantity, in: 0...Double.infinity, step: 1) {}
                     default:
                         TextField(
                             "Quantity",
@@ -32,7 +34,7 @@ struct EditQuantityView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 80)
                         
-                        Stepper(value: $inventoryItemVm.quantity, step: 0.1) {}
+                        Stepper(value: $inventoryItemVm.quantity, in: 0.0...Double.infinity, step: 0.1) {}
                     }
                 }
                 .frame(width: 150)
@@ -40,7 +42,7 @@ struct EditQuantityView: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
-                        inventory.showingEditModal = false
+                        dismiss()
                     }
                     .tint(.red)
                 }
@@ -48,10 +50,15 @@ struct EditQuantityView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
                         Task {
-                            await inventoryVm.updateInventoryItem(
-                                id: inventoryItemVm.inventoryItem.id,
-                                updatedItem: inventoryItemVm.itemToEdit())
-                            inventory.showingEditModal = false
+                            let id = inventoryItemVm.inventoryItem.id
+                            
+                            if let updated = inventoryItemVm.itemToEdit() {
+                                await inventoryVm.updateInventoryItem(id: id, updatedItem: updated)
+                            } else {
+                                await inventoryVm.deleteInventoryItem(id: id)
+                            }
+                            await onUpdate()
+                            dismiss()
                         }
                     }
                 }

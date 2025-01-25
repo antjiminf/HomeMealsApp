@@ -12,7 +12,10 @@ final class InventoryItemVM {
         self.quantity = inventoryItem.quantity
     }
     
-    func itemToEdit() -> ModifyInventoryItemDTO {
+    func itemToEdit() -> ModifyInventoryItemDTO? {
+        if quantity < 0.1 {
+            return nil
+        }
         return ModifyInventoryItemDTO(ingredient: inventoryItem.ingredientId,
                                       unit: inventoryItem.unit,
                                       quantity: quantity)

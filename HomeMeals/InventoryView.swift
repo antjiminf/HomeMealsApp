@@ -73,59 +73,62 @@ struct InventoryView: View {
                 }
                 .padding(.horizontal, 20)
                 
-                if !inventoryVm.filteredInventory.isEmpty {
-                    List {
-                        ForEach(inventoryVm.filteredInventory.sorted(by: { $0.name < $1.name })) { item in
-                            HStack {
-                                Text(item.name)
-                                    .font(.headline)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                switch item.unit {
-                                case .units:
-                                    Text("\(item.quantity, specifier: "%.0f") units")
-                                        .foregroundColor(.secondary)
-                                case .weight:
-                                    Text("\(item.quantity, specifier: "%.1f") g")
-                                        .foregroundColor(.secondary)
-                                case .volume:
-                                    Text("\(item.quantity, specifier: "%.1f") L")
-                                        .foregroundColor(.secondary)
+                Group {
+                    if !inventoryVm.filteredInventory.isEmpty {
+                        List {
+                            ForEach(inventoryVm.filteredInventory.sorted(by: { $0.name < $1.name })) { item in
+                                HStack {
+                                    Text(item.name)
+                                        .font(.headline)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    switch item.unit {
+                                    case .units:
+                                        Text("\(item.quantity, specifier: "%.0f") units")
+                                            .foregroundColor(.secondary)
+                                    case .weight:
+                                        Text("\(item.quantity, specifier: "%.1f") g")
+                                            .foregroundColor(.secondary)
+                                    case .volume:
+                                        Text("\(item.quantity, specifier: "%.1f") L")
+                                            .foregroundColor(.secondary)
+                                    }
+                                    
+                                    Button {
+                                        inventoryVm.editingItem = item
+                                        inventoryVm.showingEditModal = true
+                                    } label: {
+                                        Image(systemName: "pencil.circle.fill")
+                                            .foregroundColor(.blue)
+                                            .font(.title2)
+                                    }
                                 }
-                                
-                                Button {
-                                    inventoryVm.editingItem = item
-                                    inventoryVm.showingEditModal = true
-                                } label: {
-                                    Image(systemName: "pencil.circle.fill")
-                                        .foregroundColor(.blue)
-                                        .font(.title2)
-                                }
-                            }
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    inventoryVm.pendingItem = item
-                                    inventoryVm.showingDeleteConfirmation = true
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        inventoryVm.pendingItem = item
+                                        inventoryVm.showingDeleteConfirmation = true
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        ContentUnavailableView(
+                            "No coincidences",
+                            systemImage: "exclamationmark.magnifyingglass",
+                            description: Text("No ingredients found containing \"\(inventoryVm.searchText)\""))
+                        .background(Color(uiColor: .systemGray6))
                     }
-                    .refreshable {
-                        await inventoryVm.loadInventory()
-                    }
-                } else {
-                    ContentUnavailableView(
-                        "No coincidences",
-                        systemImage: "exclamationmark.magnifyingglass",
-                        description: Text("No ingredients found containing \"\(inventoryVm.searchText)\""))
-                    .background(Color(uiColor: .systemGray6))
+                }
+                .refreshable {
+                    await inventoryVm.loadInventory()
                 }
             }
             .sheet(isPresented: $inventory.showingEditModal) {
                 if let item = inventoryVm.editingItem {
-                    EditQuantityView(inventoryItemVm: InventoryItemVM(inventoryItem: item))
+                    EditQuantityView(inventoryItemVm: InventoryItemVM(inventoryItem: item),
+                                     onUpdate: recipesVm.inventoryUpdated)
                         .environment(inventoryVm)
                         .presentationDetents([.fraction(0.25), .medium], selection: $detent)
                 }
@@ -140,6 +143,7 @@ struct InventoryView: View {
                         Task {
                             await inventoryVm.addGroceries(groceries: ingredients)
                             ingredients = []
+                            await recipesVm.inventoryUpdated()
                         }
                     }
                 }
@@ -154,6 +158,7 @@ struct InventoryView: View {
                         Task {
                             await inventoryVm.consumeGroceries(groceries: ingredients)
                             ingredients = []
+                            await recipesVm.inventoryUpdated()
                         }
                     }
                 }
@@ -163,6 +168,7 @@ struct InventoryView: View {
                     Task {
                         if let item = inventoryVm.pendingItem {
                             await inventoryVm.deleteInventoryItem(id: item.id)
+                            await recipesVm.inventoryUpdated()
                         }
                     }
                 }
@@ -211,9 +217,9 @@ struct InventoryView: View {
                         }
                     }
                     .presentationDetents([.medium, .large])
-    //                .navigationDestination(for: RecipeListDTO.self) { r in
-    //                    RecipeDetailsView(recipe: r.id)
-    //                }
+                    //                .navigationDestination(for: RecipeListDTO.self) { r in
+                    //                    RecipeDetailsView(recipe: r.id)
+                    //                }
                 }
             }
             .navigationTitle("Inventory")
