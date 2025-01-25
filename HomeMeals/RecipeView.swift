@@ -15,18 +15,26 @@ struct RecipeView: View {
                     ScrollView {
                         LazyVStack {
                             if recipesVm.isFiltered {
-                                ForEach(recipesVm.filteredRecipes, id: \.id) { recipe in
-                                    NavigationLink {
-                                        RecipeDetailsView(recipeId: recipe.id)
-                                    } label: {
-                                        RecipeRow(recipe: recipe)
-                                            .task {
-                                                if recipesVm.hasReachedEnd(recipe: recipe),
-                                                   !recipesVm.isFetching {
-                                                    await recipesVm.getNextFilteredRecipes()
+                                if !recipesVm.filteredRecipes.isEmpty {
+                                    ForEach(recipesVm.filteredRecipes, id: \.id) { recipe in
+                                        NavigationLink {
+                                            RecipeDetailsView(recipeId: recipe.id)
+                                        } label: {
+                                            RecipeRow(recipe: recipe)
+                                                .task {
+                                                    if recipesVm.hasReachedEnd(recipe: recipe),
+                                                       !recipesVm.isFetching {
+                                                        await recipesVm.getNextFilteredRecipes()
+                                                    }
                                                 }
-                                            }
+                                        }
                                     }
+                                } else {
+                                    ContentUnavailableView(
+                                        "No coincidences",
+                                        systemImage: "exclamationmark.magnifyingglass",
+                                        description: Text("No ingredients found matching given filters"))
+                                    .padding(.top, 20)
                                 }
                             } else {
                                 ForEach(recipesVm.recipes, id: \.id) { recipe in
