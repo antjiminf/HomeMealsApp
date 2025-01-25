@@ -16,6 +16,8 @@ struct RecipeDTO: Codable, Identifiable {
     let allergens: [Allergen]
     let owner: UUID
     let ingredients: [RecipeIngredient]
+    var favorite: Bool
+    var favTotal: Int
 }
 
 struct RecipeListDTO: Codable, Identifiable, Hashable {
@@ -25,6 +27,13 @@ struct RecipeListDTO: Codable, Identifiable, Hashable {
     let time: Int
     let allergens: [Allergen]
     let owner: UUID
+    var favorite: Bool
+    var favTotal: Int
+}
+
+struct UserLikeInfo: Codable, Identifiable {
+    let id: UUID
+    let name: String
 }
 
 struct CreateRecipeDTO: Codable {

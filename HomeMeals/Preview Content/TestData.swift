@@ -28,17 +28,19 @@ extension RecipeDTO {
                                 owner: UUID(),
                                 ingredients: [
                                     RecipeIngredient(ingredientId: UUID(),
-                                                        name: "Egg",
-                                                        quantity: 2,
-                                                        unit: .units),
+                                                     name: "Egg",
+                                                     quantity: 2,
+                                                     unit: .units),
                                     RecipeIngredient(ingredientId: UUID(),
-                                                        name: "Water",
-                                                        quantity: 3.2,
-                                                        unit: .volume),
+                                                     name: "Water",
+                                                     quantity: 3.2,
+                                                     unit: .volume),
                                     RecipeIngredient(ingredientId: UUID(),
-                                                        name: "Olive Oil",
-                                                        quantity: 0.2,
-                                                        unit: .volume)])
+                                                     name: "Olive Oil",
+                                                     quantity: 0.2,
+                                                     unit: .volume)],
+                                favorite: true,
+                                favTotal: 300)
 }
 
 extension RecipeListDTO {
@@ -47,7 +49,13 @@ extension RecipeListDTO {
                                     description: "Las mejores papas de la historia",
                                     time: 20,
                                     allergens: [.dairy],
-                                    owner: UUID())
+                                    owner: UUID(),
+                                    favorite: true,
+                                    favTotal: 204000)
+}
+
+extension UserLikeInfo {
+    static var test = UserLikeInfo(id: UUID(), name: "Cristiano Ronaldo")
 }
 
 struct InteractorTest: DataInteractor {
@@ -64,6 +72,38 @@ struct InteractorTest: DataInteractor {
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws {}
     
     func deleteRecipe(id: UUID) async throws {}
+    
+    func getRecipeSuggestions() async throws -> [RecipeListDTO] {
+        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
+            return [.test]
+        }
+        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
+        return recipes
+        
+    }
+    
+    func getRecipeFavorites(id: UUID) async throws -> [UserLikeInfo] {
+        [UserLikeInfo(id: UUID(), name: "Cristiano Ronaldo"),
+         UserLikeInfo(id: UUID(), name: "Lionel Messi"),
+         UserLikeInfo(id: UUID(), name: "Neymar Jr."),
+         UserLikeInfo(id: UUID(), name: "Kylian Mbappé")]
+    }
+    
+    func getFavorites() async throws -> [RecipeListDTO] {
+        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
+            return []
+        }
+        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
+        return recipes
+    }
+    
+    func addFavorite(id: UUID) async throws {
+    }
+    
+    func removeFavorite(id: UUID) async throws {
+    }
+    
+    //INVENTORY
     
     func getInventory() async throws -> [InventoryItemDTO] {
         [
@@ -83,14 +123,6 @@ struct InteractorTest: DataInteractor {
                              unit: .units,
                              quantity: 4)
         ]
-    }
-    
-    func getRecipeSuggestions() async throws -> [RecipeListDTO] {
-        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
-            return []
-        }
-        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
-        return recipes
     }
     
     func addInventoryItem(_ item: ModifyInventoryItemDTO) async throws {}
@@ -148,26 +180,30 @@ struct InteractorTest: DataInteractor {
     }
     
     func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO> {
-        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
-            return Page(items: [], page: page, perPage: perPage, total: 0)
-        }
-        
-        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
-        let total = recipes.count
-        
-        let first = (page - 1) * perPage
-        let last = min(first + perPage, total)
-        
-        guard first < total else {
-            return Page(items: [], page: page, perPage: perPage, total: total)
-        }
-        
-        let paginatedRecipes = Array(recipes[first..<last])
-        return Page(items: paginatedRecipes, page: page, perPage: perPage, total: total)
-    }
-    
-    func filterRecipes(minTime: Int, maxTime: Int, allergens: [Allergen]) async throws -> Page<RecipeListDTO> {
-        return Page(items: [], page: 1, perPage: 10, total: 0)
+        //TODO: SI TUVIESE SUFICIENTES RECETAS PODRÍA PROBAR EL SCROLL INFINITO
+//        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
+//            return Page(items: [], page: page, perPage: perPage, total: 0)
+//        }
+//        
+//        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
+//        let total = recipes.count
+//        
+//        let first = (page - 1) * perPage
+//        let last = min(first + perPage, total)
+//        
+//        guard first < total else {
+//            return Page(items: [], page: page, perPage: perPage, total: total)
+//        }
+//        
+//        let paginatedRecipes = Array(recipes[first..<last])
+//        return Page(items: paginatedRecipes, page: page, perPage: perPage, total: total)
+        Page(items: [.test,
+                     .test,
+                     .test
+                    ],
+             page: 1,
+             perPage: 10,
+             total: 1)
     }
     
     func getJSON<JSON>(url: URL, type: JSON.Type) throws -> JSON where JSON: Codable {
@@ -225,7 +261,7 @@ extension IngredientQuantity {
 extension EditQuantityView {
     static var preview: some View {
         NavigationStack {
-            EditQuantityView(inventoryItemVm: InventoryItemVM(inventoryItem: .test))
+            EditQuantityView(inventoryItemVm: InventoryItemVM(inventoryItem: .test), onUpdate: {})
                 .environment(InventoryVM(interactor: InteractorTest()))
         }
     }
@@ -234,7 +270,7 @@ extension EditQuantityView {
 extension RecipeDetailsView {
     static var preview: some View {
         NavigationStack {
-            RecipeDetailsView(recipeId: UUID())
+            RecipeDetailsView(recipeId: UUID(), recipeDetailsVm: RecipeDetailsVM(interactor: InteractorTest()))
                 .environment(RecipesVM(interactor: InteractorTest()))
         }
     }
