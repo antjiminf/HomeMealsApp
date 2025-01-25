@@ -1,15 +1,33 @@
 import SwiftUI
 
 struct RecipeRow: View {
+    @Environment(RecipesVM.self) var recipesVm
     let recipe: RecipeListDTO
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             
             VStack(alignment: .leading, spacing: 8) {
-                Text(recipe.name)
-                    .font(.headline)
-                    .lineLimit(1)
+                
+                HStack(spacing: 4) {
+                    Text(recipe.name)
+                        .font(.headline)
+                        .lineLimit(1)
+                    Spacer()
+                    Button {
+                        Task {
+                            await recipesVm.softToggleFavorite(recipe: recipe.id)
+                        }
+                    } label: {
+                        Image(systemName: "heart")
+                            .symbolVariant(recipe.favorite ? .fill : .none)
+                            .foregroundColor(.red)
+                    }
+
+                    Text(recipe.favTotal.formattedLikes)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                }
                 
                 Text(recipe.description)
                     .font(.subheadline)
@@ -57,4 +75,5 @@ struct RecipeRow: View {
 
 #Preview {
     RecipeRow(recipe: .test)
+        .environment(RecipesVM(interactor: InteractorTest()))
 }

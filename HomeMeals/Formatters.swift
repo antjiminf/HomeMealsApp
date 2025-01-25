@@ -10,3 +10,15 @@ extension NumberFormatter {
         return formatter
     }
 }
+
+extension Int {
+    var formattedLikes: String {
+        if self >= 1_000_000 {
+            return String(format: "%.1fM", Double(self) / 1_000_000).replacingOccurrences(of: ".0", with: "")
+        } else if self >= 1_000 {
+            return String(format: "%.1fk", Double(self) / 1_000).replacingOccurrences(of: ".0", with: "")
+        } else {
+            return "\(self)"
+        }
+    }
+}
