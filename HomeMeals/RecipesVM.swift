@@ -5,13 +5,20 @@ final class RecipesVM {
     private let interactor: DataInteractor
     
     var recipes: [RecipeListDTO] = []
+    var favoriteRecipes: [RecipeListDTO] = []
+    var searchedFavorites: [RecipeListDTO] {
+        favoriteRecipes.filter { r in
+            favoriteSearchText.isEmpty || r.name.localizedCaseInsensitiveContains(favoriteSearchText)
+        }
+    }
+    var favoriteSearchText: String = ""
     var suggestedRecipes: [RecipeListDTO] = []
-//        var searchedRecipes: [RecipeListDTO] {
-//            recipes.filter { r in
-//                search.isEmpty || r.name.localizedCaseInsensitiveContains(search)
-//            }
-//        }
-//        var search: String = ""
+    //        var searchedRecipes: [RecipeListDTO] {
+    //            recipes.filter { r in
+    //                search.isEmpty || r.name.localizedCaseInsensitiveContains(search)
+    //            }
+    //        }
+    //        var search: String = ""
     
     private let perPage = 30
     private var page = 1
@@ -41,12 +48,14 @@ final class RecipesVM {
         
         async let recipesQuery = interactor.getRecipes(page: page, perPage: perPage)
         async let suggestionsQuery = interactor.getRecipeSuggestions()
+        async let favoritesQuery = interactor.getFavorites()
         
         do {
-            let (suggestionsResult, recipesResult) = try await (suggestionsQuery, recipesQuery)
+            let (favoritesResult, suggestionsResult, recipesResult) = try await (favoritesQuery, suggestionsQuery, recipesQuery)
             recipes = recipesResult.items
             suggestedRecipes = suggestionsResult
             totalPages = recipesResult.total
+            favoriteRecipes = favoritesResult
         } catch {
             hasError = true
             errorMessage = "Failed to fetch recipes"
@@ -191,6 +200,86 @@ extension RecipesVM {
     func dismissFilter() {
         isFiltered = false
     }
+}
+
+//INVENTORY COORDINATION EXTENSION
+extension RecipesVM {
+    func inventoryUpdated() async {
+        do {
+            suggestedRecipes = try await interactor.getRecipeSuggestions()
+        } catch {
+            hasError = true
+            errorMessage = "Error loading recipes"
+        }
+    }
+}
+
+//FAVORITE LOGIC EXTENSION
+extension RecipesVM {
+    func toggleFavorite(recipe: UUID) async {
+        do {
+            if favoriteRecipes.contains(where: { $0.id == recipe }) {
+                try await interactor.removeFavorite(id: recipe)
+            } else {
+                try await interactor.addFavorite(id: recipe)
+            }
+            await initRecipes()
+            
+        } catch {
+            hasError = true
+            errorMessage = "Error toggling favorite"
+        }
+    }
+    
+    func initAuxRecipeLists() async {
+        async let suggestionsQuery = interactor.getRecipeSuggestions()
+        async let favoritesQuery = interactor.getFavorites()
+        
+        do {
+            let (favoritesResult, suggestionsResult) = try await (favoritesQuery, suggestionsQuery)
+            
+            suggestedRecipes = suggestionsResult
+            favoriteRecipes = favoritesResult
+        } catch {
+            hasError = true
+            errorMessage = "Failed to fetch recipes"
+        }
+    }
+    
+    func softToggleFavorite(recipe: UUID) async {
+        
+        guard let index = recipes.firstIndex(where: { $0.id == recipe }) else {
+            return
+        }
+        
+        do {
+            if favoriteRecipes.contains(where: { $0.id == recipe }) {
+                try await interactor.removeFavorite(id: recipe)
+                
+                recipes[index].favorite = false
+                recipes[index].favTotal -= 1
+            } else {
+                try await interactor.addFavorite(id: recipe)
+                
+                recipes[index].favorite = true
+                recipes[index].favTotal += 1
+            }
+            await initAuxRecipeLists()
+            
+        } catch {
+            hasError = true
+            errorMessage = "Error toggling favorite"
+        }
+    }
+    
+    //    func getRecipeFavorites(recipeId: UUID) async {
+    //        do {
+    //            try await interactor.getRecipeFavorites(id: recipeId)
+    //        } catch {
+    //            hasError = true
+    //            errorMessage = "Error fetching recipe likes"
+    //        }
+    //    }
 }
 
 extension RecipesVM {

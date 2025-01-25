@@ -8,6 +8,7 @@ protocol DataInteractor {
     func getIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO>
     func searchIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO>
     
+    
     //Recipes
     func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
     func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
@@ -15,6 +16,12 @@ protocol DataInteractor {
     func getRecipeIngredients(id: UUID) async throws -> RecipeDTO
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws
     func deleteRecipe(id: UUID) async throws
+    func getRecipeFavorites(id: UUID) async throws -> [UserLikeInfo]
+    //Favorites
+    func getFavorites() async throws -> [RecipeListDTO]
+    func addFavorite(id: UUID) async throws
+    func removeFavorite(id: UUID) async throws
+    
     
     //Inventory
     func getInventory() async throws -> [InventoryItemDTO]
@@ -68,6 +75,7 @@ extension URLRequest {
 }
 
 struct Network: NetworkJSONInteractor, DataInteractor {
+    
     
     static let shared = Network()
     
@@ -202,6 +210,28 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     
     func deleteRecipe(id: UUID) async throws {
         try await post(request: .delete(url: .recipesId(id: id)),
+                       status: 204)
+    }
+    
+    func getRecipeFavorites(id: UUID) async throws -> [UserLikeInfo] {
+        try await getJSON(request: .get(url: .recipesIdFavorites(id: id)),
+                          type: [UserLikeInfo].self)
+    }
+    
+    //Favorites Interactions
+    
+    func getFavorites() async throws -> [RecipeListDTO] {
+        try await getJSON(request: .get(url: .favorites),
+                          type: [RecipeListDTO].self)
+    }
+    
+    func addFavorite(id: UUID) async throws {
+        try await post(request: .post(url: .favorites, post: id),
+                       status: 201)
+    }
+    
+    func removeFavorite(id: UUID) async throws {
+        try await post(request: .delete(url: .favoritesId(id: id)),
                        status: 204)
     }
 }

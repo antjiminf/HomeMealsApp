@@ -35,5 +35,13 @@ extension URL {
     static func recipesIdIngredients(id: UUID) -> URL {
         recipes.appending(path: "\(id.uuidString)/ingredients")
     }
+    static func recipesIdFavorites(id: UUID) -> URL {
+        recipes.appending(path: "\(id.uuidString)/favorites")
+    }
+    //Favorites
+    static let favorites = recipes.appending(path: "favorites")
+    static func favoritesId(id: UUID) -> URL {
+        favorites.appending(path: id.uuidString)
+    }
     
 }
