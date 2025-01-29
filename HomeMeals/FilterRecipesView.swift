@@ -7,7 +7,7 @@ struct FilterRecipesView: View {
     @State var filterVm: FilterRecipesVM
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Recipe Name")) {
                     HStack {

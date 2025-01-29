@@ -11,7 +11,7 @@ struct IngredientsSelector: View {
     var body: some View {
         @Bindable var ingredientsBindable = ingredientsVM
 
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 // Search bar
                 HStack {
@@ -22,8 +22,10 @@ struct IngredientsSelector: View {
                         .overlay(
                             HStack {
                                 Spacer()
-                                if !ingredientsBindable.searchText.isEmpty {
-                                    Button(action: { ingredientsBindable.searchText = "" }) {
+                                if !ingredientsVM.searchText.isEmpty {
+                                    Button { 
+                                        ingredientsBindable.searchText = ""
+                                    } label: {
                                         Image(systemName: "xmark.circle.fill")
                                             .foregroundColor(.gray)
                                     }

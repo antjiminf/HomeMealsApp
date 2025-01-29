@@ -9,7 +9,7 @@ struct EditQuantityView: View {
     var body: some View {
         @Bindable var inventory = inventoryVm
         
-        NavigationView {
+        NavigationStack {
             VStack(alignment: .center) {
                 HStack() {
                     switch inventoryItemVm.inventoryItem.unit {
