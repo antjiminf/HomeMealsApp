@@ -180,7 +180,7 @@ struct InteractorTest: DataInteractor {
     }
     
     func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO> {
-        //TODO: SI TUVIESE SUFICIENTES RECETAS PODRÍA PROBAR EL SCROLL INFINITO
+        //TODO: SI TUVIESE SUFICIENTES RECETAS PODRÍA PROBAR EL SCROLL INFINITO EN PREVIEWS
 //        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
 //            return Page(items: [], page: page, perPage: perPage, total: 0)
 //        }
@@ -219,6 +219,13 @@ extension RecipeView {
         RecipeView()
             .environment(RecipesVM(interactor: InteractorTest()))
             .environment(IngredientsVM(interactor: InteractorTest()))
+    }
+}
+
+extension FavoriteRecipesView {
+    static var preview: some View {
+        FavoriteRecipesView()
+            .environment(RecipesVM(interactor: InteractorTest()))
     }
 }
 
@@ -270,7 +277,7 @@ extension EditQuantityView {
 extension RecipeDetailsView {
     static var preview: some View {
         NavigationStack {
-            RecipeDetailsView(recipeId: UUID(), recipeDetailsVm: RecipeDetailsVM(interactor: InteractorTest()))
+            RecipeDetailsView(/*recipeId: UUID(), */recipeDetailsVm: RecipeDetailsVM(interactor: InteractorTest(), recipeId: UUID()))
                 .environment(RecipesVM(interactor: InteractorTest()))
         }
     }
@@ -280,6 +287,23 @@ extension FilterRecipesView {
     static var preview: some View {
         NavigationStack {
             FilterRecipesView(filterVm: FilterRecipesVM())
+                .environment(RecipesVM(interactor: InteractorTest()))
+        }
+    }
+}
+
+extension UsersLikesList {
+    static var preview: some View {
+        NavigationStack {
+            UsersLikesList(recipeDetailsVm: RecipeDetailsVM(interactor: InteractorTest(), recipeId: UUID()))
+        }
+    }
+}
+
+extension SuggestedRecipesList {
+    static var preview: some View {
+        NavigationStack {
+            SuggestedRecipesList()
                 .environment(RecipesVM(interactor: InteractorTest()))
         }
     }

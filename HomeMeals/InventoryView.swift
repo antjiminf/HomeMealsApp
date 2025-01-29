@@ -14,7 +14,6 @@ struct InventoryView: View {
         
         NavigationStack {
             VStack(alignment: .leading) {
-                // Lista de ingredientes
                 HStack {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
@@ -129,8 +128,8 @@ struct InventoryView: View {
                 if let item = inventoryVm.editingItem {
                     EditQuantityView(inventoryItemVm: InventoryItemVM(inventoryItem: item),
                                      onUpdate: recipesVm.inventoryUpdated)
-                        .environment(inventoryVm)
-                        .presentationDetents([.fraction(0.25), .medium], selection: $detent)
+                    .environment(inventoryVm)
+                    .presentationDetents([.fraction(0.25), .medium], selection: $detent)
                 }
             }
             .fullScreenCover(isPresented: $showAddIngredients) {
@@ -178,49 +177,8 @@ struct InventoryView: View {
             }, message: {
                 Text("Are you sure you want to delete \(inventoryVm.pendingItem?.name ?? "this ingredient")?")
             })
-            .sheet(isPresented: $showSuggestedRecipes) {
-                //TODO: NO PUEDO HACER NAVIGATIONSTACK AQUÍ, no respeta el detent
-                NavigationStack {
-                    Group {
-                        if !recipesVm.suggestedRecipes.isEmpty {
-                            Section {
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack {
-                                        ForEach(recipesVm.suggestedRecipes) { recipe in
-                                            NavigationLink(destination: RecipeDetailsView(recipeId: recipe.id)) {
-                                                RecipeCard(recipe: recipe)
-                                            }
-                                        }
-                                    }
-                                    .scrollTargetLayout()
-                                }
-                                .scrollTargetBehavior(.viewAligned)
-                                .contentMargins(20, for: .scrollContent)
-                                .listRowInsets(EdgeInsets())
-                            } header: {
-                                HStack {
-                                    Text("Suggested for you")
-                                        .font(.title)
-                                        .bold()
-                                    Spacer()
-                                    Button("Close") {
-                                        showSuggestedRecipes = false
-                                    }
-                                }
-                                .padding()
-                            }
-                            .listRowSeparator(.hidden)
-                        } else {
-                            Text("No suggestions available.")
-                                .foregroundStyle(.secondary)
-                                .padding()
-                        }
-                    }
-                    .presentationDetents([.medium, .large])
-                    //                .navigationDestination(for: RecipeListDTO.self) { r in
-                    //                    RecipeDetailsView(recipe: r.id)
-                    //                }
-                }
+            .fullScreenCover(isPresented: $showSuggestedRecipes) {
+                SuggestedRecipesList()
             }
             .navigationTitle("Inventory")
         }
