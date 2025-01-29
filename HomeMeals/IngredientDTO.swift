@@ -32,7 +32,8 @@ struct RecipeIngredient: Identifiable, Codable, Hashable {
         return SelectionIngredient(id: ingredientId,
                                    name: name,
                                    unit: unit,
-                                   quantity: quantity)
+                                   quantity: quantity
+        )
     }
 }
 

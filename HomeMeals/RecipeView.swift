@@ -18,7 +18,7 @@ struct RecipeView: View {
                                 if !recipesVm.filteredRecipes.isEmpty {
                                     ForEach(recipesVm.filteredRecipes, id: \.id) { recipe in
                                         NavigationLink {
-                                            RecipeDetailsView(recipeId: recipe.id)
+                                            RecipeDetailsView(recipeDetailsVm: RecipeDetailsVM(recipeId: recipe.id))
                                         } label: {
                                             RecipeRow(recipe: recipe)
                                                 .task {
@@ -38,16 +38,18 @@ struct RecipeView: View {
                                 }
                             } else {
                                 ForEach(recipesVm.recipes, id: \.id) { recipe in
-                                    NavigationLink {
-                                        RecipeDetailsView(recipeId: recipe.id)
-                                    } label: {
-                                        RecipeRow(recipe: recipe)
-                                            .task {
-                                                if recipesVm.hasReachedEnd(recipe: recipe),
-                                                   !recipesVm.isFetching {
-                                                    await recipesVm.getNextRecipes()
+                                    ZStack {
+                                        NavigationLink {
+                                            RecipeDetailsView(recipeDetailsVm: RecipeDetailsVM(recipeId: recipe.id))
+                                        } label: {
+                                            RecipeRow(recipe: recipe)
+                                                .task {
+                                                    if recipesVm.hasReachedEnd(recipe: recipe),
+                                                       !recipesVm.isFetching {
+                                                        await recipesVm.getNextRecipes()
+                                                    }
                                                 }
-                                            }
+                                        }
                                     }
                                 }
                             }
@@ -95,9 +97,9 @@ struct RecipeView: View {
                 }
             }
             .navigationTitle("Recipes Explorer")
-            //            .navigationBarTitleDisplayMode(.inline)
+                        .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: RecipeListDTO.self) { r in
-                RecipeDetailsView(recipeId: r.id)
+                RecipeDetailsView(recipeDetailsVm: RecipeDetailsVM(recipeId: r.id))
             }
             .fullScreenCover(isPresented: $showAddRecipe) {
                 RecipeFormView(addRecipeVm: AddRecipeVM(),

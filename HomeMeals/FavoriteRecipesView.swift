@@ -23,9 +23,9 @@ struct FavoriteRecipesView: View {
                             } else {
                                 ForEach(recipesVm.searchedFavorites) { recipe in
                                     NavigationLink {
-                                        RecipeDetailsView(recipeId: recipe.id)
+                                        RecipeDetailsView(recipeDetailsVm: RecipeDetailsVM(recipeId: recipe.id))
                                     } label: {
-                                        RecipeRow(recipe: recipe)
+                                        RecipeRow(recipe: recipe, listType: .favorite)
                                     }
                                 }
                             }
@@ -40,6 +40,5 @@ struct FavoriteRecipesView: View {
 }
 
 #Preview {
-    FavoriteRecipesView()
-        .environment(RecipesVM(interactor: InteractorTest()))
+    FavoriteRecipesView.preview
 }
