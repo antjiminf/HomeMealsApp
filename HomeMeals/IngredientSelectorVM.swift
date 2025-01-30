@@ -15,7 +15,7 @@ final class IngredientSelectorVM {
         self.selectedIngredients = ingredients
     }
     
-    func updateIngredientSelection(ingredient: IngredientDTO, quantity: Double) {
+    func updateIngredientSelection(ingredient: Ingredient, quantity: Double) {
         if let index = selectedIngredients.firstIndex(where: { $0.id == ingredient.id }) {
             if quantity > 0 {
                 selectedIngredients[index].quantity = quantity
@@ -28,7 +28,7 @@ final class IngredientSelectorVM {
         }
     }
     
-    func quantityForIngredient(_ ingredient: IngredientDTO) -> Double {
+    func quantityForIngredient(_ ingredient: Ingredient) -> Double {
         return selectedIngredients.first(where: { $0.id == ingredient.id })?.quantity ?? 0
     }
     

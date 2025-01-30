@@ -4,21 +4,15 @@ import SwiftUI
 final class RecipesVM {
     private let interactor: DataInteractor
     
-    var recipes: [RecipeListDTO] = []
-    var favoriteRecipes: [RecipeListDTO] = []
-    var searchedFavorites: [RecipeListDTO] {
+    var recipes: [RecipeListItem] = []
+    var favoriteRecipes: [RecipeListItem] = []
+    var searchedFavorites: [RecipeListItem] {
         favoriteRecipes.filter { r in
             favoriteSearchText.isEmpty || r.name.localizedCaseInsensitiveContains(favoriteSearchText)
         }
     }
     var favoriteSearchText: String = ""
-    var suggestedRecipes: [RecipeListDTO] = []
-    //        var searchedRecipes: [RecipeListDTO] {
-    //            recipes.filter { r in
-    //                search.isEmpty || r.name.localizedCaseInsensitiveContains(search)
-    //            }
-    //        }
-    //        var search: String = ""
+    var suggestedRecipes: [RecipeListItem] = []
     
     private let perPage = 30
     private var page = 1
@@ -26,7 +20,7 @@ final class RecipesVM {
     
     var isFiltered: Bool = false
     private var filters: (String?, Int?, Int?, [Allergen]?)
-    var filteredRecipes: [RecipeListDTO] = []
+    var filteredRecipes: [RecipeListItem] = []
     private var filteredPage: Int = 1
     private var filteredTotalPages: Int?
     
@@ -104,7 +98,7 @@ final class RecipesVM {
         }
     }
     
-    func getRecipeDetails(id: UUID) async -> RecipeDTO? {
+    func getRecipeDetails(id: UUID) async -> Recipe? {
         do {
             return try await interactor.getRecipeIngredients(id: id)
         } catch {
@@ -143,7 +137,7 @@ final class RecipesVM {
         filteredRecipes = []
     }
     
-    func hasReachedEnd(recipe: RecipeListDTO) -> Bool {
+    func hasReachedEnd(recipe: RecipeListItem) -> Bool {
         return isFiltered ? recipe.id == filteredRecipes.last?.id : recipe.id == recipes.last?.id
     }
 }

@@ -4,13 +4,14 @@ import SwiftUI
 final class InventoryVM {
     private let interactor: DataInteractor
     
-    var inventory: [InventoryItemDTO] = []
+    var inventory: [InventoryItem] = []
     var searchText: String = ""
-    var filteredInventory: [InventoryItemDTO] {
+    var filteredInventory: [InventoryItem] {
         inventory.filter {
             searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText)
         }
     }
+    var shoppingList: [Groceries] = []
 //    var ingredients: [SelectionIngredient] {
 //        inventory.map { i in
 //            SelectionIngredient(id: i.ingredientId,
@@ -20,11 +21,11 @@ final class InventoryVM {
 //        }
 //    }
     
-    var editingItem: InventoryItemDTO?
+    var editingItem: InventoryItem?
     var showingEditModal: Bool = false
     
     var showingDeleteConfirmation: Bool = false
-    var pendingItem: InventoryItemDTO?
+    var pendingItem: InventoryItem?
 
     
     init(interactor: DataInteractor = Network.shared) {
@@ -93,6 +94,14 @@ final class InventoryVM {
                                        quantity: i.quantity)
             })
             await loadInventory()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getShoppingList(ingredients: [ModifyInventoryItemDTO]) async {
+        do {
+            shoppingList = try await interactor.shoppingList(ingredients)
         } catch {
             print(error.localizedDescription)
         }

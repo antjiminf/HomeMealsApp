@@ -10,16 +10,16 @@ extension [SelectionIngredient] {
     ]
 }
 
-extension InventoryItemDTO {
-    static var test = InventoryItemDTO(id: UUID(uuidString: "B07B2DF9-2A7C-4280-A14B-6E503AA2581D")!,
+extension InventoryItem {
+    static var test = InventoryItem(id: UUID(uuidString: "B07B2DF9-2A7C-4280-A14B-6E503AA2581D")!,
                                        ingredientId: UUID(uuidString: "623E4567-E89B-12D3-A456-426614174005")!,
                                        name: "Sugar",
                                        unit: .weight,
                                        quantity: 20)
 }
 
-extension RecipeDTO {
-    static var test = RecipeDTO(id: UUID(),
+extension Recipe {
+    static var test = Recipe(id: UUID(),
                                 name: "Grilled Chicken Salad",
                                 description: "The best chicken recipe you would ever see",
                                 time: 20,
@@ -43,8 +43,8 @@ extension RecipeDTO {
                                 favTotal: 300)
 }
 
-extension RecipeListDTO {
-    static var test = RecipeListDTO(id: UUID(),
+extension RecipeListItem {
+    static var test = RecipeListItem(id: UUID(),
                                     name: "Papas",
                                     description: "Las mejores papas de la historia",
                                     time: 20,
@@ -60,24 +60,24 @@ extension UserLikeInfo {
 
 struct InteractorTest: DataInteractor {
     
-    func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO> {
+    func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListItem> {
         return Page(items: [], page: 1, perPage: 10, total: 10)
     }
     
     
-    func getRecipeIngredients(id: UUID) async throws -> RecipeDTO {
-        RecipeDTO.test
+    func getRecipeIngredients(id: UUID) async throws -> Recipe {
+        Recipe.test
     }
     
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws {}
     
     func deleteRecipe(id: UUID) async throws {}
     
-    func getRecipeSuggestions() async throws -> [RecipeListDTO] {
+    func getRecipeSuggestions() async throws -> [RecipeListItem] {
         guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
             return [.test]
         }
-        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
+        let recipes = try getJSON(url: url, type: [RecipeListItem].self)
         return recipes
         
     }
@@ -89,11 +89,11 @@ struct InteractorTest: DataInteractor {
          UserLikeInfo(id: UUID(), name: "Kylian Mbappé")]
     }
     
-    func getFavorites() async throws -> [RecipeListDTO] {
+    func getFavorites() async throws -> [RecipeListItem] {
         guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
             return []
         }
-        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
+        let recipes = try getJSON(url: url, type: [RecipeListItem].self)
         return recipes
     }
     
@@ -105,19 +105,19 @@ struct InteractorTest: DataInteractor {
     
     //INVENTORY
     
-    func getInventory() async throws -> [InventoryItemDTO] {
+    func getInventory() async throws -> [InventoryItem] {
         [
-            InventoryItemDTO(id: UUID(uuidString: "B07B2DF9-2A7C-4280-A14B-6E503AA2581D")!,
+            InventoryItem(id: UUID(uuidString: "B07B2DF9-2A7C-4280-A14B-6E503AA2581D")!,
                              ingredientId: UUID(uuidString: "623E4567-E89B-12D3-A456-426614174005")!,
                              name: "Sugar",
                              unit: .weight,
                              quantity: 20),
-            InventoryItemDTO(id: UUID(uuidString: "74092453-BE2A-4FF6-AC3A-30274A65B906")!,
+            InventoryItem(id: UUID(uuidString: "74092453-BE2A-4FF6-AC3A-30274A65B906")!,
                              ingredientId: UUID(uuidString: "423E4567-E89B-12D3-A456-426614174003")!,
                              name: "Milk",
                              unit: .volume,
                              quantity: 2),
-            InventoryItemDTO(id: UUID(uuidString: "5087909C-0AB6-4AAD-BA2B-03A2006D4724")!,
+            InventoryItem(id: UUID(uuidString: "5087909C-0AB6-4AAD-BA2B-03A2006D4724")!,
                              ingredientId: UUID(uuidString: "723E4567-E89B-12D3-A456-426614174006")!,
                              name: "Egg",
                              unit: .units,
@@ -146,19 +146,19 @@ struct InteractorTest: DataInteractor {
         //        try await post(request: .post(url: .recipes, post: recipe), status: 201)
     }
     
-    func getAllIngredients() async throws -> [IngredientDTO] {
+    func getAllIngredients() async throws -> [Ingredient] {
         guard let url = Bundle.main.url(forResource: "ingredients", withExtension: "json") else {
             return []
         }
-        return try getJSON(url: url, type: [IngredientDTO].self)
+        return try getJSON(url: url, type: [Ingredient].self)
     }
     
-    func getIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO> {
+    func getIngredients(page: Int, perPage: Int) async throws -> Page<Ingredient> {
         guard let url = Bundle.main.url(forResource: "ingredients", withExtension: "json") else {
             return Page(items: [], page: page, perPage: perPage, total: 0)
         }
         
-        let ingredients = try getJSON(url: url, type: [IngredientDTO].self)
+        let ingredients = try getJSON(url: url, type: [Ingredient].self)
         let total = ingredients.count
         
         let first = (page - 1) * perPage
@@ -172,14 +172,14 @@ struct InteractorTest: DataInteractor {
         return Page(items: paginatedIngredients, page: page, perPage: perPage, total: total)
     }
     
-    func searchIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO> {
+    func searchIngredients(page: Int, perPage: Int) async throws -> Page<Ingredient> {
         //        guard let url = Bundle.main.url(forResource: "ingredients", withExtension: "json") else {
         //            return Page(items: [], page: page, perPage: perPage, total: 0)
         //        }
         return Page(items: [], page: 1, perPage: 10, total: 0)
     }
     
-    func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO> {
+    func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListItem> {
         //TODO: SI TUVIESE SUFICIENTES RECETAS PODRÍA PROBAR EL SCROLL INFINITO EN PREVIEWS
 //        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
 //            return Page(items: [], page: page, perPage: perPage, total: 0)

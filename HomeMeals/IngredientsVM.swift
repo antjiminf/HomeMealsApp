@@ -4,16 +4,16 @@ import SwiftUI
 final class IngredientsVM {
     private let interactor: DataInteractor
     
-    var ingredients: [IngredientDTO] = []
+    var ingredients: [Ingredient] = []
     var searchText: String = ""
     
-    var filteredIngredients: [IngredientDTO] {
+    var filteredIngredients: [Ingredient] {
         ingredients.filter {
             searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText)
         }
     }
     
-    var ingredientsByCategory: [FoodCategory: [IngredientDTO]] {
+    var ingredientsByCategory: [FoodCategory: [Ingredient]] {
         Dictionary(grouping: filteredIngredients, by: { $0.category })
     }
     

@@ -3,7 +3,7 @@ import SwiftUI
 @Observable
 final class AddRecipeVM {
     
-    init(recipe: RecipeDTO? = nil) {
+    init(recipe: Recipe? = nil) {
         if let recipe = recipe {
             id = recipe.id
             name = recipe.name

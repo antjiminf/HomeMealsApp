@@ -4,28 +4,28 @@ import ACNetwork
 protocol DataInteractor {
     
     //Ingredients
-    func getAllIngredients() async throws -> [IngredientDTO]
-    func getIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO>
-    func searchIngredients(page: Int, perPage: Int) async throws -> Page<IngredientDTO>
+    func getAllIngredients() async throws -> [Ingredient]
+    func getIngredients(page: Int, perPage: Int) async throws -> Page<Ingredient>
+    func searchIngredients(page: Int, perPage: Int) async throws -> Page<Ingredient>
     
     
     //Recipes
-    func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
-    func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListDTO>
+    func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListItem>
+    func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListItem>
     func addRecipe(_ recipe: CreateRecipeDTO) async throws
-    func getRecipeIngredients(id: UUID) async throws -> RecipeDTO
+    func getRecipeIngredients(id: UUID) async throws -> Recipe
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws
     func deleteRecipe(id: UUID) async throws
     func getRecipeFavorites(id: UUID) async throws -> [UserLikeInfo]
     //Favorites
-    func getFavorites() async throws -> [RecipeListDTO]
+    func getFavorites() async throws -> [RecipeListItem]
     func addFavorite(id: UUID) async throws
     func removeFavorite(id: UUID) async throws
     
     
     //Inventory
-    func getInventory() async throws -> [InventoryItemDTO]
-    func getRecipeSuggestions() async throws -> [RecipeListDTO]
+    func getInventory() async throws -> [InventoryItem]
+    func getRecipeSuggestions() async throws -> [RecipeListItem]
     func addInventoryItem(_ item: ModifyInventoryItemDTO) async throws
     func shoppingList(_ ingredients: [ModifyInventoryItemDTO]) async throws -> [Groceries]
     func updateInventory(_ ingredients: [ModifyInventoryItemDTO]) async throws
@@ -82,12 +82,12 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     
     // Inventory
     
-    func getInventory() async throws -> [InventoryItemDTO] {
-        try await getJSON(request: .get(url: .inventory), type: [InventoryItemDTO].self)
+    func getInventory() async throws -> [InventoryItem] {
+        try await getJSON(request: .get(url: .inventory), type: [InventoryItem].self)
     }
     
-    func getRecipeSuggestions() async throws -> [RecipeListDTO] {
-        try await getJSON(request: .get(url: .inventoryRecipeSuggestions), type: [RecipeListDTO].self)
+    func getRecipeSuggestions() async throws -> [RecipeListItem] {
+        try await getJSON(request: .get(url: .inventoryRecipeSuggestions), type: [RecipeListItem].self)
     }
     
     func addInventoryItem(_ item: ModifyInventoryItemDTO) async throws {
@@ -129,43 +129,43 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     
     //Ingredients
     
-    func getAllIngredients() async throws -> [IngredientDTO] {
-        try await getJSON(request: .get(url: .ingredientsAll), type: [IngredientDTO].self)
+    func getAllIngredients() async throws -> [Ingredient] {
+        try await getJSON(request: .get(url: .ingredientsAll), type: [Ingredient].self)
     }
     
-    func getIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<IngredientDTO> {
+    func getIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<Ingredient> {
         try await getJSON(
             request: .get(url: .ingredients.appending(queryItems: [
                 URLQueryItem(name: "page", value: page.description),
                 URLQueryItem(name: "per", value: perPage.description)
             ])),
-            type: Page<IngredientDTO>.self)
+            type: Page<Ingredient>.self)
     }
     
     //TODO: Falta busqueda
-    func searchIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<IngredientDTO> {
+    func searchIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<Ingredient> {
         try await getJSON(
             request: .get(url: .ingredientsSearch.appending(queryItems: [
                 URLQueryItem(name: "page", value: page.description),
                 URLQueryItem(name: "per", value: perPage.description)
             ])),
-            type: Page<IngredientDTO>.self)
+            type: Page<Ingredient>.self)
     }
     
     
     
     //Recipes
     
-    func getRecipes(page: Int = 1, perPage: Int = 20) async throws -> Page<RecipeListDTO> {
+    func getRecipes(page: Int = 1, perPage: Int = 20) async throws -> Page<RecipeListItem> {
         try await getJSON(
             request: .get(url: .recipes.appending(queryItems: [
                 URLQueryItem(name: "page", value: page.description),
                 URLQueryItem(name: "per", value: perPage.description)
             ])),
-            type: Page<RecipeListDTO>.self)
+            type: Page<RecipeListItem>.self)
     }
     
-    func filterRecipes(name: String? = nil, minTime: Int? = nil, maxTime: Int? = nil, allergens: [Allergen]? = nil, page: Int = 1, perPage: Int = 20) async throws -> Page<RecipeListDTO> {
+    func filterRecipes(name: String? = nil, minTime: Int? = nil, maxTime: Int? = nil, allergens: [Allergen]? = nil, page: Int = 1, perPage: Int = 20) async throws -> Page<RecipeListItem> {
         
         var queryItems: [URLQueryItem] = []
         
@@ -190,7 +190,7 @@ struct Network: NetworkJSONInteractor, DataInteractor {
         }
         
         return try await getJSON(request: .get(url: .recipesSearch.appending(queryItems: queryItems)),
-                                 type: Page<RecipeListDTO>.self)
+                                 type: Page<RecipeListItem>.self)
     }
 
     
@@ -199,9 +199,9 @@ struct Network: NetworkJSONInteractor, DataInteractor {
                        status: 201)
     }
     
-    func getRecipeIngredients(id: UUID) async throws -> RecipeDTO {
+    func getRecipeIngredients(id: UUID) async throws -> Recipe {
         try await getJSON(request: .get(url: .recipesIdIngredients(id: id)), 
-                          type: RecipeDTO.self)
+                          type: Recipe.self)
     }
     
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws {
@@ -220,9 +220,9 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     
     //Favorites Interactions
     
-    func getFavorites() async throws -> [RecipeListDTO] {
+    func getFavorites() async throws -> [RecipeListItem] {
         try await getJSON(request: .get(url: .favorites),
-                          type: [RecipeListDTO].self)
+                          type: [RecipeListItem].self)
     }
     
     func addFavorite(id: UUID) async throws {

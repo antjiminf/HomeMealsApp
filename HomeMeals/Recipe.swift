@@ -7,7 +7,7 @@ struct Page<T: Codable>: Codable {
     let total: Int
 }
 
-struct RecipeDTO: Codable, Identifiable {
+struct Recipe: Codable, Identifiable {
     let id: UUID
     let name: String
     let description: String
@@ -20,7 +20,7 @@ struct RecipeDTO: Codable, Identifiable {
     var favTotal: Int
 }
 
-struct RecipeListDTO: Codable, Identifiable, Hashable {
+struct RecipeListItem: Codable, Identifiable, Hashable {
     let id: UUID
     let name: String
     let description: String

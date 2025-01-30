@@ -1,7 +1,7 @@
 import Foundation
 
 
-struct IngredientDTO: Codable, Identifiable, Hashable {
+struct Ingredient: Codable, Identifiable, Hashable {
     let id: UUID
     let name: String
     let unit: Unit

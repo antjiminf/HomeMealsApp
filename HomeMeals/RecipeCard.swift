@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RecipeCard: View {
-    let recipe: RecipeListDTO
+    let recipe: RecipeListItem
     private let cardHeight: CGFloat = 120
 
     var body: some View {

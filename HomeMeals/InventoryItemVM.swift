@@ -3,11 +3,11 @@ import SwiftUI
 @Observable
 final class InventoryItemVM {
     
-    let inventoryItem: InventoryItemDTO
+    let inventoryItem: InventoryItem
     
     var quantity: Double
     
-    init(inventoryItem: InventoryItemDTO) {
+    init(inventoryItem: InventoryItem) {
         self.inventoryItem = inventoryItem
         self.quantity = inventoryItem.quantity
     }

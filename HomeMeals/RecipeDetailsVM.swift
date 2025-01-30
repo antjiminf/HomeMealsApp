@@ -8,7 +8,7 @@ final class RecipeDetailsVM {
     var showEditForm: Bool = false
     var showDeleteConfirmation: Bool = false
     var showRecipeLikes: Bool = false
-    var recipe: RecipeDTO?
+    var recipe: Recipe?
     var likes: [UserLikeInfo] = []
     
     init(interactor: DataInteractor = Network.shared, recipeId: UUID) {
