@@ -1,7 +1,6 @@
 import Foundation
 
 extension NumberFormatter {
-    
     static var decimalFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -20,5 +19,19 @@ extension Int {
         } else {
             return "\(self)"
         }
+    }
+}
+
+extension Date {
+    var dateFormatter: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, MMM d"
+        return formatter.string(from: self)
+    }
+}
+
+extension Date {
+    var normalized: Date {
+        Calendar.current.startOfDay(for: self)
     }
 }

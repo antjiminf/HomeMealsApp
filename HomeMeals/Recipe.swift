@@ -45,3 +45,8 @@ struct CreateRecipeDTO: Codable {
     let guide: [String]
     let allergens: [Allergen]
 }
+
+struct RecipeQuantity: Codable {
+    let id: UUID
+    var quantity: Int
+}

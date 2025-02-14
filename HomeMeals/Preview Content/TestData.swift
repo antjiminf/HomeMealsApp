@@ -60,8 +60,18 @@ extension UserLikeInfo {
 
 struct InteractorTest: DataInteractor {
     
+    
     func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListItem> {
         return Page(items: [], page: 1, perPage: 10, total: 10)
+    }
+    
+    func getTotalIngredientsInRecipes(recipes: [RecipeQuantity]) async throws -> [Groceries] {
+        [
+            Groceries(ingredientId: UUID(), name: "Bread", requiredQuantity: 100, unit: .units),
+            Groceries(ingredientId: UUID(), name: "Egg", requiredQuantity: 50, unit: .units),
+            Groceries(ingredientId: UUID(), name: "Oil", requiredQuantity: 0.5, unit: .volume),
+            Groceries(ingredientId: UUID(), name: "Chicken", requiredQuantity: 200, unit: .weight)
+        ]
     }
     
     

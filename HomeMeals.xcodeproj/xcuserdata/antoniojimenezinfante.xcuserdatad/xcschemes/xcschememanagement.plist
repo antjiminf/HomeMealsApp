@@ -7,7 +7,25 @@
 		<key>HomeMeals.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1E28E9852C8CB76200CEA3BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1E28E9952C8CB76400CEA3BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1E28E99F2C8CB76400CEA3BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

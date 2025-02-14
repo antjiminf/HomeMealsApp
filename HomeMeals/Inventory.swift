@@ -21,6 +21,10 @@ struct Groceries: Codable {
     let name: String
     let requiredQuantity: Double
     let unit: Unit
+    
+    func toModifyInventoryItemDTO() -> ModifyInventoryItemDTO {
+        return .init(ingredient: ingredientId, unit: unit, quantity: requiredQuantity)
+    }
 }
 
 struct InventoryItem: Codable, Identifiable {

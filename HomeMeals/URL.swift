@@ -29,6 +29,7 @@ extension URL {
     // Recipes
     static let recipes = api.appending(path: "recipes")
     static let recipesSearch = recipes.appending(path: "search")
+    static let recipesTotalIngredients = recipes.appending(path: "total-ingredients")
     static func recipesId(id: UUID) -> URL {
         recipes.appending(path: id.uuidString)
     }
