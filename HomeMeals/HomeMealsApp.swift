@@ -7,12 +7,6 @@ struct HomeMealsApp: App {
     @State var ingredientsVm = IngredientsVM()
     @State var inventoryVm = InventoryVM()
     
-    var sharedModelContainer: ModelContainer = {
-            let schema = Schema([MealPlanDay.self, Meal.self])
-            let container = try! ModelContainer(for: schema)
-            return container
-        }()
-    
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -20,6 +14,6 @@ struct HomeMealsApp: App {
                 .environment(ingredientsVm)
                 .environment(inventoryVm)
         }
-        .modelContainer(for: MealPlanDay.self)
+        .modelContainer(for: [MealPlanDay.self, GroceriesList.self])
     }
 }

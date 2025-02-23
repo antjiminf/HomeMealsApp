@@ -110,7 +110,6 @@ struct IngredientsSelectedList: View {
                                 }
                             }
                             .padding(.bottom, 5)
-//                            .buttonStyle(PlainButtonStyle())
                             Divider()
                         }
 //                        .onDelete(perform: deleteIngredients)
