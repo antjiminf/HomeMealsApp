@@ -11,15 +11,6 @@ final class InventoryVM {
             searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText)
         }
     }
-    var shoppingList: [Groceries] = []
-//    var ingredients: [SelectionIngredient] {
-//        inventory.map { i in
-//            SelectionIngredient(id: i.ingredientId,
-//                                name: i.name,
-//                                unit: i.unit,
-//                                quantity: i.quantity)
-//        }
-//    }
     
     var editingItem: InventoryItem?
     var showingEditModal: Bool = false
@@ -35,7 +26,7 @@ final class InventoryVM {
     
     func loadInventory() async {
         do {
-            self.inventory = try await interactor.getInventory()
+            inventory = try await interactor.getInventory()
         } catch {
             print(error.localizedDescription)
         }
@@ -94,14 +85,6 @@ final class InventoryVM {
                                        quantity: i.quantity)
             })
             await loadInventory()
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func getShoppingList(ingredients: [ModifyInventoryItemDTO]) async {
-        do {
-            shoppingList = try await interactor.shoppingList(ingredients)
         } catch {
             print(error.localizedDescription)
         }

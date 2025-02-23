@@ -40,16 +40,21 @@ final class RecipesVM {
         viewState = .loading
         defer { viewState = .finished }
         
-        async let recipesQuery = interactor.getRecipes(page: page, perPage: perPage)
-        async let suggestionsQuery = interactor.getRecipeSuggestions()
-        async let favoritesQuery = interactor.getFavorites()
+//        async let recipesQuery = interactor.getRecipes(page: page, perPage: perPage)
+//        async let suggestionsQuery = interactor.getRecipeSuggestions()
+//        async let favoritesQuery = interactor.getFavorites()
         
         do {
-            let (favoritesResult, suggestionsResult, recipesResult) = try await (favoritesQuery, suggestionsQuery, recipesQuery)
-            recipes = recipesResult.items
-            suggestedRecipes = suggestionsResult
-            totalPages = recipesResult.total
-            favoriteRecipes = favoritesResult
+            let result = try await interactor.getRecipes(page: page, perPage: perPage)
+            recipes = result.items
+            totalPages = result.total
+            favoriteRecipes = try await interactor.getFavorites()
+            suggestedRecipes = try await interactor.getRecipeSuggestions()
+//            let (favoritesResult, suggestionsResult, recipesResult) = try await (favoritesQuery, suggestionsQuery, recipesQuery)
+//            recipes = recipesResult.items
+//            suggestedRecipes = suggestionsResult
+//            totalPages = recipesResult.total
+//            favoriteRecipes = favoritesResult
         } catch {
             hasError = true
             errorMessage = "Failed to fetch recipes"

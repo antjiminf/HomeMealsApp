@@ -9,10 +9,9 @@ struct MealPlannerView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: 16) {
                     DatePicker("Select Date", selection: $mealPlanner.selectedDate, displayedComponents: .date)
                         .datePickerStyle(.graphical)
-                        .padding()
                     
                     VStack(spacing: 20) {
                         let dayPlan = mealPlanner.getMealPlan(for: mealPlanner.selectedDate, in: modelContext)
@@ -106,28 +105,5 @@ struct MealPlannerView: View {
 
 
 #Preview {
-    let meals = [
-        Meal(type: .breakfast, recipeId: UUID(), recipeName: "Pancakes"),
-        Meal(type: .lunch, recipeId: UUID(), recipeName: "Grilled Chicken Salad"),
-        Meal(type: .dinner, recipeId: UUID(), recipeName: "Spaghetti Bolognese"),
-        Meal(type: .snack, recipeId: UUID(), recipeName: "Greek Yogurt with Berries"),
-        Meal(type: .lunch, recipeId: UUID(), recipeName: "Avocado Toast"),
-        Meal(type: .dinner, recipeId: UUID(), recipeName: "Salmon with Quinoa")
-    ]
-    
-    let mealPlans = [
-        MealPlanDay(date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!.normalized, meals: [meals[0], meals[1], meals[2]]),
-        MealPlanDay(date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!.normalized, meals: [meals[3], meals[4]]),
-        MealPlanDay(date: Calendar.current.date(byAdding: .day, value: 2, to: Date())!.normalized, meals: [meals[5]])
-    ]
-    
-    MealPlannerView()
-        .environment(RecipesVM(interactor: InteractorTest()))
-        .modelContainer(for: MealPlanDay.self, inMemory: true) { result in
-            if case .success(let container) = result {
-                for mealPlan in mealPlans {
-                    container.mainContext.insert(mealPlan)
-                }
-            }
-        }
+    MealPlannerView.preview
 }

@@ -12,8 +12,7 @@ struct IngredientsSelector: View {
         @Bindable var ingredientsBindable = ingredientsVM
 
         NavigationStack {
-            VStack(spacing: 0) {
-                // Search bar
+            VStack {
                 HStack {
                     TextField("Search ingredients...", text: $ingredientsBindable.searchText)
                         .padding(10)
@@ -37,17 +36,12 @@ struct IngredientsSelector: View {
                 }
                 .padding(.vertical, 8)
 
-                // Form
                 Form {
                     Group {
                         if !ingredientsVM.filteredIngredients.isEmpty {
                             ForEach(ingredientsVM.ingredientsByCategory.keys.sorted(), id: \.self) { category in
-                                Section(header: HStack {
-                                    Image(systemName: "leaf.circle")
-                                    Text(category.rawValue.capitalized)
-                                        .font(.headline)
-                                }) {
-                                    ForEach(ingredientsVM.ingredientsByCategory[category]?.sorted(by: { $0.name < $1.name }) ?? [], id: \.self) { ingredient in
+                                Section {
+                                    ForEach(ingredientsVM.ingredientsByCategory[category]?.sorted { $0.name < $1.name } ?? [], id: \.self) { ingredient in
                                         IngredientQuantity(
                                             ingredientName: ingredient.name,
                                             quantity: Binding(
@@ -56,8 +50,13 @@ struct IngredientsSelector: View {
                                                     selectorVM.updateIngredientSelection(ingredient: ingredient, quantity: newQuantity)
                                                 }
                                             ),
-                                            unit: ingredient.unit
-                                        )
+                                            unit: ingredient.unit)
+                                    }
+                                } header: {
+                                    HStack {
+                                        Image(systemName: "leaf.circle")
+                                        Text(category.rawValue.capitalized)
+                                            .font(.headline)
                                     }
                                 }
                                 .padding(.vertical, 4)
@@ -115,9 +114,9 @@ struct IngredientsSelector: View {
                             case .units:
                             Text("\(i.quantity, specifier: "%.0f") units")
                             case .volume:
-                                Text("\(i.quantity, specifier: "%.2f") L")
+                                Text("\(i.quantity, specifier: "%.1f") L")
                             case .weight:
-                                Text("\(i.quantity, specifier: "%.2f") g")
+                                Text("\(i.quantity, specifier: "%.1f") g")
                         }
                     }
                 }

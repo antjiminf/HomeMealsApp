@@ -7,47 +7,45 @@ struct AllergensSelector: View {
     let isAllergenSelected: (Allergen) -> Bool
     
     var body: some View {
-        Section("Allergens") {
-            HStack {
-                if allergens.isEmpty {
-                    Text("Allergens: None")
-                        .bold()
-                } else {
-                    Text("Allergens: \(allergens.map{$0.rawValue}.joined(separator: ", "))")
-                        .bold()
-                }
-                Spacer()
-                Button {
-                    showAllergens.toggle()
-                } label: {
-                    HStack {
-                        Text("Allergens")
-                        Image(systemName: showAllergens ? "arrow.up" : "arrow.down")
-                    }
+        HStack {
+            if allergens.isEmpty {
+                Text("Allergens: None")
+                    .bold()
+            } else {
+                Text("Allergens: \(allergens.map{$0.rawValue}.joined(separator: ", "))")
+                    .bold()
+            }
+            Spacer()
+            Button {
+                showAllergens.toggle()
+            } label: {
+                HStack {
+                    Text("Allergens")
+                    Image(systemName: showAllergens ? "arrow.up" : "arrow.down")
                 }
             }
-            if showAllergens {
-                VStack {
-                    ForEach(Allergen.allCases, id: \.self) { allergen in
-                        HStack {
-                            Image(allergen.rawValue)
+        }
+        if showAllergens {
+            VStack {
+                ForEach(Allergen.allCases, id: \.self) { allergen in
+                    HStack {
+                        Image(allergen.rawValue)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40)
+                        Text(allergen.rawValue)
+                        Spacer()
+                        Button(action: {
+                            toggleAllergen(allergen)
+                        }) {
+                            Image(systemName: isAllergenSelected(allergen) ? "checkmark.circle.fill" : "xmark.circle.fill")
                                 .resizable()
-                                .scaledToFit()
-                                .frame(width: 40)
-                            Text(allergen.rawValue)
-                            Spacer()
-                            Button(action: {
-                                toggleAllergen(allergen)
-                            }) {
-                                Image(systemName: isAllergenSelected(allergen) ? "checkmark.circle.fill" : "xmark.circle.fill")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundColor( isAllergenSelected(allergen) ? .blue : .gray)
-                            }
+                                .frame(width: 24, height: 24)
+                                .foregroundColor( isAllergenSelected(allergen) ? .blue : .gray)
                         }
-                        .contentShape(Rectangle())
-                        .buttonStyle(PlainButtonStyle())
                     }
+                    .contentShape(Rectangle())
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
         }

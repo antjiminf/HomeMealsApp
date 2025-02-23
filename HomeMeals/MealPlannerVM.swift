@@ -29,8 +29,8 @@ final class MealPlannerVM {
             
             if let dayPlan = existingDayPlan {
                 if let existingMealIndex = dayPlan.meals.firstIndex(where: { $0.type == mealType }) {
-                    
                     let existingMeal = dayPlan.meals[existingMealIndex]
+                    
                     if existingMeal.recipeId == recipe.id {
                         return
                     }
@@ -39,11 +39,17 @@ final class MealPlannerVM {
                     try modelContext.save()
                 }
                 
-                let newMeal = Meal(type: mealType, recipeId: recipe.id, recipeName: recipe.name)
+                let newMeal = Meal(type: mealType,
+                                   recipeId: recipe.id,
+                                   recipeName: recipe.name)
                 dayPlan.meals.append(newMeal)
+                
                 try modelContext.save()
             } else {
-                let newDayPlan = MealPlanDay(date: normalizedDate, meals: [Meal(type: mealType, recipeId: recipe.id, recipeName: recipe.name)])
+                let newDayPlan = MealPlanDay(date: normalizedDate,
+                                             meals: [Meal(type: mealType,
+                                                          recipeId: recipe.id,
+                                                          recipeName: recipe.name)])
                 modelContext.insert(newDayPlan)
             }
         } catch {
@@ -59,6 +65,10 @@ final class MealPlannerVM {
                 
                 dayPlan.meals.remove(at: mealIndex)
                 try modelContext.save()
+                
+                if dayPlan.meals.isEmpty {
+                    modelContext.delete(dayPlan)
+                }
             }
         } catch {
             print("Error eliminando la comida: \(error.localizedDescription)")

@@ -162,7 +162,7 @@ struct InventoryView: View {
                     }
                 }
             }
-            .alert("Delete Ingredient", isPresented: $inventory.showingDeleteConfirmation, actions: {
+            .alert("Delete Ingredient", isPresented: $inventory.showingDeleteConfirmation) {
                 Button("Delete", role: .destructive) {
                     Task {
                         if let item = inventoryVm.pendingItem {
@@ -174,9 +174,9 @@ struct InventoryView: View {
                 Button("Cancel", role: .cancel) {
                     inventoryVm.pendingItem = nil
                 }
-            }, message: {
+            } message: {
                 Text("Are you sure you want to delete \(inventoryVm.pendingItem?.name ?? "this ingredient")?")
-            })
+            }
             .fullScreenCover(isPresented: $showSuggestedRecipes) {
                 SuggestedRecipesList()
             }
