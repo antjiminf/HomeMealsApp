@@ -19,6 +19,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Inventory", systemImage: "house.fill")
                 }
+            ShoppingListsView()
+                .tabItem {
+                    Label("Groceries", systemImage: "cart.fill")
+                }
         }
     }
 }
@@ -28,4 +32,5 @@ struct ContentView: View {
         .environment(RecipesVM(interactor: InteractorTest()))
         .environment(InventoryVM(interactor: InteractorTest()))
         .environment(IngredientsVM(interactor: InteractorTest()))
+        .modelContainer(.testContainer)
 }

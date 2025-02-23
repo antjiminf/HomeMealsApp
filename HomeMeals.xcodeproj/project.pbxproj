@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E2617842D6A7A14002B5BB2 /* ShoppingListDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2617832D6A7A13002B5BB2 /* ShoppingListDetailVM.swift */; };
 		1E276A242CEBD53800747585 /* InventoryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E276A232CEBD53800747585 /* InventoryVM.swift */; };
 		1E28E98A2C8CB76200CEA3BB /* HomeMealsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9892C8CB76200CEA3BB /* HomeMealsApp.swift */; };
 		1E28E98C2C8CB76200CEA3BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E98B2C8CB76200CEA3BB /* ContentView.swift */; };
@@ -18,11 +19,15 @@
 		1E28E9B82C8CF82D00CEA3BB /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9B72C8CF82D00CEA3BB /* Recipe.swift */; };
 		1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9B92C8DB87F00CEA3BB /* Enums.swift */; };
 		1E28E9C02C8E408500CEA3BB /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E28E9BF2C8E408500CEA3BB /* URL.swift */; };
+		1E2B05972D638DA600D35C1C /* ShoppingListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2B05962D638DA600D35C1C /* ShoppingListsView.swift */; };
+		1E2B05992D64DD8800D35C1C /* ShoppingListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2B05982D64DD8800D35C1C /* ShoppingListDetailView.swift */; };
+		1E2B059B2D65FB3300D35C1C /* MinutesStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2B059A2D65FB3300D35C1C /* MinutesStepper.swift */; };
 		1E2CD67A2D492B2500D03B69 /* SuggestedRecipesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2CD6792D492B2500D03B69 /* SuggestedRecipesList.swift */; };
 		1E2CD67E2D4FD96900D03B69 /* RecipeSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2CD67D2D4FD96900D03B69 /* RecipeSelectionView.swift */; };
 		1E2CD6802D50E60A00D03B69 /* Meals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2CD67F2D50E5FF00D03B69 /* Meals.swift */; };
 		1E2CD6822D50ED1E00D03B69 /* MealPlannerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2CD6812D50ED0900D03B69 /* MealPlannerVM.swift */; };
 		1E2CD6842D50ED9000D03B69 /* MealPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2CD6832D50ED8600D03B69 /* MealPlannerView.swift */; };
+		1E40C1A92D6914A200006132 /* GroceryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E40C1A82D6914A200006132 /* GroceryRow.swift */; };
 		1E48BAC62CC6DE23008D5CC4 /* GuideField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E48BAC52CC6DE23008D5CC4 /* GuideField.swift */; };
 		1E48BAC82CC6DEA9008D5CC4 /* IngredientsSelectedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E48BAC72CC6DEA9008D5CC4 /* IngredientsSelectedList.swift */; };
 		1E4D95BB2C8E7BFD00BCA798 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4D95BA2C8E7BFD00BCA798 /* Network.swift */; };
@@ -40,6 +45,8 @@
 		1E68E52F2C9B564B008AFF07 /* RecipeFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E68E52E2C9B564B008AFF07 /* RecipeFormView.swift */; };
 		1E68E5322C9C492F008AFF07 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E68E5312C9C492F008AFF07 /* CustomTextField.swift */; };
 		1E6BDD002D52B9B300D43F76 /* MealSelectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6BDCFF2D52B98200D43F76 /* MealSelectionVM.swift */; };
+		1E6BDD072D5F932A00D43F76 /* ShoppingListGeneratorVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6BDD062D5F932A00D43F76 /* ShoppingListGeneratorVM.swift */; };
+		1E6BDD092D5F936A00D43F76 /* ShoppingListFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6BDD082D5F936A00D43F76 /* ShoppingListFormView.swift */; };
 		1E6E030B2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E030A2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift */; };
 		1E6E030D2CF4AF2B00B60FE8 /* InventoryItemVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E030C2CF4AF2B00B60FE8 /* InventoryItemVM.swift */; };
 		1E7222B52D08BF0700591D3E /* RecipeDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7222B42D08BF0700591D3E /* RecipeDetailsVM.swift */; };
@@ -76,6 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E2617832D6A7A13002B5BB2 /* ShoppingListDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListDetailVM.swift; sourceTree = "<group>"; };
 		1E276A232CEBD53800747585 /* InventoryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryVM.swift; sourceTree = "<group>"; };
 		1E28E9862C8CB76200CEA3BB /* HomeMeals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeMeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E28E9892C8CB76200CEA3BB /* HomeMealsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMealsApp.swift; sourceTree = "<group>"; };
@@ -91,11 +99,15 @@
 		1E28E9B92C8DB87F00CEA3BB /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		1E28E9BD2C8E37FF00CEA3BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E28E9BF2C8E408500CEA3BB /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		1E2B05962D638DA600D35C1C /* ShoppingListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListsView.swift; sourceTree = "<group>"; };
+		1E2B05982D64DD8800D35C1C /* ShoppingListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListDetailView.swift; sourceTree = "<group>"; };
+		1E2B059A2D65FB3300D35C1C /* MinutesStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinutesStepper.swift; sourceTree = "<group>"; };
 		1E2CD6792D492B2500D03B69 /* SuggestedRecipesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedRecipesList.swift; sourceTree = "<group>"; };
 		1E2CD67D2D4FD96900D03B69 /* RecipeSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSelectionView.swift; sourceTree = "<group>"; };
 		1E2CD67F2D50E5FF00D03B69 /* Meals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meals.swift; sourceTree = "<group>"; };
 		1E2CD6812D50ED0900D03B69 /* MealPlannerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlannerVM.swift; sourceTree = "<group>"; };
 		1E2CD6832D50ED8600D03B69 /* MealPlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlannerView.swift; sourceTree = "<group>"; };
+		1E40C1A82D6914A200006132 /* GroceryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryRow.swift; sourceTree = "<group>"; };
 		1E48BAC52CC6DE23008D5CC4 /* GuideField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideField.swift; sourceTree = "<group>"; };
 		1E48BAC72CC6DEA9008D5CC4 /* IngredientsSelectedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsSelectedList.swift; sourceTree = "<group>"; };
 		1E4D95BA2C8E7BFD00BCA798 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -112,6 +124,8 @@
 		1E68E52E2C9B564B008AFF07 /* RecipeFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFormView.swift; sourceTree = "<group>"; };
 		1E68E5312C9C492F008AFF07 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		1E6BDCFF2D52B98200D43F76 /* MealSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealSelectionVM.swift; sourceTree = "<group>"; };
+		1E6BDD062D5F932A00D43F76 /* ShoppingListGeneratorVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListGeneratorVM.swift; sourceTree = "<group>"; };
+		1E6BDD082D5F936A00D43F76 /* ShoppingListFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListFormView.swift; sourceTree = "<group>"; };
 		1E6E030A2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInventoryQuantity.swift; sourceTree = "<group>"; };
 		1E6E030C2CF4AF2B00B60FE8 /* InventoryItemVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryItemVM.swift; sourceTree = "<group>"; };
 		1E7222B42D08BF0700591D3E /* RecipeDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsVM.swift; sourceTree = "<group>"; };
@@ -262,6 +276,9 @@
 		1E5255052C8F5F5600A9A364 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1E2B05982D64DD8800D35C1C /* ShoppingListDetailView.swift */,
+				1E2B05962D638DA600D35C1C /* ShoppingListsView.swift */,
+				1E6BDD082D5F936A00D43F76 /* ShoppingListFormView.swift */,
 				1E2CD6832D50ED8600D03B69 /* MealPlannerView.swift */,
 				1E5255032C8F5F4E00A9A364 /* RecipeView.swift */,
 				1E7472DD2CCB8EEE00697C89 /* InventoryView.swift */,
@@ -277,6 +294,8 @@
 		1E68E5302C9C4918008AFF07 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1E40C1A82D6914A200006132 /* GroceryRow.swift */,
+				1E2B059A2D65FB3300D35C1C /* MinutesStepper.swift */,
 				1E68E5312C9C492F008AFF07 /* CustomTextField.swift */,
 				1E63BABC2CA5D7B0000082BD /* IngredientsSelector.swift */,
 				1EC380032CBD549D0077B520 /* IngredientQuantity.swift */,
@@ -296,6 +315,8 @@
 		1E7A847A2C8F0F3A00544777 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1E2617832D6A7A13002B5BB2 /* ShoppingListDetailVM.swift */,
+				1E6BDD062D5F932A00D43F76 /* ShoppingListGeneratorVM.swift */,
 				1E6BDCFF2D52B98200D43F76 /* MealSelectionVM.swift */,
 				1E2CD6812D50ED0900D03B69 /* MealPlannerVM.swift */,
 				1E7A847B2C8F0F5600544777 /* RecipesVM.swift */,
@@ -466,8 +487,12 @@
 				1E68DBBF2D011590004972E8 /* Ingredient.swift in Sources */,
 				1E6BDD002D52B9B300D43F76 /* MealSelectionVM.swift in Sources */,
 				1E2CD6822D50ED1E00D03B69 /* MealPlannerVM.swift in Sources */,
+				1E2B05992D64DD8800D35C1C /* ShoppingListDetailView.swift in Sources */,
 				1EA705802CE65B7D00933279 /* Inventory.swift in Sources */,
 				1E7A847C2C8F0F5600544777 /* RecipesVM.swift in Sources */,
+				1E2B05972D638DA600D35C1C /* ShoppingListsView.swift in Sources */,
+				1E6BDD072D5F932A00D43F76 /* ShoppingListGeneratorVM.swift in Sources */,
+				1E2617842D6A7A14002B5BB2 /* ShoppingListDetailVM.swift in Sources */,
 				1E5255042C8F5F4E00A9A364 /* RecipeView.swift in Sources */,
 				1E6E030B2CF3DE9E00B60FE8 /* EditInventoryQuantity.swift in Sources */,
 				1E276A242CEBD53800747585 /* InventoryVM.swift in Sources */,
@@ -476,15 +501,18 @@
 				1E68DBC12D021CDC004972E8 /* RecipeDetailsView.swift in Sources */,
 				1E63BABF2CA5D826000082BD /* IngredientsVM.swift in Sources */,
 				1E6E030D2CF4AF2B00B60FE8 /* InventoryItemVM.swift in Sources */,
+				1E40C1A92D6914A200006132 /* GroceryRow.swift in Sources */,
 				1E4D95BB2C8E7BFD00BCA798 /* Network.swift in Sources */,
 				1E2CD67A2D492B2500D03B69 /* SuggestedRecipesList.swift in Sources */,
 				1E48BAC62CC6DE23008D5CC4 /* GuideField.swift in Sources */,
 				1E2CD67E2D4FD96900D03B69 /* RecipeSelectionView.swift in Sources */,
 				1EC380022CBD2A0A0077B520 /* IngredientSelectorVM.swift in Sources */,
 				1E2CD6842D50ED9000D03B69 /* MealPlannerView.swift in Sources */,
+				1E6BDD092D5F936A00D43F76 /* ShoppingListFormView.swift in Sources */,
 				1E28E98C2C8CB76200CEA3BB /* ContentView.swift in Sources */,
 				1E68E5322C9C492F008AFF07 /* CustomTextField.swift in Sources */,
 				1E5971C22D10A15E000D2CF0 /* RecipeCard.swift in Sources */,
+				1E2B059B2D65FB3300D35C1C /* MinutesStepper.swift in Sources */,
 				1E28E9BA2C8DB87F00CEA3BB /* Enums.swift in Sources */,
 				1E68E52B2C9B551F008AFF07 /* AddRecipeVM.swift in Sources */,
 				1E48BAC82CC6DEA9008D5CC4 /* IngredientsSelectedList.swift in Sources */,
