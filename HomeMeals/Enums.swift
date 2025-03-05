@@ -78,3 +78,10 @@ enum Allergen: String, Identifiable, Codable, CaseIterable {
     
     var id: Self { self }
 }
+
+enum ProfileListType: LocalizedStringResource, Identifiable, CaseIterable {
+    case myRecipes = "My recipes"
+    case favorites = "Favorites"
+    
+    var id: Self { self }
+}
