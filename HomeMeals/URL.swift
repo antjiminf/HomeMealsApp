@@ -4,6 +4,16 @@ let api = URL(string: "http://localhost:8080/api")!
 
 extension URL {
     
+    //Users-Auth
+    static let users = api.appending(path: "users")
+    static let login = users.appending(path: "login")
+    static let loginSIWA = users.appending(path: "loginSIWA")
+    static let register = users.appending(path: "register")
+    static let testJWT = users.appending(path: "testJWT")
+    static let profile = users.appending(path: "profile")
+    static let userRecipes = users.appending(path: "recipes")
+    static let userUpdatePassword = users.appending(path: "password")
+    
     // Inventory
     static let inventory = api.appending(path: "users/inventory")
     static let inventoryRecipeSuggestions = inventory.appending(path: "recipe-suggestions")

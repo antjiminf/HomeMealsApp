@@ -3,6 +3,16 @@ import ACNetwork
 
 protocol DataInteractor {
     
+    //Users
+    func getToken() -> String?
+    func register(user: CreateUser) async throws
+    func loginSIWA(token: Data, request: SIWARequest) async throws
+    func login(username: String, password: String) async throws
+    func testJWT() async throws
+    func getUserProfile() async throws -> UserProfile
+    func updateProfile(_ profile: UpdateProfile) async throws
+    func updatePassword(_ request: UpdatePassword) async throws
+    
     //Ingredients
     func getAllIngredients() async throws -> [Ingredient]
     func getIngredients(page: Int, perPage: Int) async throws -> Page<Ingredient>
@@ -11,13 +21,19 @@ protocol DataInteractor {
     
     //Recipes
     func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListItem>
-    func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListItem>
+    func filterRecipes(name: String?,
+                       minTime: Int?,
+                       maxTime: Int?,
+                       allergens: [Allergen]?,
+                       page: Int,
+                       perPage: Int) async throws -> Page<RecipeListItem>
     func getTotalIngredientsInRecipes(recipes: [RecipeQuantity]) async throws -> [Groceries]
     func addRecipe(_ recipe: CreateRecipeDTO) async throws
     func getRecipeIngredients(id: UUID) async throws -> Recipe
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws
     func deleteRecipe(id: UUID) async throws
     func getRecipeFavorites(id: UUID) async throws -> [UserLikeInfo]
+    func getUserRecipes() async throws -> [RecipeListItem]
     //Favorites
     func getFavorites() async throws -> [RecipeListItem]
     func addFavorite(id: UUID) async throws
@@ -80,49 +96,106 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     
     static let shared = Network()
     
+    //Auth
+    
+    func getToken() -> String? {
+        guard let token = SecKeyStore.shared.readKey(label: "token") else {
+            return nil
+        }
+        return String(data: token, encoding: .utf8)
+    }
+    
+    func register(user: CreateUser) async throws {
+        var request: URLRequest = .post(url: .register, post: user)
+        request.setValue(SecManager.shared.apiKey,
+                         forHTTPHeaderField: "App-APIKey")
+        try await post(request: request, status: 201)
+    }
+    
+    func loginSIWA(token: Data, request: SIWARequest) async throws {
+        let accessToken = try await getJSON(request: .post(url: .loginSIWA, post: request,
+                                                           token: String(data: token, encoding: .utf8)),
+                          type: TokenDTO.self)
+        SecKeyStore.shared.storeKey(key: Data(accessToken.token.utf8), label: "token")
+        NotificationCenter.default.post(name: .login, object: nil)
+    }
+    
+    func login(username: String, password: String) async throws {
+        let token = "\(username):\(password)".data(using: .utf8)?.base64EncodedString()
+        let accessToken =  try await getJSON(request: .get(url: .login, token: token, authType: .basic),
+                                             type: TokenDTO.self)
+        SecKeyStore.shared.storeKey(key: Data(accessToken.token.utf8), label: "token")
+        NotificationCenter.default.post(name: .login, object: nil)
+    }
+    
+    func testJWT() async throws {
+        try await post(request: .get(url: .testJWT, token: getToken()), status: 200)
+    }
+    
+    func getUserProfile() async throws -> UserProfile {
+        try await getJSON(request: .get(url: .profile, token: getToken()), type: UserProfile.self)
+    }
+    
+    func getUserRecipes() async throws -> [RecipeListItem] {
+        try await getJSON(request: .get(url: .userRecipes, token: getToken()),
+                          type: [RecipeListItem].self)
+    }
+    
+    func updateProfile(_ profile: UpdateProfile) async throws {
+        try await post(request: .post(url: .users, post: profile, method: .put, token: getToken()),
+                       status: 204)
+    }
+    
+    func updatePassword(_ request: UpdatePassword) async throws {
+        try await post(request: .post(url: .userUpdatePassword, post: request, method: .put, token: getToken()),
+                       status: 204)
+    }
+    
     
     // Inventory
     
     func getInventory() async throws -> [InventoryItem] {
-        try await getJSON(request: .get(url: .inventory), type: [InventoryItem].self)
+        try await getJSON(request: .get(url: .inventory, token: getToken()),
+                          type: [InventoryItem].self)
     }
     
     func getRecipeSuggestions() async throws -> [RecipeListItem] {
-        try await getJSON(request: .get(url: .inventoryRecipeSuggestions), type: [RecipeListItem].self)
+        try await getJSON(request: .get(url: .inventoryRecipeSuggestions, token: getToken()),
+                          type: [RecipeListItem].self)
     }
     
     func addInventoryItem(_ item: ModifyInventoryItemDTO) async throws {
-        try await post(request: .post(url: .inventory, post: item))
+        try await post(request: .post(url: .inventory, post: item, token: getToken()))
     }
     
     func shoppingList(_ ingredients: [ModifyInventoryItemDTO]) async throws -> [Groceries] {
-        try await postJSON(request: .post(url: .inventoryGroceriesList, post: ingredients),
+        try await postJSON(request: .post(url: .inventoryGroceriesList, post: ingredients, token: getToken()),
                            type: [Groceries].self,
                            status: 200)
     }
     
     func updateInventory(_ ingredients: [ModifyInventoryItemDTO]) async throws {
-        try await post(request: .post(url: .inventory, post: ingredients, method: .put),
+        try await post(request: .post(url: .inventory, post: ingredients, method: .put, token: getToken()),
                        status: 204)
     }
     
     func updateInventoryItem(id: UUID, item: ModifyInventoryItemDTO) async throws {
-        try await post(request: .post(url: .inventoryItem(id: id), post: item, method: .put), 
+        try await post(request: .post(url: .inventoryItem(id: id), post: item, method: .put, token: getToken()),
                        status: 204)
     }
     
     func addGroceries(_ groceries: [ModifyInventoryItemDTO]) async throws {
-        try await post(request: .post(url: .inventoryAddGroceries, post: groceries, method: .put), 
+        try await post(request: .post(url: .inventoryAddGroceries, post: groceries, method: .put, token: getToken()),
                        status: 204)
     }
     
     func consumeGroceries(_ groceries: [ModifyInventoryItemDTO]) async throws {
-        try await post(request: .post(url: .inventoryConsumeGroceries, post: groceries, method: .put),
+        try await post(request: .post(url: .inventoryConsumeGroceries, post: groceries, method: .put, token: getToken()),
                        status: 204)
     }
     
     func deleteInventoryItem(_ id: UUID) async throws {
-        try await post(request: .delete(url: .inventoryItem(id: id)),
+        try await post(request: .delete(url: .inventoryItem(id: id), token: getToken()),
                        status: 204)
     }
     
@@ -131,15 +204,15 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     //Ingredients
     
     func getAllIngredients() async throws -> [Ingredient] {
-        try await getJSON(request: .get(url: .ingredientsAll), type: [Ingredient].self)
+        try await getJSON(request: .get(url: .ingredientsAll),
+                          type: [Ingredient].self)
     }
     
     func getIngredients(page: Int = 1, perPage: Int = 10) async throws -> Page<Ingredient> {
         try await getJSON(
             request: .get(url: .ingredients.appending(queryItems: [
                 URLQueryItem(name: "page", value: page.description),
-                URLQueryItem(name: "per", value: perPage.description)
-            ])),
+                URLQueryItem(name: "per", value: perPage.description)])),
             type: Page<Ingredient>.self)
     }
     
@@ -148,8 +221,7 @@ struct Network: NetworkJSONInteractor, DataInteractor {
         try await getJSON(
             request: .get(url: .ingredientsSearch.appending(queryItems: [
                 URLQueryItem(name: "page", value: page.description),
-                URLQueryItem(name: "per", value: perPage.description)
-            ])),
+                URLQueryItem(name: "per", value: perPage.description)])),
             type: Page<Ingredient>.self)
     }
     
@@ -161,8 +233,8 @@ struct Network: NetworkJSONInteractor, DataInteractor {
         try await getJSON(
             request: .get(url: .recipes.appending(queryItems: [
                 URLQueryItem(name: "page", value: page.description),
-                URLQueryItem(name: "per", value: perPage.description)
-            ])),
+                URLQueryItem(name: "per", value: perPage.description)]),
+                          token: getToken()),
             type: Page<RecipeListItem>.self)
     }
     
@@ -190,7 +262,7 @@ struct Network: NetworkJSONInteractor, DataInteractor {
             queryItems.append(URLQueryItem(name: "allergens", value: allergensString))
         }
         
-        return try await getJSON(request: .get(url: .recipesSearch.appending(queryItems: queryItems)),
+        return try await getJSON(request: .get(url: .recipesSearch.appending(queryItems: queryItems), token: getToken()),
                                  type: Page<RecipeListItem>.self)
     }
     
@@ -202,21 +274,22 @@ struct Network: NetworkJSONInteractor, DataInteractor {
 
     
     func addRecipe(_ recipe: CreateRecipeDTO) async throws {
-        try await post(request: .post(url: .recipes, post: recipe), 
+        try await post(request: .post(url: .recipes, post: recipe, token: getToken()),
                        status: 201)
     }
     
     func getRecipeIngredients(id: UUID) async throws -> Recipe {
-        try await getJSON(request: .get(url: .recipesIdIngredients(id: id)), 
+        try await getJSON(request: .get(url: .recipesIdIngredients(id: id), token: getToken()),
                           type: Recipe.self)
     }
     
     func updateRecipe(id: UUID, updated: CreateRecipeDTO) async throws {
-        try await post(request: .post(url: .recipesId(id: id), post: updated, method: .put), status: 204)
+        try await post(request: .post(url: .recipesId(id: id), post: updated, method: .put, token: getToken()),
+                       status: 204)
     }
     
     func deleteRecipe(id: UUID) async throws {
-        try await post(request: .delete(url: .recipesId(id: id)),
+        try await post(request: .delete(url: .recipesId(id: id), token: getToken()),
                        status: 204)
     }
     
@@ -228,17 +301,17 @@ struct Network: NetworkJSONInteractor, DataInteractor {
     //Favorites Interactions
     
     func getFavorites() async throws -> [RecipeListItem] {
-        try await getJSON(request: .get(url: .favorites),
+        try await getJSON(request: .get(url: .favorites, token: getToken()),
                           type: [RecipeListItem].self)
     }
     
     func addFavorite(id: UUID) async throws {
-        try await post(request: .post(url: .favorites, post: id),
+        try await post(request: .post(url: .favorites, post: id, token: getToken()),
                        status: 201)
     }
     
     func removeFavorite(id: UUID) async throws {
-        try await post(request: .delete(url: .favoritesId(id: id)),
+        try await post(request: .delete(url: .favoritesId(id: id), token: getToken()),
                        status: 204)
     }
 }

@@ -112,12 +112,72 @@ extension UserLikeInfo {
     static var test = UserLikeInfo(id: UUID(), name: "Cristiano Ronaldo")
 }
 
+extension UserProfile {
+    static var test = UserProfile(id: UUID(),
+                                  name: "Cristiano Ronaldo",
+                                  username: "cr7",
+                                  email: "cr7@gmail.com",
+                                  avatar: nil)
+}
+
 struct InteractorTest: DataInteractor {
     
+    
+    //AUTH
+    
+    func getToken() -> String? {
+        nil
+    }
+    
+    func register(user: CreateUser) async throws {}
+    
+    func loginSIWA(token: Data, request: SIWARequest) async throws {}
+    
+    func login(username: String, password: String) async throws {}
+    
+    func testJWT() async throws {}
+    
+    func getUserProfile() async throws -> UserProfile { .test }
+    
+    func getUserRecipes() async throws -> [RecipeListItem] {
+        [.test, .test2]
+    }
+    
+    func updateProfile(_ profile: UpdateProfile) async throws {}
+    
+    func updatePassword(_ request: UpdatePassword) async throws {}
+    
+    //RECIPES
+    
+    func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListItem> {
+        //TODO: SI TUVIESE SUFICIENTES RECETAS PODRÍA PROBAR EL SCROLL INFINITO EN PREVIEWS
+        //        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
+        //            return Page(items: [], page: page, perPage: perPage, total: 0)
+        //        }
+        //
+        //        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
+        //        let total = recipes.count
+        //
+        //        let first = (page - 1) * perPage
+        //        let last = min(first + perPage, total)
+        //
+        //        guard first < total else {
+        //            return Page(items: [], page: page, perPage: perPage, total: total)
+        //        }
+        //
+        //        let paginatedRecipes = Array(recipes[first..<last])
+        //        return Page(items: paginatedRecipes, page: page, perPage: perPage, total: total)
+        Page(items: [.test, .test2],
+             page: 1,
+             perPage: 10,
+             total: 1)
+    }
     
     func filterRecipes(name: String?, minTime: Int?, maxTime: Int?, allergens: [Allergen]?, page: Int, perPage: Int) async throws -> Page<RecipeListItem> {
         return Page(items: [], page: 1, perPage: 10, total: 10)
     }
+    
+    func addRecipe(_ recipe: CreateRecipeDTO) async throws {}
     
     func getTotalIngredientsInRecipes(recipes: [RecipeQuantity]) async throws -> [Groceries] {
         [
@@ -163,11 +223,9 @@ struct InteractorTest: DataInteractor {
         [.test]
     }
     
-    func addFavorite(id: UUID) async throws {
-    }
+    func addFavorite(id: UUID) async throws {}
     
-    func removeFavorite(id: UUID) async throws {
-    }
+    func removeFavorite(id: UUID) async throws {}
     
     //INVENTORY
     
@@ -211,9 +269,7 @@ struct InteractorTest: DataInteractor {
     func deleteInventoryItem(_ id: UUID) async throws {}
     
     
-    func addRecipe(_ recipe: CreateRecipeDTO) async throws {
-        //        try await post(request: .post(url: .recipes, post: recipe), status: 201)
-    }
+    //INGREDIENTS
     
     func getAllIngredients() async throws -> [Ingredient] {
         guard let url = Bundle.main.url(forResource: "ingredients", withExtension: "json") else {
@@ -253,30 +309,6 @@ struct InteractorTest: DataInteractor {
         //            return Page(items: [], page: page, perPage: perPage, total: 0)
         //        }
         return Page(items: [], page: 1, perPage: 10, total: 0)
-    }
-    
-    func getRecipes(page: Int, perPage: Int) async throws -> Page<RecipeListItem> {
-        //TODO: SI TUVIESE SUFICIENTES RECETAS PODRÍA PROBAR EL SCROLL INFINITO EN PREVIEWS
-        //        guard let url = Bundle.main.url(forResource: "recipes", withExtension: "json") else {
-        //            return Page(items: [], page: page, perPage: perPage, total: 0)
-        //        }
-        //
-        //        let recipes = try getJSON(url: url, type: [RecipeListDTO].self)
-        //        let total = recipes.count
-        //
-        //        let first = (page - 1) * perPage
-        //        let last = min(first + perPage, total)
-        //
-        //        guard first < total else {
-        //            return Page(items: [], page: page, perPage: perPage, total: total)
-        //        }
-        //
-        //        let paginatedRecipes = Array(recipes[first..<last])
-        //        return Page(items: paginatedRecipes, page: page, perPage: perPage, total: total)
-        Page(items: [.test, .test2],
-             page: 1,
-             perPage: 10,
-             total: 1)
     }
     
     func getJSON<JSON>(url: URL, type: JSON.Type) throws -> JSON where JSON: Codable {
@@ -352,6 +384,7 @@ extension RecipeDetailsView {
         NavigationStack {
             RecipeDetailsView(/*recipeId: UUID(), */recipeDetailsVm: RecipeDetailsVM(interactor: InteractorTest(), recipeId: UUID()))
                 .environment(RecipesVM(interactor: InteractorTest()))
+                .environment(UserVM(interactor: InteractorTest()))
         }
     }
 }
@@ -444,5 +477,28 @@ extension GroceryRow {
                                         requiredQuantity: 2,
                                         unit: .units),
                    toggleObtained: { $0.isObtained.toggle() })
+    }
+}
+
+
+extension ProfileView {
+    static var preview: some View {
+        ProfileView(showLogin: .constant(false))
+            .environment(UserVM(interactor: InteractorTest()))
+            .environment(RecipesVM(interactor: InteractorTest()))
+    }
+}
+
+extension UpdatePasswordView {
+    static var preview: some View {
+        UpdatePasswordView()
+            .environment(UserVM(interactor: InteractorTest()))
+    }
+}
+
+extension EditProfileView {
+    static var preview: some View {
+        EditProfileView()
+            .environment(UserVM(interactor: InteractorTest()))
     }
 }
