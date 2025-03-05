@@ -78,8 +78,7 @@ struct RegisterView: View {
                                               validation: validateConfirmPassword,
                                               initial: false)
                     }
-                    .padding(.vertical)
-                    .padding(.horizontal)
+                    .padding()
                     
                     Button(action: registerUser) {
                         HStack {
@@ -146,13 +145,13 @@ struct RegisterView: View {
     
     private func validateEmail(_ text: String) -> String? {
         if text.isEmpty { return "cannot be empty" }
-        if !text.contains("@") { return "Invalid email format" }
+        if !text.isValidEmail { return "has invalid email format" }
         return nil
     }
     
     private func validatePassword(_ text: String) -> String? {
         if text.isEmpty { return "cannot be empty" }
-        if text.count < 6 { return "must be at least 6 characters" }
+        if text.count < 8 { return "must be at least 8 characters" }
         return nil
     }
     

@@ -38,7 +38,7 @@ struct CustomTextField: View {
                             .symbolVariant(.circle)
                     }
                     .buttonStyle(.plain)
-                    .opacity(error ? 0.0 : 0.5)
+                    .opacity(/*error ? 0.0 : */0.5)
                     .accessibilityLabel(Text("\(label) delete value."))
                     .accessibilityHint(Text("Tap this button to delete the value of the field."))
                 }
