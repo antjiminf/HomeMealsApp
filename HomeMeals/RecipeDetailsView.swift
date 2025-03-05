@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct RecipeDetailsView: View {
+    @Environment(UserVM.self) var userVm
     @Environment(RecipesVM.self) var recipesVm
     @Environment(\.dismiss) var dismiss
     @State var recipeDetailsVm: RecipeDetailsVM
@@ -59,7 +60,7 @@ struct RecipeDetailsView: View {
                                 
                                 Spacer()
                                 
-    //                             Tiempo de Preparación
+                                //                             Tiempo de Preparación
                                 HStack(spacing: 4) {
                                     Image(systemName: "clock")
                                         .foregroundColor(.secondary)
@@ -99,17 +100,17 @@ struct RecipeDetailsView: View {
                                         
                                         switch ingredient.unit {
                                             
-                                            case .units:
+                                        case .units:
                                             Text("\(ingredient.quantity, specifier: "%.0f") units")
                                                 .foregroundColor(.secondary)
                                             
-                                            case .volume:
+                                        case .volume:
                                             
                                             Text("\(ingredient.quantity, specifier: "%.1f") L")
                                                 .foregroundColor(.secondary)
                                             
-                                            case .weight:
-                                                Text("\(ingredient.quantity, specifier: "%.1f") g")
+                                        case .weight:
+                                            Text("\(ingredient.quantity, specifier: "%.1f") g")
                                                 .foregroundColor(.secondary)
                                         }
                                     }
@@ -131,20 +132,22 @@ struct RecipeDetailsView: View {
                     .navigationTitle(recipe.name)
                     .toolbar {
                         // Editar y Eliminar
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button("Edit") {
-                                recipeDetailsVm.showEditForm = true
+                        if let user = userVm.userProfile,
+                           user.id == recipe.owner {
+                            ToolbarItemGroup(placement: .topBarTrailing){
+                                Button("Edit") {
+                                    recipeDetailsVm.showEditForm = true
+                                }
+                                .accessibility(label: Text("Edit Recipe"))
+                                
+                                Button(role: .destructive) {
+                                    recipeDetailsVm.showDeleteConfirmation = true
+                                } label: {
+                                    Image(systemName: "trash")
+                                        .tint(.red)
+                                }
+                                .accessibility(label: Text("Delete Recipe"))
                             }
-                            .accessibility(label: Text("Edit Recipe"))
-                        }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(role: .destructive) {
-                                recipeDetailsVm.showDeleteConfirmation = true
-                            } label: {
-                                Image(systemName: "trash")
-                                    .tint(.red)
-                            }
-                            .accessibility(label: Text("Delete Recipe"))
                         }
                     }
                     .sheet(isPresented: $recipeDetailsVm.showEditForm) {

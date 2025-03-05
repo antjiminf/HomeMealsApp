@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showLogin = false
+    
     var body: some View {
         TabView {
             MealPlannerView()
@@ -11,10 +13,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Recipes", systemImage: "fork.knife.circle.fill")
                 }
-            FavoriteRecipesView()
-                .tabItem {
-                    Label("Favorites", systemImage: "heart.fill")
-                }
+//            FavoriteRecipesView()
+//                .tabItem {
+//                    Label("Favorites", systemImage: "heart.fill")
+//                }
             InventoryView()
                 .tabItem {
                     Label("Inventory", systemImage: "house.fill")
@@ -23,6 +25,16 @@ struct ContentView: View {
                 .tabItem {
                     Label("Groceries", systemImage: "cart.fill")
                 }
+            ProfileView(showLogin: $showLogin)
+                .tabItem {
+                    Label("Profile", systemImage: "person.fill")
+                }
+        }
+        .onAppear {
+            showLogin = !SecManager.shared.isLogged()
+        }
+        .fullScreenCover(isPresented: $showLogin) {
+            LoginView()
         }
     }
 }
@@ -32,5 +44,6 @@ struct ContentView: View {
         .environment(RecipesVM(interactor: InteractorTest()))
         .environment(InventoryVM(interactor: InteractorTest()))
         .environment(IngredientsVM(interactor: InteractorTest()))
+        .environment(UserVM(interactor: InteractorTest()))
         .modelContainer(.testContainer)
 }

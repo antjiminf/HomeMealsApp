@@ -21,7 +21,12 @@ final class InventoryVM {
     
     init(interactor: DataInteractor = Network.shared) {
         self.interactor = interactor
-        Task { await loadInventory() }
+        if SecManager.shared.isLogged() {
+            Task { await loadInventory() }
+        }
+        NotificationCenter.default.addObserver(forName: .login, object: nil, queue: .main) { _ in
+            Task { await self.loadInventory() }
+        }
     }
     
     func loadInventory() async {
@@ -88,5 +93,9 @@ final class InventoryVM {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .login, object: nil)
     }
 }

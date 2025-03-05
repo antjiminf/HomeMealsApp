@@ -13,6 +13,7 @@ final class RecipesVM {
     }
     var favoriteSearchText: String = ""
     var suggestedRecipes: [RecipeListItem] = []
+    var userRecipes: [RecipeListItem] = []
     
     private let perPage = 30
     private var page = 1
@@ -30,9 +31,16 @@ final class RecipesVM {
     
     init(interactor: DataInteractor = Network.shared) {
         self.interactor = interactor
-        Task {
-            await initRecipes()
+        if SecManager.shared.isLogged() {
+            Task { await initRecipes() }
         }
+        NotificationCenter.default.addObserver(forName: .login, object: nil, queue: .main) { _ in
+            Task { await self.initRecipes() }
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .login, object: nil)
     }
     
     func initRecipes() async {
@@ -50,6 +58,7 @@ final class RecipesVM {
             totalPages = result.total
             favoriteRecipes = try await interactor.getFavorites()
             suggestedRecipes = try await interactor.getRecipeSuggestions()
+            userRecipes = try await interactor.getUserRecipes()
 //            let (favoritesResult, suggestionsResult, recipesResult) = try await (favoritesQuery, suggestionsQuery, recipesQuery)
 //            recipes = recipesResult.items
 //            suggestedRecipes = suggestionsResult
@@ -127,6 +136,15 @@ final class RecipesVM {
     func getSuggestedRecipes() async {
         do {
             suggestedRecipes = try await interactor.getRecipeSuggestions()
+        } catch {
+            hasError = true
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func getUserRecipes() async {
+        do {
+            userRecipes = try await interactor.getUserRecipes()
         } catch {
             hasError = true
             errorMessage = error.localizedDescription
@@ -233,12 +251,16 @@ extension RecipesVM {
     func initAuxRecipeLists() async {
         async let suggestionsQuery = interactor.getRecipeSuggestions()
         async let favoritesQuery = interactor.getFavorites()
+        async let userRecipeQuery = interactor.getUserRecipes()
         
         do {
-            let (favoritesResult, suggestionsResult) = try await (favoritesQuery, suggestionsQuery)
+            let (favoritesResult, suggestionsResult, userRecipesResult) = try await (favoritesQuery,
+                                                                                     suggestionsQuery,
+                                                                                     userRecipeQuery)
             
             suggestedRecipes = suggestionsResult
             favoriteRecipes = favoritesResult
+            userRecipes = userRecipesResult
         } catch {
             hasError = true
             errorMessage = "Failed to fetch recipes"
@@ -270,15 +292,6 @@ extension RecipesVM {
             errorMessage = "Error toggling favorite"
         }
     }
-    
-    //    func getRecipeFavorites(recipeId: UUID) async {
-    //        do {
-    //            try await interactor.getRecipeFavorites(id: recipeId)
-    //        } catch {
-    //            hasError = true
-    //            errorMessage = "Error fetching recipe likes"
-    //        }
-    //    }
 }
 
 extension RecipesVM {

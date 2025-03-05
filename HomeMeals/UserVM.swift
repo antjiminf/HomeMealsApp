@@ -8,27 +8,42 @@ final class UserVM {
     
     init(interactor: DataInteractor = Network.shared) {
         self.interactor = interactor
+        if SecManager.shared.isLogged() {
+            Task { await loadUserProfile() }
+        }
+        NotificationCenter.default.addObserver(forName: .login, object: nil, queue: .main) { _ in
+            Task { await self.loadUserProfile() }
+        }
     }
     
-    /// 🔄 Carga el perfil del usuario desde la API
     func loadUserProfile() async {
         do {
             self.userProfile = try await interactor.getUserProfile()
         } catch {
-            print("❌ Error loading user profile: \(error.localizedDescription)")
+            print("Error loading user profile: \(error.localizedDescription)")
         }
     }
     
-    /// 🔄 Refresca manualmente el perfil
     func refreshProfile() {
         Task {
             await loadUserProfile()
         }
     }
     
-    /// 🔐 Cierra sesión y borra los datos del usuario
     func logOut() {
         SecManager.shared.logOut()
         userProfile = nil
+    }
+    
+    func updatePassword(_ request: UpdatePassword) async throws {
+        try await interactor.updatePassword(request)
+    }
+    
+    func updateProfile(_ updatedProfile: UpdateProfile) async throws {
+        
+        try await interactor.updateProfile(updatedProfile)
+        userProfile?.email = updatedProfile.email
+        userProfile?.name = updatedProfile.name
+        userProfile?.username = updatedProfile.username
     }
 }

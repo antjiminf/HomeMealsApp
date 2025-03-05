@@ -19,7 +19,12 @@ final class IngredientsVM {
     
     init(interactor: DataInteractor = Network.shared) {
         self.interactor = interactor
-        Task { await loadIngredients() }
+        if SecManager.shared.isLogged() {
+            Task { await loadIngredients() }
+        }
+        NotificationCenter.default.addObserver(forName: .login, object: nil, queue: .main) { _ in
+            Task { await self.loadIngredients() }
+        }
     }
     
     func loadIngredients() async {
