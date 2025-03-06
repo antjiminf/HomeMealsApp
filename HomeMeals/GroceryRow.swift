@@ -12,8 +12,8 @@ struct GroceryRow: View {
                         .font(.headline)
                     Spacer()
                     
-                    TextField("Quantity", value: $item.requiredQuantity, format: .number)
-                        .keyboardType(.decimalPad)
+                    TextField("Quantity", value: $item.requiredQuantity, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
                         .frame(width: 60, alignment: .trailing)
                         .multilineTextAlignment(.trailing)
                         .textFieldStyle(.roundedBorder)
@@ -28,22 +28,27 @@ struct GroceryRow: View {
                         .font(.headline)
                     
                     HStack {
-                        TextField("Quantity", value: $item.requiredQuantity, format: .number)
-                            .keyboardType(.decimalPad)
+                        TextField("Quantity", value: $item.requiredQuantity, formatter: NumberFormatter())
+                            .keyboardType(.numberPad)
                             .frame(width: 60, alignment: .trailing)
                             .multilineTextAlignment(.trailing)
                             .textFieldStyle(.roundedBorder)
                             .disabled(item.isObtained)
                         
-                        Text(item.unit.rawValue)
-                            .frame(width: 40, alignment: .leading)
+                        
+                        if item.unit == .units,
+                           item.requiredQuantity == 1 {
+                            Text("unit")
+                                .frame(width: 40, alignment: .leading)
+                        } else {
+                            Text(item.unit.rawValue)
+                                .frame(width: 40, alignment: .leading)
+                        }
                     }
                 }
             }
             Spacer()
-            Stepper(value: $item.requiredQuantity,
-                    in: item.unit == .units ? 1...Double.infinity : 0.1...Double.infinity,
-                    step: item.unit == .units ? 1 : 0.1) {
+            Stepper(value: $item.requiredQuantity, in: 1...Double.infinity, step: 1) {
                 EmptyView()
             }
             .disabled(item.isObtained)

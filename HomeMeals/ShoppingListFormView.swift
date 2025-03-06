@@ -103,19 +103,25 @@ struct ShoppingListFormView: View {
                                     
                                     TextField("Quantity",
                                               value: $shoppingListVm.shoppingList[index].requiredQuantity,
-                                              format: .number)
-                                    .keyboardType(.decimalPad)
+                                              formatter: NumberFormatter())
+                                    .keyboardType(.numberPad)
                                     .frame(width: 80, alignment: .trailing)
                                     .multilineTextAlignment(.trailing)
                                     .textFieldStyle(.roundedBorder)
                                     .focused($isFocused)
                                     
-                                    Text(item.unit.rawValue)
-                                        .frame(width: 40, alignment: .leading)
+                                    if item.unit == .units,
+                                       item.requiredQuantity == 1 {
+                                        Text("unit")
+                                            .frame(width: 40, alignment: .leading)
+                                    } else {
+                                        Text(item.unit.rawValue)
+                                            .frame(width: 40, alignment: .leading)
+                                    }
                                     
                                     Stepper(value: $shoppingListVm.shoppingList[index].requiredQuantity,
-                                            in: item.unit == .units ? 1...Double.infinity : 0.1...Double.infinity,
-                                            step: item.unit == .units ? 1 : 0.1) {
+                                            in: 1...Double.infinity,
+                                            step: 1) {
                                         EmptyView()
                                     }
                                 }
@@ -180,12 +186,12 @@ struct ShoppingListFormView: View {
                     }
                 }
             }
-            .onTapGesture {
-                if isFocused {
-                    isFocused = false
-                }
-            }
             .navigationTitle("Create Groceries List")
+        }
+        .onTapGesture {
+            if isFocused {
+                isFocused = false
+            }
         }
     }
 }

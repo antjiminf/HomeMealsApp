@@ -12,34 +12,21 @@ struct EditQuantityView: View {
         
         NavigationStack {
             VStack(alignment: .center) {
-                HStack() {
-                    switch inventoryItemVm.inventoryItem.unit {
-                    case .units:
-                        TextField(
-                            "Quantity",
-                            value: $inventoryItemVm.quantity,
-                            formatter: NumberFormatter()
-                        )
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 80)
-                        
-                        Stepper(value: $inventoryItemVm.quantity, in: 0...Double.infinity, step: 1) {}
-                    default:
-                        TextField(
-                            "Quantity",
-                            value: $inventoryItemVm.quantity,
-                            formatter: NumberFormatter.decimalFormatter
-                        )
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 80)
-                        
-                        Stepper(value: $inventoryItemVm.quantity, in: 0.0...Double.infinity, step: 0.1) {}
-                    }
+                HStack {
+                    TextField(
+                        "Quantity",
+                        value: $inventoryItemVm.quantity,
+                        formatter: NumberFormatter()
+                    )
+                    .keyboardType(.numberPad)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 80)
+                    Text(inventoryItemVm.inventoryItem.unit.rawValue)
+                    
+                    Stepper(value: $inventoryItemVm.quantity, in: 0...Double.infinity, step: 1) {}
                 }
                 .focused($focusState)
-                .frame(width: 150)
+                .frame(width: 200)
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -81,10 +68,10 @@ struct EditQuantityView: View {
             .onAppear {
                 focusState = true
             }
-            .onTapGesture {
-                if focusState {
-                    focusState = false
-                }
+        }
+        .onTapGesture {
+            if focusState {
+                focusState = false
             }
         }
     }

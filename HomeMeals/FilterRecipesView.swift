@@ -152,10 +152,10 @@ struct FilterRecipesView: View {
                     
                 }
             }
-            .onTapGesture {
-                if let _ = focusedField {
-                    focusedField = nil
-                }
+        }
+        .onTapGesture {
+            if let _ = focusedField {
+                focusedField = nil
             }
         }
     }

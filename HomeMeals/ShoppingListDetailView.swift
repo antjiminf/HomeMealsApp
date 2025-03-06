@@ -84,11 +84,6 @@ struct ShoppingListDetailView: View {
                     }
                 }
             }
-            .onTapGesture {
-                if isFocused {
-                    isFocused = false
-                }
-            }
             .alert("Confirm save", isPresented: $detailsVm.showConfirmationAlert) {
                 Button("Cancel", role: .cancel) {}
                 Button("Confirm", role: .destructive) {
@@ -101,6 +96,11 @@ struct ShoppingListDetailView: View {
                 }
             } message: {
                 Text("This action will add the items to your inventory and mark the shopping list as completed. Are you sure?")
+            }
+        }
+        .onTapGesture {
+            if isFocused {
+                isFocused = false
             }
         }
     }

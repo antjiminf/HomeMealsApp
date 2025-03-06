@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RegisterView: View {
     @Environment(\.dismiss) private var dismiss
+    @FocusState private var focusedField: Field?
     
     @State var username = ""
     @State private var password = ""
@@ -49,6 +50,11 @@ struct RegisterView: View {
                                         hint: "Enter a unique username",
                                         validation: validateUsername,
                                         initial: false)
+                        .focused($focusedField, equals: .username)
+                        .submitLabel(.next)
+                        .onSubmit {
+                            focusedField = .name
+                        }
                         
                         CustomTextField(label: "Full Name",
                                         value: $fullname,
@@ -56,6 +62,11 @@ struct RegisterView: View {
                                         hint: "Enter your full name",
                                         validation: validateFullName,
                                         initial: false)
+                        .focused($focusedField, equals: .name)
+                        .submitLabel(.next)
+                        .onSubmit {
+                            focusedField = .email
+                        }
                         
                         CustomTextField(label: "Email",
                                         value: $email,
@@ -63,6 +74,14 @@ struct RegisterView: View {
                                         hint: "Enter a valid email",
                                         validation: validateEmail,
                                         initial: false)
+                        .textContentType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.emailAddress)
+                        .focused($focusedField, equals: .email)
+                        .submitLabel(.next)
+                        .onSubmit {
+                            focusedField = .password
+                        }
                         
                         SecureCustomTextField(label: "Password",
                                               value: $password,
@@ -70,6 +89,11 @@ struct RegisterView: View {
                                               hint: "Enter a strong password",
                                               validation: validatePassword,
                                               initial: false)
+                        .focused($focusedField, equals: .password)
+                        .submitLabel(.next)
+                        .onSubmit {
+                            focusedField = .confirmPassword
+                        }
                         
                         SecureCustomTextField(label: "Confirm Password",
                                               value: $confirmPassword,
@@ -77,6 +101,11 @@ struct RegisterView: View {
                                               hint: "Re-enter your password",
                                               validation: validateConfirmPassword,
                                               initial: false)
+                        .focused($focusedField, equals: .confirmPassword)
+                        .submitLabel(.done)
+                        .onSubmit {
+                            focusedField = nil
+                        }
                     }
                     .padding()
                     
@@ -98,6 +127,29 @@ struct RegisterView: View {
                     .disabled(isLoading || !isFormValid)
                     .padding(.horizontal)
                 }
+                .toolbar {
+                    ToolbarItem(placement: .keyboard) {
+                        HStack {
+                            Button {
+                                focusedField?.previous()
+                            } label: {
+                                Image(systemName: "chevron.up")
+                            }
+                            Button {
+                                focusedField?.next()
+                            } label: {
+                                Image(systemName: "chevron.down")
+                                
+                            }
+                            Spacer()
+                            Button {
+                                focusedField = nil
+                            } label: {
+                                Image(systemName: "keyboard.chevron.compact.down.fill")
+                            }
+                        }
+                    }
+                }
                 .padding()
                 .alert("Registration Failed", isPresented: $showError) {
                     Button("OK", role: .cancel) {}
@@ -109,6 +161,11 @@ struct RegisterView: View {
                 } message: {
                     Text("Your account has been created successfully!")
                 }
+            }
+        }
+        .onTapGesture {
+            if let _ = focusedField {
+                focusedField = nil
             }
         }
     }
@@ -159,6 +216,42 @@ struct RegisterView: View {
         if text.isEmpty { return "cannot be empty" }
         if text != password { return "do not match" }
         return nil
+    }
+}
+
+extension RegisterView {
+    enum Field: Hashable {
+        case username, name, email, password, confirmPassword
+        
+        mutating func next() {
+            switch self {
+            case .username:
+                self = .name
+            case .name:
+                self = .email
+            case .email:
+                self = .password
+            case .password:
+                self = .confirmPassword
+            case .confirmPassword:
+                self = .username
+            }
+        }
+        
+        mutating func previous() {
+            switch self {
+            case .username:
+                self = .confirmPassword
+            case .name:
+                self = .username
+            case .email:
+                self = .name
+            case .password:
+                self = .email
+            case .confirmPassword:
+                self = .password
+            }
+        }
     }
 }
 

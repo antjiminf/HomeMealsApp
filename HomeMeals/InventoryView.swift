@@ -81,15 +81,12 @@ struct InventoryView: View {
                                         .font(.headline)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     
-                                    switch item.unit {
-                                    case .units:
-                                        Text("\(item.quantity, specifier: "%.0f") units")
+                                    if item.unit == .units,
+                                       item.quantity == 1 {
+                                        Text("\(item.quantity, specifier: "%.0f") unit")
                                             .foregroundColor(.secondary)
-                                    case .weight:
-                                        Text("\(item.quantity, specifier: "%.1f") g")
-                                            .foregroundColor(.secondary)
-                                    case .volume:
-                                        Text("\(item.quantity, specifier: "%.1f") L")
+                                    } else {
+                                        Text("\(item.quantity, specifier: "%.0f") \(item.unit.rawValue)")
                                             .foregroundColor(.secondary)
                                     }
                                     

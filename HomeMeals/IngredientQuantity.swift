@@ -21,66 +21,27 @@ struct IngredientQuantity: View {
                 .buttonStyle(BorderlessButtonStyle())
                 .accessibilityHint(Text("Ingredient selected, tap here to discard"))
             }
+            
             Text(ingredientName)
             Spacer()
             
-            switch unit {
-            case .volume:
-                TextField(
-                    "Quantity",
-                    value: $quantity,
-                    formatter: NumberFormatter.decimalFormatter
-                )
-                .foregroundStyle(quantity == 0 ? .gray : .black)
-                .padding(5)
-                .background {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(UIColor.secondarySystemBackground))
-                }
-                .keyboardType(.decimalPad)
-                .frame(width: 80)
-                
-                
-                Text("L")
-                    .frame(width: 40, alignment: .leading)
-                
-            case .units:
-                TextField(
-                    "Quantity",
-                    value: $quantity,
-                    formatter: NumberFormatter()
-                )
-                .foregroundStyle(quantity == 0 ? .gray : .black)
-                .padding(5)
-                .background {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(UIColor.secondarySystemBackground))
-                }
-                .keyboardType(.decimalPad)
-                .frame(width: 80)
-                
-                Text("units")
-                    .frame(width: 40, alignment: .leading)
-                
-            case .weight:
-                TextField(
-                    "Quantity",
-                    value: $quantity,
-                    formatter: NumberFormatter.decimalFormatter
-                )
-                .foregroundStyle(quantity == 0 ? .gray : .black)
-                .padding(5)
-                .background {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(UIColor.secondarySystemBackground))
-                }
-                .keyboardType(.decimalPad)
-                .frame(width: 80)
-                
-                Text("g")
-                    .frame(width: 40, alignment: .leading)
-                
+            TextField(
+                "Quantity",
+                value: $quantity,
+                formatter: NumberFormatter()
+            )
+            .foregroundStyle(quantity == 0 ? .gray : .black)
+            .padding(5)
+            .background {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color(UIColor.secondarySystemBackground))
             }
+            .keyboardType(.numberPad)
+            .frame(width: 80)
+            
+            
+            Text(unit.rawValue)
+                .frame(width: 40, alignment: .leading)
         }
         .contentShape(Rectangle())
     }

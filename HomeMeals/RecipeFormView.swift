@@ -167,13 +167,13 @@ struct RecipeFormView: View {
                     Text(errorMessage)
                 }
             }
-            .onTapGesture {
-                if let _ = focusedField {
-                    focusedField = nil
-                }
-            }
             .onAppear {
                 focusedField = .name
+            }
+        }
+        .onTapGesture {
+            if let _ = focusedField {
+                focusedField = nil
             }
         }
     }

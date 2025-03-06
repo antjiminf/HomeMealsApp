@@ -83,7 +83,7 @@ extension Recipe {
                                                  unit: .volume),
                                 RecipeIngredient(ingredientId: UUID(),
                                                  name: "Olive Oil",
-                                                 quantity: 0.2,
+                                                 quantity: 1,
                                                  unit: .volume)],
                              favorite: true,
                              favTotal: 300)

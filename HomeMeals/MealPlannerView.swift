@@ -67,7 +67,7 @@ struct MealPlannerView: View {
                             .background(Color.red.opacity(0.1))
                             .foregroundColor(.red)
                             .cornerRadius(8)
-                            .padding(.horizontal)
+                            .padding()
                         }
                     }
                 }

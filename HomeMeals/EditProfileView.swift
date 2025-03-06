@@ -134,10 +134,10 @@ struct EditProfileView: View {
                 }
                 focusField = .name
             }
-            .onTapGesture {
-                if let _ = focusField {
-                    focusField = nil
-                }
+        }
+        .onTapGesture {
+            if let _ = focusField {
+                focusField = nil
             }
         }
     }

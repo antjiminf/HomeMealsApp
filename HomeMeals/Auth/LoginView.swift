@@ -3,13 +3,14 @@ import AuthenticationServices
 
 struct LoginView: View {
     @Environment(\.dismiss) private var dismiss
+    @FocusState private var focusedField: Field?
     @State private var username = ""
     @State private var password = ""
     @State private var isLoading = false
     @State private var showError = false
     @State private var errorMessage = ""
     @State private var showRegisterForm = false
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -35,6 +36,11 @@ struct LoginView: View {
                                 .keyboardType(.emailAddress)
                                 .padding()
                                 .background(RoundedRectangle(cornerRadius: 8).fill(Color(.systemGray6)))
+                                .focused($focusedField, equals: .username)
+                                .submitLabel(.next)
+                                .onSubmit {
+                                    focusedField = .password
+                                }
                             
                             Text("Password")
                                 .bold()
@@ -42,6 +48,11 @@ struct LoginView: View {
                                 .textContentType(.password)
                                 .padding()
                                 .background(RoundedRectangle(cornerRadius: 8).fill(Color(.systemGray6)))
+                                .focused($focusedField, equals: .password)
+                                .submitLabel(.done)
+                                .onSubmit {
+                                    focusedField = nil
+                                }
                         }
                         .padding(.vertical)
                     }
@@ -97,6 +108,29 @@ struct LoginView: View {
                     .signInWithAppleButtonStyle(.whiteOutline)
                     .frame(width: 250, height: 50)
                 }
+                .toolbar {
+                    ToolbarItem(placement: .keyboard) {
+                        HStack {
+                            Button {
+                                focusedField?.next()
+                            } label: {
+                                Image(systemName: "chevron.up")
+                            }
+                            Button {
+                                focusedField?.next()
+                            } label: {
+                                Image(systemName: "chevron.down")
+                                
+                            }
+                            Spacer()
+                            Button {
+                                focusedField = nil
+                            } label: {
+                                Image(systemName: "keyboard.chevron.compact.down.fill")
+                            }
+                        }
+                    }
+                }
                 .padding()
                 .textFieldStyle(.roundedBorder)
                 .sheet(isPresented: $showRegisterForm) {
@@ -109,12 +143,17 @@ struct LoginView: View {
                 }
             }
         }
+        .onTapGesture {
+            if let _ = focusedField {
+                focusedField = nil
+            }
+        }
     }
     
     private func login() {
         isLoading = true
         errorMessage = ""
-
+        
         Task {
             do {
                 try await Network.shared.login(username: username, password: password)
@@ -123,8 +162,24 @@ struct LoginView: View {
                 errorMessage = "Invalid username or password. Please try again."
                 showError = true
             }
-
+            
             isLoading = false
+        }
+    }
+}
+
+extension LoginView {
+    enum Field: Hashable {
+        case username
+        case password
+        
+        mutating func next() {
+            switch self {
+            case .username:
+                self = .password
+            case .password:
+                self = .username
+            }
         }
     }
 }

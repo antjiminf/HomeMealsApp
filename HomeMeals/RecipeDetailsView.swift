@@ -98,20 +98,14 @@ struct RecipeDetailsView: View {
                                         Text(ingredient.name)
                                         Spacer()
                                         
-                                        switch ingredient.unit {
+                                        if ingredient.unit == .units,
+                                           ingredient.quantity == 1 {
                                             
-                                        case .units:
-                                            Text("\(ingredient.quantity, specifier: "%.0f") units")
-                                                .foregroundColor(.secondary)
-                                            
-                                        case .volume:
-                                            
-                                            Text("\(ingredient.quantity, specifier: "%.1f") L")
-                                                .foregroundColor(.secondary)
-                                            
-                                        case .weight:
-                                            Text("\(ingredient.quantity, specifier: "%.1f") g")
-                                                .foregroundColor(.secondary)
+                                            Text("\(ingredient.quantity, specifier: "%.0f") unit")
+                                                .foregroundStyle(.secondary)
+                                        } else {
+                                            Text("\(ingredient.quantity, specifier: "%.0f") \(ingredient.unit.rawValue)")
+                                                .foregroundStyle(.secondary)
                                         }
                                     }
                                 }

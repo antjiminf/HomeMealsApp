@@ -127,24 +127,17 @@ struct IngredientsSelector: View {
                     HStack {
                         Text(i.name)
                         Spacer()
-                        switch i.unit {
-                            case .units:
-                            Text("\(i.quantity, specifier: "%.0f") units")
-                            case .volume:
-                                Text("\(i.quantity, specifier: "%.1f") L")
-                            case .weight:
-                                Text("\(i.quantity, specifier: "%.1f") g")
-                        }
+                        Text("\(i.quantity, specifier: "%.0f") \(i.unit == .units && i.quantity == 1 ? "unit" : i.unit.rawValue)")
                     }
                 }
                 .presentationDetents([.large, .fraction(0.5)],
                                      selection: $detent)
                 .presentationBackgroundInteraction(.enabled)
             }
-            .onTapGesture {
-                if let _ = focusedField {
-                    focusedField = nil
-                }
+        }
+        .onTapGesture {
+            if let _ = focusedField {
+                focusedField = nil
             }
         }
     }
@@ -154,30 +147,6 @@ extension IngredientsSelector {
     enum Field: Hashable {
         case search
         case ingredient(UUID)
-        
-//        mutating func next(totalIngredients: Int = 0) {
-//            switch self {
-//            case .search:
-//                if totalIngredients > 0 {
-//                    self = .ingredient(0)
-//                }
-//            case .ingredient(let index):
-//                if totalIngredients == 0 {
-//                    self = .ingredient(index + 1)
-//                }
-//            }
-//        }
-//        
-//        mutating func previous() {
-//            switch self {
-//            case .search:
-//                break
-//            case .ingredient(let index):
-//                if index > 0 {
-//                    self = .ingredient(index - 1)
-//                }
-//            }
-//        }
     }
 }
 

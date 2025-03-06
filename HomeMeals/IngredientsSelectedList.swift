@@ -54,61 +54,22 @@ struct IngredientsSelectedList: View {
                                 Text(ingredients[index].name)
                                 Spacer()
                                 
-                                switch ingredients[index].unit {
-                                case .volume:
-                                    TextField(
-                                        "Quantity",
-                                        value: $ingredients[index].quantity,
-                                        formatter: NumberFormatter.decimalFormatter
-                                    )
-                                    .foregroundStyle(ingredients[index].quantity < 0.1 ? .gray : .black)
-                                    .padding(5)
-                                    .background {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(Color(UIColor.systemBackground))
-                                    }
-                                    .keyboardType(.decimalPad)
-                                    .frame(width: 80)
-                                    
-                                    Text("L")
-                                        .frame(width: 40, alignment: .leading)
-                                    
-                                case .units:
-                                    TextField(
-                                        "Quantity",
-                                        value: $ingredients[index].quantity,
-                                        formatter: NumberFormatter()
-                                    )
-                                    .foregroundStyle(ingredients[index].quantity < 0.1 ? .gray : .black)
-                                    .padding(5)
-                                    .background {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(Color(UIColor.systemBackground))
-                                    }
-                                    .keyboardType(.decimalPad)
-                                    .frame(width: 80)
-                                    
-                                    Text("units")
-                                        .frame(width: 40, alignment: .leading)
-                                    
-                                case .weight:
-                                    TextField(
-                                        "Quantity",
-                                        value: $ingredients[index].quantity,
-                                        formatter: NumberFormatter.decimalFormatter)
-                                    .foregroundStyle(ingredients[index].quantity < 0.1 ? .gray : .black)
-                                    .padding(5)
-                                    .background {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(Color(UIColor.systemBackground))
-                                    }
-                                    .keyboardType(.decimalPad)
-                                    .frame(width: 80)
-                                    
-                                    Text("g")
-                                        .frame(width: 40, alignment: .leading)
-
+                                TextField(
+                                    "Quantity",
+                                    value: $ingredients[index].quantity,
+                                    formatter: NumberFormatter()
+                                )
+                                .foregroundStyle(ingredients[index].quantity == 0 ? .gray : .black)
+                                .padding(5)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(Color(UIColor.systemBackground))
                                 }
+                                .keyboardType(.numberPad)
+                                .frame(width: 80)
+                                
+                                Text(ingredients[index].unit.rawValue)
+                                    .frame(width: 40, alignment: .leading)
                             }
                             .focused($focusedField, equals: .ingredientQuantity(index))
                             .padding(.bottom, 5)

@@ -120,13 +120,13 @@ struct UpdatePasswordView: View {
             } message: {
                 Text("Your password has been updated successfully.")
             }
-            .onTapGesture {
-                if let _ = focusedField {
-                    focusedField = nil
-                }
-            }
             .onAppear {
                 focusedField = .password
+            }
+        }
+        .onTapGesture {
+            if let _ = focusedField {
+                focusedField = nil
             }
         }
     }
