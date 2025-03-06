@@ -2,6 +2,7 @@ import SwiftUI
 
 struct IngredientsSelector: View {
     @Environment(\.dismiss) private var dismiss
+    @FocusState private var focusedField: Field?
     @Environment(IngredientsVM.self) var ingredientsVM
     @State var selectorVM: IngredientSelectorVM
     @Binding var selectedIngredients: [SelectionIngredient]
@@ -18,11 +19,11 @@ struct IngredientsSelector: View {
                         .padding(10)
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
-                        .overlay(
+                        .overlay {
                             HStack {
                                 Spacer()
                                 if !ingredientsVM.searchText.isEmpty {
-                                    Button { 
+                                    Button {
                                         ingredientsBindable.searchText = ""
                                     } label: {
                                         Image(systemName: "xmark.circle.fill")
@@ -31,8 +32,9 @@ struct IngredientsSelector: View {
                                     .padding(.trailing, 8)
                                 }
                             }
-                        )
+                        }
                         .padding(.horizontal)
+                        .focused($focusedField, equals: .search)
                 }
                 .padding(.vertical, 8)
 
@@ -51,6 +53,11 @@ struct IngredientsSelector: View {
                                                 }
                                             ),
                                             unit: ingredient.unit)
+                                        .focused($focusedField, equals: .ingredient(ingredient.id))
+                                        .submitLabel(.next)
+                                        .onTapGesture {
+                                            focusedField = .ingredient(ingredient.id)
+                                        }
                                     }
                                 } header: {
                                     HStack {
@@ -99,6 +106,16 @@ struct IngredientsSelector: View {
                     .padding()
                     .accessibilityHint(Text("Shows the list of ingredients selected"))
                 }
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        Button {
+                            focusedField = nil
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down.fill")
+                        }
+                    }
+                }
             }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
@@ -124,7 +141,43 @@ struct IngredientsSelector: View {
                                      selection: $detent)
                 .presentationBackgroundInteraction(.enabled)
             }
+            .onTapGesture {
+                if let _ = focusedField {
+                    focusedField = nil
+                }
+            }
         }
+    }
+}
+
+extension IngredientsSelector {
+    enum Field: Hashable {
+        case search
+        case ingredient(UUID)
+        
+//        mutating func next(totalIngredients: Int = 0) {
+//            switch self {
+//            case .search:
+//                if totalIngredients > 0 {
+//                    self = .ingredient(0)
+//                }
+//            case .ingredient(let index):
+//                if totalIngredients == 0 {
+//                    self = .ingredient(index + 1)
+//                }
+//            }
+//        }
+//        
+//        mutating func previous() {
+//            switch self {
+//            case .search:
+//                break
+//            case .ingredient(let index):
+//                if index > 0 {
+//                    self = .ingredient(index - 1)
+//                }
+//            }
+//        }
     }
 }
 

@@ -5,8 +5,6 @@ struct IngredientQuantity: View {
     @Binding var quantity: Double
     let unit: Unit
     
-    @FocusState private var isFocused: Bool    
-    
     var body: some View {
         HStack {
             if quantity > 0 {
@@ -41,7 +39,6 @@ struct IngredientQuantity: View {
                 }
                 .keyboardType(.decimalPad)
                 .frame(width: 80)
-                .focused($isFocused)
                 
                 
                 Text("L")
@@ -61,7 +58,6 @@ struct IngredientQuantity: View {
                 }
                 .keyboardType(.decimalPad)
                 .frame(width: 80)
-                .focused($isFocused)
                 
                 Text("units")
                     .frame(width: 40, alignment: .leading)
@@ -80,7 +76,6 @@ struct IngredientQuantity: View {
                 }
                 .keyboardType(.decimalPad)
                 .frame(width: 80)
-                .focused($isFocused)
                 
                 Text("g")
                     .frame(width: 40, alignment: .leading)
@@ -88,12 +83,6 @@ struct IngredientQuantity: View {
             }
         }
         .contentShape(Rectangle())
-        .onTapGesture {
-            if quantity == 0 {
-                quantity = 1.0
-            }
-            isFocused = true
-        }
     }
 }
 

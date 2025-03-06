@@ -3,6 +3,7 @@ import SwiftData
 
 struct ShoppingListFormView: View {
     @Environment(\.modelContext) var modelContext
+    @FocusState private var isFocused: Bool
     @Environment(\.dismiss) private var dismiss
     @State var shoppingListVm = ShoppingListGeneratorVM()
     
@@ -23,6 +24,7 @@ struct ShoppingListFormView: View {
                                     shoppingListVm.generationToggled = false
                                     shoppingListVm.validateDates()
                                 }
+                                .bold()
                         }
                         
                         if let errorMessage = shoppingListVm.dateErrorMessage {
@@ -45,14 +47,16 @@ struct ShoppingListFormView: View {
                             shoppingListVm.generationToggled = false
                             shoppingListVm.validateDates()
                         }
+                        .bold()
                     
                     HStack {
                         VStack(alignment: .leading) {
                             Text("Display Groceries List")
                                 .font(.headline)
-                            Text("Based on inventory")
+                            Text("Based on missing ingredients in your inventory.")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.leading)
                         }
                         
                         Spacer()
@@ -104,6 +108,7 @@ struct ShoppingListFormView: View {
                                     .frame(width: 80, alignment: .trailing)
                                     .multilineTextAlignment(.trailing)
                                     .textFieldStyle(.roundedBorder)
+                                    .focused($isFocused)
                                     
                                     Text(item.unit.rawValue)
                                         .frame(width: 40, alignment: .leading)
@@ -139,7 +144,7 @@ struct ShoppingListFormView: View {
                                            description: Text("Please add meals to your schedule to generate a shopping list"))
                 }
             }
-            .fullScreenCover(isPresented: $shoppingListVm.showIngredientsSelector) {
+            .sheet(isPresented: $shoppingListVm.showIngredientsSelector) {
                 IngredientsSelector(selectorVM: IngredientSelectorVM(),
                                     selectedIngredients: $shoppingListVm.ingredientsInList,
                                     title: "Add Groceries")
@@ -164,7 +169,21 @@ struct ShoppingListFormView: View {
                     }
                     .disabled(shoppingListVm.hasDateError)
                 }
-                
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        Button {
+                            isFocused = false
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down.fill")
+                        }
+                    }
+                }
+            }
+            .onTapGesture {
+                if isFocused {
+                    isFocused = false
+                }
             }
             .navigationTitle("Create Groceries List")
         }

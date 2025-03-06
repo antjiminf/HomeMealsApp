@@ -31,7 +31,6 @@
 		1E48BAC62CC6DE23008D5CC4 /* GuideField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E48BAC52CC6DE23008D5CC4 /* GuideField.swift */; };
 		1E48BAC82CC6DEA9008D5CC4 /* IngredientsSelectedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E48BAC72CC6DEA9008D5CC4 /* IngredientsSelectedList.swift */; };
 		1E4D95BB2C8E7BFD00BCA798 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4D95BA2C8E7BFD00BCA798 /* Network.swift */; };
-		1E4D95BE2C8E7E6E00BCA798 /* ACNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 1E4D95BD2C8E7E6E00BCA798 /* ACNetwork */; };
 		1E5255042C8F5F4E00A9A364 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5255032C8F5F4E00A9A364 /* RecipeView.swift */; };
 		1E573A322CBE8ADF005EF98C /* AllergensSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E573A312CBE8ADF005EF98C /* AllergensSelector.swift */; };
 		1E5971C22D10A15E000D2CF0 /* RecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5971C12D10A15E000D2CF0 /* RecipeCard.swift */; };
@@ -57,6 +56,7 @@
 		1E7A847C2C8F0F5600544777 /* RecipesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A847B2C8F0F5600544777 /* RecipesVM.swift */; };
 		1E7E51A52D159EA600DA445B /* FilterRecipesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7E51A42D159EA600DA445B /* FilterRecipesVM.swift */; };
 		1E8F1AD32CC7F3F6001284B8 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8F1AD22CC7F3F6001284B8 /* Formatters.swift */; };
+		1E9374442D792CB200239B27 /* ACNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 1E9374432D792CB200239B27 /* ACNetwork */; };
 		1EA705802CE65B7D00933279 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA7057F2CE65B7D00933279 /* Inventory.swift */; };
 		1EC380022CBD2A0A0077B520 /* IngredientSelectorVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC380012CBD2A0A0077B520 /* IngredientSelectorVM.swift */; };
 		1EC380042CBD549D0077B520 /* IngredientQuantity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC380032CBD549D0077B520 /* IngredientQuantity.swift */; };
@@ -176,7 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E4D95BE2C8E7E6E00BCA798 /* ACNetwork in Frameworks */,
+				1E9374442D792CB200239B27 /* ACNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,7 +413,7 @@
 			);
 			name = HomeMeals;
 			packageProductDependencies = (
-				1E4D95BD2C8E7E6E00BCA798 /* ACNetwork */,
+				1E9374432D792CB200239B27 /* ACNetwork */,
 			);
 			productName = HomeMeals;
 			productReference = 1E28E9862C8CB76200CEA3BB /* HomeMeals.app */;
@@ -488,7 +488,7 @@
 			);
 			mainGroup = 1E28E97D2C8CB76200CEA3BB;
 			packageReferences = (
-				1E28E9BC2C8E36B400CEA3BB /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */,
+				1E9374422D792BAE00239B27 /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */,
 			);
 			productRefGroup = 1E28E9872C8CB76200CEA3BB /* Products */;
 			projectDirPath = "";
@@ -932,7 +932,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1E28E9BC2C8E36B400CEA3BB /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */ = {
+		1E9374422D792BAE00239B27 /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/acacademy/ACNetwork-Bootcamp2024";
 			requirement = {
@@ -943,9 +943,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1E4D95BD2C8E7E6E00BCA798 /* ACNetwork */ = {
+		1E9374432D792CB200239B27 /* ACNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1E28E9BC2C8E36B400CEA3BB /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */;
+			package = 1E9374422D792BAE00239B27 /* XCRemoteSwiftPackageReference "ACNetwork-Bootcamp2024" */;
 			productName = ACNetwork;
 		};
 /* End XCSwiftPackageProductDependency section */

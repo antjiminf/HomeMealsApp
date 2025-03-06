@@ -45,7 +45,7 @@ struct ShoppingListsView: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $showForm) {
+            .sheet(isPresented: $showForm) {
                 ShoppingListFormView()
             }
         }

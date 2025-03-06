@@ -132,7 +132,7 @@ struct InventoryView: View {
                     .presentationDetents([.fraction(0.25), .medium], selection: $detent)
                 }
             }
-            .fullScreenCover(isPresented: $showAddIngredients) {
+            .sheet(isPresented: $showAddIngredients) {
                 IngredientsSelector(
                     selectorVM: IngredientSelectorVM(),
                     selectedIngredients: $ingredients,
@@ -147,7 +147,7 @@ struct InventoryView: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $showConsumeIngredients) {
+            .sheet(isPresented: $showConsumeIngredients) {
                 IngredientsSelector(
                     selectorVM: IngredientSelectorVM(),
                     selectedIngredients: $ingredients,

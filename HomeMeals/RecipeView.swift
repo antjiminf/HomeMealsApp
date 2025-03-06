@@ -67,15 +67,13 @@ struct RecipeView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
                     Button {
                         showAddRecipe = true
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .imageScale(.large)
                     }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showFilters = true
                     } label: {
@@ -99,12 +97,12 @@ struct RecipeView: View {
             .navigationDestination(for: RecipeListItem.self) { r in
                 RecipeDetailsView(recipeDetailsVm: RecipeDetailsVM(recipeId: r.id))
             }
-            .fullScreenCover(isPresented: $showAddRecipe) {
+            .sheet(isPresented: $showAddRecipe) {
                 RecipeFormView(addRecipeVm: AddRecipeVM(),
                                title: "Create Recipe",
                                method: .CREATE)
             }
-            .fullScreenCover(isPresented: $showFilters) {
+            .sheet(isPresented: $showFilters) {
                 FilterRecipesView(filterVm: FilterRecipesVM())
             }
         }

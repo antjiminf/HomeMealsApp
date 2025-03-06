@@ -2,6 +2,7 @@ import SwiftUI
 
 struct GuideField: View {
     
+    @FocusState.Binding var focusedField: RecipeFormView.Field?
     @Binding var guide: [String]
     @Binding var isError: Bool
     let validation: ([String]) -> String?
@@ -45,7 +46,7 @@ struct GuideField: View {
                             initial.toggle()
                         }
                     }
-                    
+                    .focused($focusedField, equals: .guideStep(index))
                 }
             }
             .overlay {

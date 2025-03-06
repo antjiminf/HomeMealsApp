@@ -2,6 +2,7 @@ import SwiftUI
 
 struct UpdatePasswordView: View {
     @Environment(\.dismiss) private var dismiss
+    @FocusState private var focusedField: Field?
     @Environment(UserVM.self) var userVm
     
     @State private var currentPassword = ""
@@ -31,6 +32,11 @@ struct UpdatePasswordView: View {
                                           hint: "Enter your current password",
                                           validation: validatePassword,
                                           initial: false)
+                    .focused($focusedField, equals: .password)
+                    .submitLabel(.next)
+                    .onSubmit {
+                        focusedField = .newPassword
+                    }
                     
                     SecureCustomTextField(label: "New Password",
                                           value: $newPassword,
@@ -38,6 +44,11 @@ struct UpdatePasswordView: View {
                                           hint: "Must be at least 8 characters",
                                           validation: validateNewPassword,
                                           initial: false)
+                    .focused($focusedField, equals: .newPassword)
+                    .submitLabel(.next)
+                    .onSubmit {
+                        focusedField = .confirmPassword
+                    }
                     
                     SecureCustomTextField(label: "Confirm Password",
                                           value: $confirmPassword,
@@ -45,6 +56,11 @@ struct UpdatePasswordView: View {
                                           hint: "Confirm your new password",
                                           validation: validateConfirmPassword,
                                           initial: false)
+                    .focused($focusedField, equals: .confirmPassword)
+                    .submitLabel(.done)
+                    .onSubmit {
+                        focusedField = nil
+                    }
                 }
             }
             .navigationTitle("Update Password")
@@ -70,6 +86,27 @@ struct UpdatePasswordView: View {
                     }
                     .disabled(!isFormValid)
                 }
+                
+                ToolbarItemGroup(placement: .keyboard) {
+                    
+                    Button {
+                        focusedField?.previous()
+                    } label: {
+                        Image(systemName: "chevron.up")
+                    }
+                    Button {
+                        focusedField?.next()
+                    } label: {
+                        Image(systemName: "chevron.down")
+                    }
+                    Spacer()
+                    Button {
+                        focusedField = nil
+                    } label: {
+                        Image(systemName: "keyboard.chevron.compact.down.fill")
+                    }
+                    
+                }
             }
             .alert("Error", isPresented: $hasError) {
                 Button("OK", role: .cancel) { hasError = false }
@@ -82,6 +119,14 @@ struct UpdatePasswordView: View {
                 Button("OK", role: .cancel) { dismiss() }
             } message: {
                 Text("Your password has been updated successfully.")
+            }
+            .onTapGesture {
+                if let _ = focusedField {
+                    focusedField = nil
+                }
+            }
+            .onAppear {
+                focusedField = .password
             }
         }
     }
@@ -103,6 +148,34 @@ struct UpdatePasswordView: View {
         if confirmPassword.isEmpty { return "cannot be empty" }
         if confirmPassword != newPassword { return "do not match" }
         return nil
+    }
+}
+
+extension UpdatePasswordView {
+    enum Field: Hashable {
+        case password, newPassword, confirmPassword
+        
+        mutating func next() {
+            switch self {
+            case .password:
+                self = .newPassword
+            case .newPassword:
+                self = .confirmPassword
+            case .confirmPassword:
+                self = .password
+            }
+        }
+        
+        mutating func previous() {
+            switch self {
+            case .password:
+                self = .confirmPassword
+            case .newPassword:
+                self = .password
+            case .confirmPassword:
+                self = .newPassword
+            }
+        }
     }
 }
 

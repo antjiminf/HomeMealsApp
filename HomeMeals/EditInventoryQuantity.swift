@@ -2,6 +2,7 @@ import SwiftUI
 
 struct EditQuantityView: View {
     @Environment(InventoryVM.self) var inventoryVm
+    @FocusState private var focusState: Bool
     @Environment(\.dismiss) var dismiss
     @State var inventoryItemVm: InventoryItemVM
     let onUpdate: () async -> Void
@@ -37,6 +38,7 @@ struct EditQuantityView: View {
                         Stepper(value: $inventoryItemVm.quantity, in: 0.0...Double.infinity, step: 0.1) {}
                     }
                 }
+                .focused($focusState)
                 .frame(width: 150)
             }
             .toolbar {
@@ -62,10 +64,28 @@ struct EditQuantityView: View {
                         }
                     }
                 }
+                
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        Button {
+                            focusState = false
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down.fill")
+                        }
+                    }
+                }
             }
             .navigationTitle(inventoryItemVm.inventoryItem.name)
             .navigationBarTitleDisplayMode(.inline)
-            
+            .onAppear {
+                focusState = true
+            }
+            .onTapGesture {
+                if focusState {
+                    focusState = false
+                }
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FilterRecipesView: View {
     @Environment(\.dismiss) private var dismiss
+    @FocusState private var focusedField: Field?
     @Environment(RecipesVM.self) var recipesVm
     
     @State var filterVm: FilterRecipesVM
@@ -13,6 +14,8 @@ struct FilterRecipesView: View {
                     HStack {
                         TextField("Enter recipe name", text: $filterVm.name)
                             .padding(.vertical, 5)
+                            .focused($focusedField, equals: .name)
+                            .submitLabel(.next)
                         if !filterVm.name.isEmpty {
                             Button {
                                 filterVm.name = ""
@@ -44,6 +47,8 @@ struct FilterRecipesView: View {
                                 .keyboardType(.numberPad)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .frame(width: 60)
+                                .focused($focusedField, equals: .minTime)
+                                .submitLabel(.next)
                         }
                         Slider(value: $filterVm.minTime,
                                in: 3...240,
@@ -53,10 +58,12 @@ struct FilterRecipesView: View {
                             Text("Max time:")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
-                            TextField("Min time", value: $filterVm.maxTime, formatter: NumberFormatter())
+                            TextField("Max time", value: $filterVm.maxTime, formatter: NumberFormatter())
                                 .keyboardType(.numberPad)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .frame(width: 60)
+                                .focused($focusedField, equals: .maxTime)
+                                .submitLabel(.next)
                         }
                         Slider(value: $filterVm.maxTime,
                                in: 3...240,
@@ -123,6 +130,60 @@ struct FilterRecipesView: View {
                     }
                     .disabled(!filterVm.checkForChanges())
                 }
+                ToolbarItemGroup(placement: .keyboard) {
+                    
+                    Button {
+                        focusedField?.previous()
+                    } label: {
+                        Image(systemName: "chevron.up")
+                    }
+                    Button {
+                        focusedField?.next()
+                    } label: {
+                        Image(systemName: "chevron.down")
+                        
+                    }
+                    Spacer()
+                    Button {
+                        focusedField = nil
+                    } label: {
+                        Image(systemName: "keyboard.chevron.compact.down.fill")
+                    }
+                    
+                }
+            }
+            .onTapGesture {
+                if let _ = focusedField {
+                    focusedField = nil
+                }
+            }
+        }
+    }
+}
+
+extension FilterRecipesView {
+    enum Field: Hashable {
+        case name, minTime, maxTime
+        
+        mutating func next() {
+            switch self {
+            case .name:
+                self = .minTime
+            case .minTime:
+                self = .maxTime
+            case .maxTime:
+                self = .name
+            }
+        }
+        
+        mutating func previous() {
+            switch self {
+            case .name:
+                self = .maxTime
+            case .minTime:
+                self = .name
+            case .maxTime:
+                self = .minTime
             }
         }
     }

@@ -3,6 +3,7 @@ import SwiftData
 
 struct ShoppingListDetailView: View {
     @Environment(\.dismiss) private var dismiss
+    @FocusState private var isFocused: Bool
     @Environment(\.modelContext) var modelContext
     @Environment(InventoryVM.self) var inventoryVm
     @Environment(RecipesVM.self) var recipesVm
@@ -28,6 +29,7 @@ struct ShoppingListDetailView: View {
                         Section(header: Text("Remaining Items")) {
                             ForEach(detailsVm.missingItems) { item in
                                 GroceryRow(item: item, toggleObtained: detailsVm.toggleObtained)
+                                    .focused($isFocused)
                             }
                         }
                     }
@@ -71,12 +73,26 @@ struct ShoppingListDetailView: View {
                         }
                     }
                 }
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        Button {
+                            isFocused = false
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down.fill")
+                        }
+                    }
+                }
+            }
+            .onTapGesture {
+                if isFocused {
+                    isFocused = false
+                }
             }
             .alert("Confirm save", isPresented: $detailsVm.showConfirmationAlert) {
                 Button("Cancel", role: .cancel) {}
                 Button("Confirm", role: .destructive) {
                     Task {
-                        //TODO: PENSAR SI DEJAR MARCADA COMO COMPLETA O BORRAR LA LISTA
                         await inventoryVm.addGroceries(groceries: detailsVm.getSelectionIngredients())
                         await recipesVm.inventoryUpdated()
                         detailsVm.completeList()

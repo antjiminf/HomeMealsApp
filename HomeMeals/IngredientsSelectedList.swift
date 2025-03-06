@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct IngredientsSelectedList: View {
+    @FocusState.Binding var focusedField: RecipeFormView.Field?
     @Binding var showIngredientsForm: Bool
     @Binding var ingredients: [SelectionIngredient]
     @Binding var isError: Bool
@@ -109,6 +110,7 @@ struct IngredientsSelectedList: View {
 
                                 }
                             }
+                            .focused($focusedField, equals: .ingredientQuantity(index))
                             .padding(.bottom, 5)
                             Divider()
                         }

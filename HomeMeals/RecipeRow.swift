@@ -46,6 +46,7 @@ struct RecipeRow: View {
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     .lineLimit(2)
+                    .multilineTextAlignment(.leading)
                 
                 HStack(spacing: 4) {
                     Image(systemName: "clock")

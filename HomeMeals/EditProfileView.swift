@@ -2,6 +2,7 @@ import SwiftUI
 
 struct EditProfileView: View {
     @Environment(\.dismiss) private var dismiss
+    @FocusState private var focusField: Field?
     @Environment(UserVM.self) var userVm
     
     @State private var name = ""
@@ -30,6 +31,11 @@ struct EditProfileView: View {
                                     hint: "Enter your full name",
                                     validation: validateName,
                                     initial: false)
+                    .focused($focusField, equals: .name)
+                    .submitLabel(.next)
+                    .onSubmit {
+                        focusField = .username
+                    }
                     
                     CustomTextField(label: "Username",
                                     value: $username,
@@ -40,6 +46,11 @@ struct EditProfileView: View {
                     )
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
+                    .focused($focusField, equals: .username)
+                    .submitLabel(.next)
+                    .onSubmit {
+                        focusField = .email
+                    }
                     
                     CustomTextField(label: "Email",
                                     value: $email,
@@ -52,6 +63,10 @@ struct EditProfileView: View {
                     .keyboardType(.emailAddress)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
+                    .focused($focusField, equals: .email)
+                    .onSubmit {
+                        focusField = nil
+                    }
                 }
             }
             .navigationTitle("Edit Profile")
@@ -78,6 +93,26 @@ struct EditProfileView: View {
                     }
                     .disabled(!isFormValid)
                 }
+                ToolbarItemGroup(placement: .keyboard) {
+                    
+                    Button {
+                        focusField?.previous()
+                    } label: {
+                        Image(systemName: "chevron.up")
+                    }
+                    Button {
+                        focusField?.next()
+                    } label: {
+                        Image(systemName: "chevron.down")
+                    }
+                    Spacer()
+                    Button {
+                        focusField = nil
+                    } label: {
+                        Image(systemName: "keyboard.chevron.compact.down.fill")
+                    }
+                    
+                }
             }
             .alert("Error", isPresented: $hasError) {
                 Button("OK", role: .cancel) { hasError = false }
@@ -96,6 +131,12 @@ struct EditProfileView: View {
                     name = user.name
                     email = user.email
                     username = user.username
+                }
+                focusField = .name
+            }
+            .onTapGesture {
+                if let _ = focusField {
+                    focusField = nil
                 }
             }
         }
@@ -121,6 +162,33 @@ struct EditProfileView: View {
     }
 }
 
+extension EditProfileView {
+    enum Field: Hashable {
+        case name, username, email
+        
+        mutating func next() {
+            switch self {
+            case .name:
+                self = .username
+            case .username:
+                self = .email
+            case .email:
+                self = .name
+            }
+        }
+        
+        mutating func previous() {
+            switch self {
+            case .name:
+                self = .email
+            case .username:
+                self = .name
+            case .email:
+                self = .username
+            }
+        }
+    }
+}
 
 #Preview {
     EditProfileView.preview
