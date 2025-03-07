@@ -102,10 +102,10 @@ struct RecipeDetailsView: View {
                                         if ingredient.unit == .units,
                                            ingredient.quantity == 1 {
                                             
-                                            Text("\(ingredient.quantity, specifier: "%.0f") unit")
+                                            Text("\(ingredient.quantity) unit")
                                                 .foregroundStyle(.secondary)
                                         } else {
-                                            Text("\(ingredient.quantity, specifier: "%.0f") \(ingredient.unit.rawValue)")
+                                            Text("\(ingredient.quantity) \(ingredient.unit.rawValue)")
                                                 .foregroundStyle(.secondary)
                                         }
                                     }

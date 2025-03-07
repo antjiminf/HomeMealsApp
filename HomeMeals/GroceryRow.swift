@@ -48,7 +48,7 @@ struct GroceryRow: View {
                 }
             }
             Spacer()
-            Stepper(value: $item.requiredQuantity, in: 1...Double.infinity, step: 1) {
+            Stepper(value: $item.requiredQuantity, in: 1...Int.max, step: item.unit == .volume ? 50 : 1) {
                 EmptyView()
             }
             .disabled(item.isObtained)

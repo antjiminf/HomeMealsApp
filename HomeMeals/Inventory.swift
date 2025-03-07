@@ -24,11 +24,11 @@ final class GroceriesModel {
     @Attribute(.unique) var id: UUID = UUID()
     var ingredientId: UUID
     var name: String
-    var requiredQuantity: Double
+    var requiredQuantity: Int
     var unit: Unit
     var isObtained: Bool = false
     
-    init(ingredientId: UUID, name: String, requiredQuantity: Double, unit: Unit) {
+    init(ingredientId: UUID, name: String, requiredQuantity: Int, unit: Unit) {
         self.ingredientId = ingredientId
         self.name = name
         self.requiredQuantity = requiredQuantity
@@ -39,7 +39,7 @@ final class GroceriesModel {
 struct Groceries: Codable, Identifiable {
     let ingredientId: UUID
     let name: String
-    var requiredQuantity: Double
+    var requiredQuantity: Int
     let unit: Unit
     
     func toModifyInventoryItemDTO() -> ModifyInventoryItemDTO {
@@ -62,11 +62,11 @@ struct InventoryItem: Codable, Identifiable {
     let ingredientId: UUID
     let name: String
     let unit: Unit
-    let quantity: Double
+    let quantity: Int
 }
 
 struct ModifyInventoryItemDTO: Codable {
     let ingredient: UUID
     let unit: Unit
-    let quantity: Double
+    let quantity: Int
 }

@@ -12,7 +12,7 @@ struct SelectionIngredient: Identifiable, Hashable {
     let id: UUID
     let name: String
     let unit: Unit
-    var quantity: Double
+    var quantity: Int
 //    let category: FoodCategory
     
     func toCreateRecipeIngredient() -> CreateRecipeIngredient {
@@ -23,7 +23,7 @@ struct SelectionIngredient: Identifiable, Hashable {
 struct RecipeIngredient: Identifiable, Codable, Hashable {
     let ingredientId: UUID
     let name: String
-    let quantity: Double
+    let quantity: Int
     let unit: Unit
     
     var id: UUID { ingredientId }
@@ -39,6 +39,6 @@ struct RecipeIngredient: Identifiable, Codable, Hashable {
 
 struct CreateRecipeIngredient: Codable, Hashable {
     let ingredient: UUID
-    let quantity: Double
+    let quantity: Int
     let unit: Unit
 }

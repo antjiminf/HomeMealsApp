@@ -25,7 +25,7 @@ enum FoodCategory: String, Identifiable, Codable, CaseIterable, Comparable {
 }
 
 enum Unit: String, Codable, CaseIterable, Identifiable {
-    case volume = "L"
+    case volume = "mL"
     case units = "units"
     case weight = "g"
     

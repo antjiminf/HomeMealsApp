@@ -2,7 +2,7 @@ import SwiftUI
 
 struct IngredientQuantity: View {
     let ingredientName: String
-    @Binding var quantity: Double
+    @Binding var quantity: Int
     let unit: Unit
     
     var body: some View {

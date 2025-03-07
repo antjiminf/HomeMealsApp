@@ -79,11 +79,11 @@ extension Recipe {
                                                  unit: .units),
                                 RecipeIngredient(ingredientId: UUID(),
                                                  name: "Water",
-                                                 quantity: 3.2,
+                                                 quantity: 300,
                                                  unit: .volume),
                                 RecipeIngredient(ingredientId: UUID(),
                                                  name: "Olive Oil",
-                                                 quantity: 1,
+                                                 quantity: 100,
                                                  unit: .volume)],
                              favorite: true,
                              favTotal: 300)
@@ -183,7 +183,7 @@ struct InteractorTest: DataInteractor {
         [
             Groceries(ingredientId: UUID(), name: "Bread", requiredQuantity: 100, unit: .units),
             Groceries(ingredientId: UUID(), name: "Egg", requiredQuantity: 50, unit: .units),
-            Groceries(ingredientId: UUID(), name: "Oil", requiredQuantity: 0.5, unit: .volume),
+            Groceries(ingredientId: UUID(), name: "Oil", requiredQuantity: 500, unit: .volume),
             Groceries(ingredientId: UUID(), name: "Chicken", requiredQuantity: 200, unit: .weight)
         ]
     }
@@ -254,7 +254,7 @@ struct InteractorTest: DataInteractor {
     func shoppingList(_ ingredients: [ModifyInventoryItemDTO]) async throws -> [Groceries] {
         [Groceries(ingredientId: UUID(), name: "Bread", requiredQuantity: 100, unit: .units),
          Groceries(ingredientId: UUID(), name: "Egg", requiredQuantity: 50, unit: .units),
-         Groceries(ingredientId: UUID(), name: "Oil", requiredQuantity: 0.5, unit: .volume),
+         Groceries(ingredientId: UUID(), name: "Oil", requiredQuantity: 500, unit: .volume),
          Groceries(ingredientId: UUID(), name: "Chicken", requiredQuantity: 200, unit: .weight)]
     }
     

@@ -83,10 +83,10 @@ struct InventoryView: View {
                                     
                                     if item.unit == .units,
                                        item.quantity == 1 {
-                                        Text("\(item.quantity, specifier: "%.0f") unit")
+                                        Text("\(item.quantity) unit")
                                             .foregroundColor(.secondary)
                                     } else {
-                                        Text("\(item.quantity, specifier: "%.0f") \(item.unit.rawValue)")
+                                        Text("\(item.quantity) \(item.unit.rawValue)")
                                             .foregroundColor(.secondary)
                                     }
                                     

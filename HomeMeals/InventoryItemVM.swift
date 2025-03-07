@@ -5,7 +5,7 @@ final class InventoryItemVM {
     
     let inventoryItem: InventoryItem
     
-    var quantity: Double
+    var quantity: Int
     
     init(inventoryItem: InventoryItem) {
         self.inventoryItem = inventoryItem
@@ -13,7 +13,7 @@ final class InventoryItemVM {
     }
     
     func itemToEdit() -> ModifyInventoryItemDTO? {
-        if quantity < 0.1 {
+        if quantity <= 0 {
             return nil
         }
         return ModifyInventoryItemDTO(ingredient: inventoryItem.ingredientId,

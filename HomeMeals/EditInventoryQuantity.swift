@@ -23,7 +23,9 @@ struct EditQuantityView: View {
                     .frame(width: 80)
                     Text(inventoryItemVm.inventoryItem.unit.rawValue)
                     
-                    Stepper(value: $inventoryItemVm.quantity, in: 0...Double.infinity, step: 1) {}
+                    Stepper(value: $inventoryItemVm.quantity,
+                            in: 0...Int.max,
+                            step: inventoryItemVm.inventoryItem.unit == .volume ? 50 : 1) {}
                 }
                 .focused($focusState)
                 .frame(width: 200)

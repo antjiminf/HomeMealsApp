@@ -120,8 +120,8 @@ struct ShoppingListFormView: View {
                                         }
                                         
                                         Stepper(value: $shoppingListVm.shoppingList[index].requiredQuantity,
-                                                in: 1...Double.infinity,
-                                                step: 1) {
+                                                in: 1...Int.max,
+                                                step: item.unit == .volume ? 50 : 1) {
                                             EmptyView()
                                         }
                                     }

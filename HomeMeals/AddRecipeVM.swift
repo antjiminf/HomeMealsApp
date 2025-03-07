@@ -11,7 +11,6 @@ final class AddRecipeVM {
             guide = recipe.guide
             time = recipe.time
             isPublic = true //TODO: RECIBIR PARAMETRO ISPUBLIC PARA FUTUROS PROBLEMAS
-            //Cuando quiero hacer update no se si la receta es true o false
             allergens = recipe.allergens
             ingredients = recipe.ingredients.map{ $0.toSelectionIngredient() }
         }
@@ -51,19 +50,6 @@ final class AddRecipeVM {
         return allergens.contains(value)
     }
     
-    //TODO: BORRAR ING SELECCIONADOS
-    // PROBAR METER EL FOREACH DE LOS ING SOLAMENTE EN UN SECTION PARA HACER ONDELETE COMO EN SCORESSWIFTUI
-//    func removeIngredient(index: Int) {
-//        ingredients.remove(at: index)
-//    }
-//    
-//    private func deleteIngredients(at offsets: IndexSet) {
-//        ingredients.remove(atOffsets: offsets)
-//    }
-//    func deleteIngredient(at offsets: IndexSet) {
-//            ingredients.remove(atOffsets: offsets)
-//        }
-    
     func validationName(value: String) -> String? {
         value.isEmpty ? "must not be empty" : nil
     }
@@ -86,7 +72,7 @@ final class AddRecipeVM {
     }
     
     func validateIngredients(value: [SelectionIngredient]) -> String? {
-        value.filter{$0.quantity > 0.1}.count < 3 ? "Recipes must have at least 3 ingredients" : nil
+        value.filter{$0.quantity > 0}.count < 3 ? "Recipes must have at least 3 ingredients" : nil
     }
     
     func validateAllFields() -> Bool {
@@ -127,7 +113,5 @@ final class AddRecipeVM {
                                guide: guide.filter{!$0.isEmpty},
                                allergens: allergens)
     }
-    
-//    func 
     
 }
