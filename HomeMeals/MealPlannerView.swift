@@ -12,6 +12,7 @@ struct MealPlannerView: View {
                 VStack(spacing: 16) {
                     DatePicker("Select Date", selection: $mealPlanner.selectedDate, displayedComponents: .date)
                         .datePickerStyle(.graphical)
+                        .frame(width: 320, height: 320)
                     
                     VStack(spacing: 20) {
                         let dayPlan = mealPlanner.getMealPlan(for: mealPlanner.selectedDate, in: modelContext)

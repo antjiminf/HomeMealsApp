@@ -30,6 +30,14 @@ struct ShoppingListDetailView: View {
                             ForEach(detailsVm.missingItems) { item in
                                 GroceryRow(item: item, toggleObtained: detailsVm.toggleObtained)
                                     .focused($isFocused)
+                                    .swipeActions {
+                                        Button(role: .destructive) {
+                                            detailsVm.pendingItem = item
+                                            detailsVm.showDeleteItemAlert = true
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    }
                             }
                         }
                     }
@@ -96,6 +104,16 @@ struct ShoppingListDetailView: View {
                 }
             } message: {
                 Text("This action will add the items to your inventory and mark the shopping list as completed. Are you sure?")
+            }
+            .alert("Delete Grocery?", isPresented: $detailsVm.showDeleteItemAlert) {
+                Button("Cancel", role: .cancel) {}
+                Button("Confirm", role: .destructive) {
+                    if let item = detailsVm.pendingItem {
+                        detailsVm.deleteItem(item)
+                    }
+                }
+            } message: {
+                Text("This action will remove \(detailsVm.pendingItem?.name ?? "") from the list. Are you sure?")
             }
         }
         .onTapGesture {

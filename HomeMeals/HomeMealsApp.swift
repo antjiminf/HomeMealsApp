@@ -16,6 +16,7 @@ struct HomeMealsApp: App {
                 .environment(ingredientsVm)
                 .environment(inventoryVm)
         }
-        .modelContainer(for: [MealPlanDay.self, GroceriesList.self])
+        .modelContainer(for: [MealPlanDay.self, GroceriesList.self],
+                        isAutosaveEnabled: true)
     }
 }

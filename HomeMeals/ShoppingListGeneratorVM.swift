@@ -30,6 +30,10 @@ final class ShoppingListGeneratorVM {
         }
     }
     
+    func indexOf(item: Groceries) -> Int? {
+        return shoppingList.firstIndex(where: { $0.id == item.id })
+    }
+    
     @MainActor
     func generateShoppingList(in modelContext: ModelContext) async {
         defer { isLoading = false }

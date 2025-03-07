@@ -51,7 +51,8 @@ struct RecipeDetailsView: View {
                                     Button {
                                         recipeDetailsVm.showRecipeLikes = true
                                     } label: {
-                                        Text("\(recipe.favTotal.formattedLikes) likes")
+//                                        Text("^[\(recipe.favTotal.formattedLikes) like](inflect: true)")
+                                        Text("\(recipe.favTotal.formattedLikes) \(recipe.favTotal == 1 ? "like" : "likes")")
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
                                     }

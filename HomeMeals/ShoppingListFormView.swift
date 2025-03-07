@@ -93,39 +93,40 @@ struct ShoppingListFormView: View {
                 } else if !shoppingListVm.shoppingList.isEmpty {
                     Section {
                         List {
-                            ForEach(shoppingListVm.shoppingList.indices, id: \.self) { index in
-                                let item = shoppingListVm.shoppingList[index]
-                                HStack {
-                                    
-                                    Text(item.name)
-                                        .font(.headline)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    
-                                    TextField("Quantity",
-                                              value: $shoppingListVm.shoppingList[index].requiredQuantity,
-                                              formatter: NumberFormatter())
-                                    .keyboardType(.numberPad)
-                                    .frame(width: 80, alignment: .trailing)
-                                    .multilineTextAlignment(.trailing)
-                                    .textFieldStyle(.roundedBorder)
-                                    .focused($isFocused)
-                                    
-                                    if item.unit == .units,
-                                       item.requiredQuantity == 1 {
-                                        Text("unit")
-                                            .frame(width: 40, alignment: .leading)
-                                    } else {
-                                        Text(item.unit.rawValue)
-                                            .frame(width: 40, alignment: .leading)
+                            ForEach(shoppingListVm.shoppingList, id: \.id) { item in
+                                if let index = shoppingListVm.indexOf(item: item) {
+                                    HStack {
+                                        
+                                        Text(item.name)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        TextField("Quantity",
+                                                  value: $shoppingListVm.shoppingList[index].requiredQuantity,
+                                                  formatter: NumberFormatter())
+                                        .keyboardType(.numberPad)
+                                        .frame(width: 80, alignment: .trailing)
+                                        .multilineTextAlignment(.trailing)
+                                        .textFieldStyle(.roundedBorder)
+                                        .focused($isFocused)
+                                        
+                                        if item.unit == .units,
+                                           item.requiredQuantity == 1 {
+                                            Text("unit")
+                                                .frame(width: 40, alignment: .leading)
+                                        } else {
+                                            Text(item.unit.rawValue)
+                                                .frame(width: 40, alignment: .leading)
+                                        }
+                                        
+                                        Stepper(value: $shoppingListVm.shoppingList[index].requiredQuantity,
+                                                in: 1...Double.infinity,
+                                                step: 1) {
+                                            EmptyView()
+                                        }
                                     }
-                                    
-                                    Stepper(value: $shoppingListVm.shoppingList[index].requiredQuantity,
-                                            in: 1...Double.infinity,
-                                            step: 1) {
-                                        EmptyView()
-                                    }
+                                    .padding(.vertical, 5)
                                 }
-                                .padding(.vertical, 5)
                             }
                             .onDelete(perform: shoppingListVm.removeItem)
                         }

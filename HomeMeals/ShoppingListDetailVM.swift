@@ -6,6 +6,9 @@ final class ShoppingListDetailVM {
     var list: GroceriesList
     var showConfirmationAlert: Bool = false
     
+    var pendingItem: GroceriesModel?
+    var showDeleteItemAlert: Bool = false
+    
     init(_ list: GroceriesList) {
         self.list = list
     }
@@ -40,6 +43,13 @@ final class ShoppingListDetailVM {
                                 name: i.name,
                                 unit: i.unit,
                                 quantity: i.requiredQuantity)
+        }
+    }
+    
+    func deleteItem(_ item: GroceriesModel) {
+        if let index = list.items.firstIndex(of: item) {
+            list.items.remove(at: index)
+            pendingItem = nil
         }
     }
 }
