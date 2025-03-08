@@ -50,6 +50,7 @@ struct RegisterView: View {
                                         hint: "Enter a unique username",
                                         validation: validateUsername,
                                         initial: false)
+                        .textInputAutocapitalization(.never)
                         .focused($focusedField, equals: .username)
                         .submitLabel(.next)
                         .onSubmit {
@@ -88,7 +89,8 @@ struct RegisterView: View {
                                               isError: $passwordError,
                                               hint: "Enter a strong password",
                                               validation: validatePassword,
-                                              initial: false)
+                                              initial: false,
+                                              isNewPassword: true)
                         .focused($focusedField, equals: .password)
                         .submitLabel(.next)
                         .onSubmit {
@@ -100,7 +102,8 @@ struct RegisterView: View {
                                               isError: $confirmPasswordError,
                                               hint: "Re-enter your password",
                                               validation: validateConfirmPassword,
-                                              initial: false)
+                                              initial: false,
+                                              isNewPassword: true)
                         .focused($focusedField, equals: .confirmPassword)
                         .submitLabel(.done)
                         .onSubmit {

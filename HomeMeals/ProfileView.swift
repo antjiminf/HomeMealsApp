@@ -124,19 +124,8 @@ struct ProfileHeader: View {
     var body: some View {
         VStack {
             Group {
-                if let avatarUrl = user.avatar, let url = URL(string: avatarUrl) {
-                    AsyncImage(url: url) { phase in
-                        if let image = phase.image {
-                            image.resizable()
-                                .scaledToFill()
-                        } else if phase.error != nil {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .scaledToFill()
-                        } else {
-                            ProgressView()
-                        }
-                    }
+                if let avatarUrl = user.avatar {
+                    NetworkCircleImage(urlString: avatarUrl)
                 } else {
                     Image(systemName: "person.circle.fill")
                         .resizable()

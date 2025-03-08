@@ -7,7 +7,7 @@ struct SecureCustomTextField: View {
     var hint: String
     let validation: (String) -> String?
     var initial = true
-    var lines = 1
+    var isNewPassword = false
     
     @State private var error = false
     @State private var errorMsg = ""
@@ -19,18 +19,11 @@ struct SecureCustomTextField: View {
                 .padding(.bottom, 5)
                 .accessibilityHidden(true)
             HStack(alignment: .top) {
-                if lines > 1 {
-                    SecureField("Enter the \(label.lowercased())", text: $value)
-                        .textContentType(.password)
-                        .accessibilityHint(Text(hint))
-                        .accessibilityLabel(Text(label))
-                        .lineLimit(lines, reservesSpace: true)
-                } else {
-                    SecureField("Enter the \(label.lowercased())", text: $value)
-                        .textContentType(.password)
-                        .accessibilityHint(Text(hint))
-                        .accessibilityLabel(Text(label))
-                }
+                SecureField("Enter the \(label.lowercased())", text: $value)
+                    .textContentType(isNewPassword ? .newPassword : .password)
+                    .accessibilityHint(Text(hint))
+                    .accessibilityLabel(Text(label))
+                
                 if !value.isEmpty {
                     Button {
                         value = ""

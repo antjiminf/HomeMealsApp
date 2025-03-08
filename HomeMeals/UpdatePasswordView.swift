@@ -43,7 +43,8 @@ struct UpdatePasswordView: View {
                                           isError: $hasNewPasswordError,
                                           hint: "Must be at least 8 characters",
                                           validation: validateNewPassword,
-                                          initial: false)
+                                          initial: false,
+                                          isNewPassword: true)
                     .focused($focusedField, equals: .newPassword)
                     .submitLabel(.next)
                     .onSubmit {
@@ -55,7 +56,8 @@ struct UpdatePasswordView: View {
                                           isError: $hasConfirmPasswordError,
                                           hint: "Confirm your new password",
                                           validation: validateConfirmPassword,
-                                          initial: false)
+                                          initial: false,
+                                          isNewPassword: true)
                     .focused($focusedField, equals: .confirmPassword)
                     .submitLabel(.done)
                     .onSubmit {
