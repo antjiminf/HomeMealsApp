@@ -1,0 +1,63 @@
+[
+    {
+        "category": "cereals-grains",
+        "id": "523E4567-E89B-12D3-A456-426614174004",
+        "name": "Flour",
+        "unit": "weight"
+    },
+    {
+        "name": "Sugar",
+        "category": "sweet-dessert",
+        "id": "623E4567-E89B-12D3-A456-426614174005",
+        "unit": "weight"
+    },
+    {
+        "name": "Egg",
+        "category": "dairy",
+        "id": "723E4567-E89B-12D3-A456-426614174006",
+        "unit": "units"
+    },
+    {
+        "id": "823E4567-E89B-12D3-A456-426614174007",
+        "name": "Butter",
+        "category": "dairy",
+        "unit": "weight"
+    },
+    {
+        "id": "923E4567-E89B-12D3-A456-426614174008",
+        "name": "Chicken Breast",
+        "category": "meat",
+        "unit": "weight"
+    },
+    {
+        "category": "oil-fat",
+        "name": "Olive Oil",
+        "id": "A23E4567-E89B-12D3-A456-426614174009",
+        "unit": "volume"
+    },
+    {
+        "category": "herbs-spices",
+        "name": "Salt",
+        "id": "B23E4567-E89B-12D3-A456-42661417400A",
+        "unit": "weight"
+    },
+    {
+        "category": "vegetable",
+        "name": "Tomato",
+        "id": "C23E4567-E89B-12D3-A456-42661417400B",
+        "unit": "units"
+    },
+    {
+        "name": "Basil",
+        "id": "D23E4567-E89B-12D3-A456-42661417400C",
+        "category": "herbs-spices",
+        "unit": "weight"
+    },
+    {
+        "category": "vegetable",
+        "id": "2142E225-4070-45D0-A814-B9F0DBD08C72",
+        "name": "Cucumber",
+        "unit": "units"
+    }
+]
+

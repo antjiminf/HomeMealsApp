@@ -1,0 +1,3 @@
+# Xcode files to ignore
+*.xcuserstate
+*.xcworkspace/xcuserdata/
