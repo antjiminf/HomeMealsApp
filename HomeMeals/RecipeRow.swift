@@ -111,6 +111,5 @@ struct RecipeRow: View {
 }
 
 #Preview {
-    RecipeRow(recipe: .test, listType: .favorite)
-        .environment(RecipesVM(interactor: InteractorTest()))
+    RecipeRow.preview
 }

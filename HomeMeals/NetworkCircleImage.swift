@@ -29,6 +29,5 @@ struct NetworkCircleImage: View {
 }
 
 #Preview {
-    NetworkCircleImage(size: 300,
-                       urlString: "https://cloudfront-us-east-1.images.arcpublishing.com/copesa/UIFIWREQRVHK7KLG4IWHI6IQXY.jpg")
+    NetworkCircleImage.preview
 }
