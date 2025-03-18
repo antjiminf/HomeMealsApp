@@ -171,6 +171,8 @@
 		1EDF48682D78C73E0048AFE4 /* Krypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Krypto.swift; sourceTree = "<group>"; };
 		1EDF486A2D78C75F0048AFE4 /* SecKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecKeyStore.swift; sourceTree = "<group>"; };
 		1EDF486C2D78C7A50048AFE4 /* SecManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecManager.swift; sourceTree = "<group>"; };
+		1EF119342D89D38400095B89 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1EF119372D8A1D7B00095B89 /* README.es.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.es.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,8 @@
 		1E28E97D2C8CB76200CEA3BB = {
 			isa = PBXGroup;
 			children = (
+				1EF119372D8A1D7B00095B89 /* README.es.md */,
+				1EF119342D89D38400095B89 /* README.md */,
 				1E28E9882C8CB76200CEA3BB /* HomeMeals */,
 				1E28E9992C8CB76400CEA3BB /* HomeMealsTests */,
 				1E28E9A32C8CB76400CEA3BB /* HomeMealsUITests */,

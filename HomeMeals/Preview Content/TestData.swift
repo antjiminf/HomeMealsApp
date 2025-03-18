@@ -502,3 +502,23 @@ extension EditProfileView {
             .environment(UserVM(interactor: InteractorTest()))
     }
 }
+
+extension RecipeCard {
+    static var preview: some View {
+        RecipeCard(recipe: .test)
+    }
+}
+
+extension RecipeRow {
+    static var preview: some View {
+        RecipeRow(recipe: .test, listType: .favorite)
+            .environment(RecipesVM(interactor: InteractorTest()))
+    }
+}
+
+extension NetworkCircleImage {
+    static var preview: some View {
+        NetworkCircleImage(size: 300,
+                           urlString: "https://cloudfront-us-east-1.images.arcpublishing.com/copesa/UIFIWREQRVHK7KLG4IWHI6IQXY.jpg")
+    }
+}
