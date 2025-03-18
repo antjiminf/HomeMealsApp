@@ -44,7 +44,7 @@
 ```bash
 git clone https://github.com/antjiminf/HomeMealsApp.git
 cd HomeMealsApp
-``
+```
 
 ### 📲 Run the Application
 
